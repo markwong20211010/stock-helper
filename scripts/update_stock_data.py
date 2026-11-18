@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-股票買入時機小助手 —— 股價/指標自動更新腳本（GitHub Actions 版）
+股票買入時機小助手 —— 股票清單 + 行情自動更新（GitHub Actions 版）
 
 用法：
     python3 scripts/update_stock_data.py index.html
 
-只更新 DATA 內的 price / ma5 / ma20 / rsi / sup / res 與頁腳「數據更新於」日期；
-不會改動任何操作邏輯、目標買入價 target、股票清單、分組與界面文案。
-"""
-import sys, re, json, time, urllib.request, datetime
+流程：
+  1. 以 repo 根目錄的 stocks.json 作為「股票清單」唯一來源（沒有就從 index.html 的 DATA 讀出來建檔）
+  2. 抓每隻股票的收市價與日 K，算出 MA5 / MA20 / RSI(14) / 20 日支撐壓力
+  3. 把計算結果寫回 stocks.json，並把整份 DATA 重新嵌入 index.html（新增的股票即時可被「查信號 / 觀察名單」使用）
+  4. 更新頁腳「數據更新於 X年X月X日（收市）」
 
-CODES = ["01810", "00700", "09988", "03690", "01398", "00939", "02318",
-         "00883", "01088", "00941", "00002", "06823", "06181", "06862"]
+不會改動任何操作邏輯、界面、分組卡片與你自己設定的目標買入價 target。
+"""
+import sys, os, re, json, time, urllib.request, datetime
+
+HKT = datetime.timezone(datetime.timedelta(hours=8))
 
 
 def get(url, tries=3):
@@ -23,32 +27,29 @@ def get(url, tries=3):
                 url, headers={"User-Agent": "Mozilla/5.0 (compatible; stock-helper-bot)",
                               "Referer": "https://gu.qq.com/"})
             return urllib.request.urlopen(req, timeout=20).read()
-        except Exception as e:          # 網絡抖動重試
+        except Exception as e:
             last = e
             time.sleep(2 + 2 * i)
     raise last
 
 
 def fetch_quotes(codes):
-    q = ",".join("hk" + c for c in codes)
-    raw = get("https://qt.gtimg.cn/q=" + q).decode("gbk", "ignore")
     out = {}
-    for line in raw.split(";"):
-        line = line.strip()
-        if not line.startswith("v_hk"):
-            continue
-        f = line.split("=", 1)[1].strip().strip('"').split("~")
-        if len(f) < 40:
-            continue
-        code = f[2]
-        k = next((i for i, x in enumerate(f) if re.match(r"^\d{4}/\d{2}/\d{2}", x)), None)
-        if k is None:
-            continue
-        out[code] = {"price": float(f[3]), "high": float(f[k + 3]), "low": float(f[k + 4]),
-                     "time": f[k]}
-    missing = [c for c in codes if c not in out]
-    if missing:
-        raise RuntimeError("行情缺漏：" + ",".join(missing))
+    for i in range(0, len(codes), 20):
+        chunk = codes[i:i + 20]
+        raw = get("https://qt.gtimg.cn/q=" + ",".join("hk" + c for c in chunk)).decode("gbk", "ignore")
+        for line in raw.split(";"):
+            line = line.strip()
+            if not line.startswith("v_hk"):
+                continue
+            f = line.split("=", 1)[1].strip().strip('"').split("~")
+            if len(f) < 40:
+                continue
+            k = next((j for j, x in enumerate(f) if re.match(r"^\d{4}/\d{2}/\d{2}", x)), None)
+            if k is None:
+                continue
+            out[f[2].zfill(5)] = {"name": f[1], "price": float(f[3]),
+                                  "high": float(f[k + 3]), "low": float(f[k + 4]), "time": f[k]}
     return out
 
 
@@ -57,10 +58,7 @@ def fetch_kline(code, n=90):
     data = json.loads(get(url).decode("utf-8", "ignore"))
     node = data["data"]["hk" + code]
     rows = node.get("day") or node.get("qfqday") or []
-    closes = [float(r[2]) for r in rows]
-    highs = [float(r[3]) for r in rows]
-    lows = [float(r[4]) for r in rows]
-    return closes, highs, lows
+    return ([float(r[2]) for r in rows], [float(r[3]) for r in rows], [float(r[4]) for r in rows])
 
 
 def rsi14(closes, period=14):
@@ -81,71 +79,104 @@ def rsi14(closes, period=14):
     return round(100 - 100 / (1 + ag / al))
 
 
-def build_stats():
-    quotes = fetch_quotes(CODES)
-    stats = {}
-    for code in CODES:
+def load_list(html, json_path):
+    """stocks.json 為準；沒有就由 index.html 的 DATA 建立。"""
+    if os.path.exists(json_path):
+        data = json.load(open(json_path, encoding="utf-8"))
+        return data.get("stocks", []), data
+    m = re.search(r"var DATA = (\{.*?\});\s*\n\s*var cur", html, re.S)
+    if not m:
+        raise RuntimeError("找不到 DATA，亦沒有 stocks.json")
+    old = json.loads(m.group(1))
+    stocks = []
+    for code, v in old.items():
+        stocks.append({"code": code, "name": v.get("name", code), "target": v.get("target"),
+                       "y": v.get("y", "—"), "grp": v.get("grp", "自選"),
+                       "note": v.get("note", ""), "news": v.get("news", "")})
+    return stocks, {"updated": "", "stocks": stocks}
+
+
+def enrich(stocks, quotes):
+    for s in stocks:
+        s["code"] = str(s["code"]).zfill(5)
+        code = s["code"]
+        q = quotes.get(code)
+        if not q:
+            print("⚠ 抓不到 %s 行情，沿用舊值" % code)
+            continue
         closes, highs, lows = fetch_kline(code)
-        cur = quotes[code]["price"]
+        cur = q["price"]
         if not closes or abs(closes[-1] - cur) > 0.01:
             closes += [cur]
-            highs += [quotes[code]["high"]]
-            lows += [quotes[code]["low"]]
-        stats[code] = {
-            "price": cur,
-            "ma5": sum(closes[-5:]) / 5,
-            "ma20": sum(closes[-20:]) / 20,
-            "rsi": rsi14(closes),
-            "sup": min(lows[-20:]),
-            "res": max(highs[-20:]),
+            highs += [q["high"]]
+            lows += [q["low"]]
+        if not s.get("name"):
+            s["name"] = q["name"]
+        if s.get("target") in (None, "", 0):
+            s["target"] = round(cur * 0.97, 2)
+            s["note"] = (s.get("note") or "") + "（自動目標：現價 −3%，可自行改 target）"
+        s.setdefault("y", "—")
+        s.setdefault("grp", "自選")
+        s.setdefault("note", "自訂加入")
+        s.setdefault("news", "（未設定當天消息，可在 stocks.json 補上）")
+        s["price"] = cur
+        s["ma5"] = sum(closes[-5:]) / 5
+        s["ma20"] = sum(closes[-20:]) / 20
+        s["rsi"] = rsi14(closes)
+        s["sup"] = min(lows[-20:])
+        s["res"] = max(highs[-20:])
+    return stocks
+
+
+def to_data_literal(stocks):
+    obj = {}
+    for s in stocks:
+        obj[s["code"]] = {
+            "name": s["name"], "price": round(float(s["price"]), 3), "target": s["target"],
+            "y": s["y"], "grp": s["grp"], "note": s["note"],
+            "ma5": round(s["ma5"], 3), "ma20": round(s["ma20"], 3), "rsi": int(s["rsi"]),
+            "sup": round(s["sup"], 3), "res": round(s["res"], 3), "news": s["news"],
         }
-    return stats
-
-
-def rewrite(html, stats):
-    starts = [(m.start(), m.group(1)) for m in re.finditer(r'"(\d{5})":\s*\{', html)]
-    if len(starts) < len(CODES):
-        raise RuntimeError("页面內 DATA 結構不符合預期，停止更新以免弄壞頁面")
-    pieces, cursor, changed = [], 0, False
-    for idx, (pos, code) in enumerate(starts):
-        end = starts[idx + 1][0] if idx + 1 < len(starts) else html.find("};", pos)
-        pieces.append(html[cursor:pos])
-        seg = html[pos:end]
-        if code in stats:
-            s, old = stats[code], seg
-            for key, val in (("price", s["price"]), ("ma5", s["ma5"]), ("ma20", s["ma20"]),
-                             ("sup", s["sup"]), ("res", s["res"])):
-                txt = ("%.3f" % val).rstrip("0").rstrip(".")
-                seg = re.sub(r'"%s":\s*[-0-9.]+' % key, '"%s": %s' % (key, txt), seg, count=1)
-            seg = re.sub(r'"rsi":\s*[-0-9.]+', '"rsi": %d' % s["rsi"], seg, count=1)
-            changed = changed or (seg != old)
-        pieces.append(seg)
-        cursor = end
-    pieces.append(html[cursor:])
-    new_html = "".join(pieces)
-    if changed:
-        today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8)))
-        new_html = re.sub(r"生成於\s*\d{4}年\d{1,2}月\d{1,2}日|數據更新於\s*\d{4}年\d{1,2}月\d{1,2}日(（收市）)?",
-                          "數據更新於 %d年%d月%d日（收市）" % (today.year, today.month, today.day),
-                          new_html, count=1)
-    return new_html, changed
+    return json.dumps(obj, ensure_ascii=False, separators=(", ", ": "))
 
 
 def main():
     path = sys.argv[1] if len(sys.argv) > 1 else "index.html"
+    root = os.path.dirname(os.path.abspath(path))
+    json_path = sys.argv[2] if len(sys.argv) > 2 else os.path.join(root, "stocks.json")
     html = open(path, encoding="utf-8").read()
-    stats = build_stats()
-    new_html, changed = rewrite(html, stats)
+
+    stocks, doc = load_list(html, json_path)
+    codes = [str(s["code"]).zfill(5) for s in stocks]
+    quotes = fetch_quotes(codes)
+    stocks = enrich(stocks, quotes)
+
+    literal = to_data_literal(stocks)
+    new_html, n = re.subn(r"var DATA = \{.*?\};\s*\n(\s*)var cur",
+                          lambda m: "var DATA = " + literal + ";\n" + m.group(1) + "var cur",
+                          html, count=1, flags=re.S)
+    if n == 0:
+        raise RuntimeError("無法在 index.html 找到 DATA，停止以免弄壞頁面")
+
+    now = datetime.datetime.now(HKT)
+    stamp = "%d年%d月%d日" % (now.year, now.month, now.day)
+    new_html = re.sub(r"(生成於|數據更新於)\s*\d{4}年\d{1,2}月\d{1,2}日(（收市）)?",
+                      "數據更新於 " + stamp + "（收市）", new_html, count=1)
+
+    changed = new_html != html
     if changed:
         open(path, "w", encoding="utf-8").write(new_html)
-    else:
-        print("價格無變化，未寫入檔案")
-    print("狀態：%s" % ("已更新" if changed else "無變化"))
-    print("%-8s %-6s %9s %8s %8s %5s %8s %8s" % ("代碼", "名稱", "現價", "MA5", "MA20", "RSI", "支撐", "壓力"))
-    for c in CODES:
-        s = stats[c]
-        print("%-8s %-6s %9.3f %8.2f %8.2f %5d %8.2f %8.2f"
-              % (c, "", s["price"], s["ma5"], s["ma20"], s["rsi"], s["sup"], s["res"]))
+
+    doc["updated"] = now.strftime("%Y-%m-%d %H:%M HKT")
+    doc["stocks"] = stocks
+    json.dump(doc, open(json_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+
+    print("stocks.json 已同步：%d 隻" % len(stocks))
+    print("狀態：%s" % ("已更新 index.html" if changed else "價格無變化，未改動 index.html"))
+    for s in stocks:
+        print("%s %-8s 現價 %.3f  目標 %s  MA20 %.2f  RSI %d"
+              % (s["code"], s["name"], s["price"], s["target"], s["ma20"], s["rsi"]))
+    print("::notice::完成，共 %d 隻股票" % len(stocks))
 
 
 if __name__ == "__main__":
