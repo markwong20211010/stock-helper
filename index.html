@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-HK">
 
 <head>
@@ -837,6 +837,15 @@
       color: var(--t2);
       line-height: 1.6;
       margin-top: 3px
+    }
+
+    .nitem .nbody .nsnap {
+      font-size: 11.5px;
+      color: var(--t3, #7A7A7A);
+      line-height: 1.6;
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(0,0,0,.12)
     }
 
     .hist {
@@ -1699,77 +1708,76 @@
     <div class="tab-panel on" id="p-home">
 
       <div class="home-cols">
-        <div class="sec">
-          <div class="query-card">
-            <div class="input-row">
-              <div class="code-input">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg>
-                <input id="code" type="text" placeholder="輸入港股編號，如 01810" maxlength="5">
-              </div>
-              <button class="btn" id="go">查信號</button>
+      <div class="sec">
+        <div class="query-card">
+          <div class="input-row">
+            <div class="code-input">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <input id="code" type="text" placeholder="輸入港股編號，如 01810" maxlength="5">
             </div>
-            <div class="hot-label">熱門股票快捷選擇：</div>
-            <div class="hot-row" id="hotRow">
-              <button class="hot" data-code="01810">小米集團<span>01810</span></button><button class="hot"
-                data-code="00700">騰訊控股<span>00700</span></button><button class="hot"
-                data-code="09988">阿里巴巴<span>09988</span></button><button class="hot"
-                data-code="03690">美團<span>03690</span></button><button class="hot"
-                data-code="00883">中海油<span>00883</span></button><button class="hot"
-                data-code="01398">工商銀行<span>01398</span></button><button class="hot"
-                data-code="00939">建設銀行<span>00939</span></button><button class="hot"
-                data-code="00941">中國移動<span>00941</span></button><button class="hot"
-                data-code="01088">中國神華<span>01088</span></button><button class="hot"
-                data-code="02318">中國平安<span>02318</span></button>
-            </div>
+            <button class="btn" id="go">查信號</button>
+          </div>
+          <div class="hot-label">熱門股票快捷選擇：</div>
+          <div class="hot-row" id="hotRow">
+            <button class="hot" data-code="01810">小米集團<span>01810</span></button><button class="hot"
+              data-code="00700">騰訊控股<span>00700</span></button><button class="hot"
+              data-code="09988">阿里巴巴<span>09988</span></button><button class="hot"
+              data-code="03690">美團<span>03690</span></button><button class="hot"
+              data-code="00883">中海油<span>00883</span></button><button class="hot"
+              data-code="01398">工商銀行<span>01398</span></button><button class="hot"
+              data-code="00939">建設銀行<span>00939</span></button><button class="hot"
+              data-code="00941">中國移動<span>00941</span></button><button class="hot"
+              data-code="01088">中國神華<span>01088</span></button><button class="hot"
+              data-code="02318">中國平安<span>02318</span></button>
           </div>
         </div>
+      </div>
 
-        <div class="sec">
-          <div class="signal-card">
-            <div class="signal-head">
-              <span class="name" id="sigName">小米集團</span>
-              <span class="code" id="sigCode">01810</span>
-            </div>
-            <div class="big-signal" id="bigSig" style="background:#B45309">
-              <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <rect x="14" y="4" width="4" height="16" rx="1" />
-                  <rect x="6" y="4" width="4" height="16" rx="1" />
-                </svg></div>
-              <div class="sig-lvl" id="sigLvl">觀望</div>
-              <div class="sig-price" id="sigPrice">現價 29.70</div>
-            </div>
-            <div class="sig-msg" id="sigMsg">股價還高於你設定的目標價，先別急，等等回調。</div>
-            <div class="sig-sub" id="sigSub">信號由「現價 vs 你的目標買入價」+「風險偏好」得出，僅供學習參考。點下面的「看完整分析」可查看技術指標與當天消息。</div>
-            <div class="sig-bar">
-              <div class="row"><span>現價 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span>
-              </div>
-              <div class="row"><span>我的目標買入價 <b id="barTarget">28.50</b></span><span class="v"
-                  id="barTargetV">28.50</span>
-              </div>
-              <div class="row"><span>價差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
-            </div>
-            <div class="risk-toggle">
-              <span class="lab">我的風險偏好：</span>
-              <div class="seg" id="riskSeg">
-                <button data-r="calm">穩健</button>
-                <button data-r="mid" class="on">均衡</button>
-                <button data-r="agg">進取</button>
-              </div>
-            </div>
-            <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg
-                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg> 看當前股票的完整分析</button></div>
+      <div class="sec">
+        <div class="signal-card">
+          <div class="signal-head">
+            <span class="name" id="sigName">小米集團</span>
+            <span class="code" id="sigCode">01810</span>
           </div>
+          <div class="big-signal" id="bigSig" style="background:#B45309">
+            <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+              </svg></div>
+            <div class="sig-lvl" id="sigLvl">觀望</div>
+            <div class="sig-price" id="sigPrice">現價 29.70</div>
+          </div>
+          <div class="sig-msg" id="sigMsg">股價還高於你設定的目標價，先別急，等等回調。</div>
+          <div class="sig-sub" id="sigSub">信號由「現價 vs 你的目標買入價」+「風險偏好」得出，僅供學習參考。點下面的「看完整分析」可查看技術指標與當天消息。</div>
+          <div class="sig-bar">
+            <div class="row"><span>現價 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span></div>
+            <div class="row"><span>我的目標買入價 <b id="barTarget">28.50</b></span><span class="v"
+                id="barTargetV">28.50</span>
+            </div>
+            <div class="row"><span>價差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
+          </div>
+          <div class="risk-toggle">
+            <span class="lab">我的風險偏好：</span>
+            <div class="seg" id="riskSeg">
+              <button data-r="calm">穩健</button>
+              <button data-r="mid" class="on">均衡</button>
+              <button data-r="agg">進取</button>
+            </div>
+          </div>
+          <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg> 看當前股票的完整分析</button></div>
         </div>
+      </div>
       </div>
 
     </div>
@@ -2033,106 +2041,7 @@
             </svg> 相關服務 · 當天消息</h2>
           <div class="tag">每隻股票當天相關資訊 / 消息（教學整理，非實時），點擊可跳到該股分析。</div>
         </div>
-        <div class="news-list">
-          <div class="nitem" data-code="01810">
-            <span class="ncode">01810</span>
-            <div class="nbody">
-              <div class="ntitle">小米集團 · 當天相關</div>
-              <div class="nmsg">10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="00700">
-            <span class="ncode">00700</span>
-            <div class="nbody">
-              <div class="ntitle">騰訊控股 · 當天相關</div>
-              <div class="nmsg">11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="09988">
-            <span class="ncode">09988</span>
-            <div class="nbody">
-              <div class="ntitle">阿里巴巴 · 當天相關</div>
-              <div class="nmsg">11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="03690">
-            <span class="ncode">03690</span>
-            <div class="nbody">
-              <div class="ntitle">美團 · 當天相關</div>
-              <div class="nmsg">11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="01398">
-            <span class="ncode">01398</span>
-            <div class="nbody">
-              <div class="ntitle">工商銀行 · 當天相關</div>
-              <div class="nmsg">前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="00939">
-            <span class="ncode">00939</span>
-            <div class="nbody">
-              <div class="ntitle">建設銀行 · 當天相關</div>
-              <div class="nmsg">11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="02318">
-            <span class="ncode">02318</span>
-            <div class="nbody">
-              <div class="ntitle">中國平安 · 當天相關</div>
-              <div class="nmsg">11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="00883">
-            <span class="ncode">00883</span>
-            <div class="nbody">
-              <div class="ntitle">中海油 · 當天相關</div>
-              <div class="nmsg">11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="01088">
-            <span class="ncode">01088</span>
-            <div class="nbody">
-              <div class="ntitle">中國神華 · 當天相關</div>
-              <div class="nmsg">11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="00941">
-            <span class="ncode">00941</span>
-            <div class="nbody">
-              <div class="ntitle">中國移動 · 當天相關</div>
-              <div class="nmsg">11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="00002">
-            <span class="ncode">00002</span>
-            <div class="nbody">
-              <div class="ntitle">中電控股 · 當天相關</div>
-              <div class="nmsg">公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="06823">
-            <span class="ncode">06823</span>
-            <div class="nbody">
-              <div class="ntitle">香港電訊 · 當天相關</div>
-              <div class="nmsg">本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="06181">
-            <span class="ncode">06181</span>
-            <div class="nbody">
-              <div class="ntitle">老鋪黃金 · 當天相關</div>
-              <div class="nmsg">金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。</div>
-            </div>
-          </div>
-          <div class="nitem" data-code="06862">
-            <span class="ncode">06862</span>
-            <div class="nbody">
-              <div class="ntitle">海底撈 · 當天相關</div>
-              <div class="nmsg">消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。</div>
-            </div>
-          </div>
-        </div>
+        <div class="news-list" id="newsList"></div>
       </div>
 
     </div>
@@ -2276,7 +2185,7 @@
       "shield-alert": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'
     };
 
-    var DATA = { "01810": { "name": "小米集團", "price": 29.66, "target": 28.5, "y": "低息·成長", "grp": "科技成長", "note": "人車家全生態，汽車+AI雙引擎，澎程系列熱銷", "ma5": 29.456, "ma20": 28.408, "rsi": 59, "sup": 25.4, "res": 31.74, "news": "10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。" }, "00700": { "name": "騰訊控股", "price": 372.8, "target": 360.0, "y": "低息·成長", "grp": "科技成長", "note": "遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入", "ma5": 384.92, "ma20": 395.02, "rsi": 35, "sup": 370.0, "res": 431.2, "news": "11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。" }, "09988": { "name": "阿里巴巴", "price": 85.25, "target": 90.0, "y": "低息·成長", "grp": "科技成長", "note": "電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌", "ma5": 89.04, "ma20": 97.388, "rsi": 29, "sup": 84.25, "res": 109.4, "news": "11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。" }, "03690": { "name": "美團", "price": 70.15, "target": 68.0, "y": "低息·成長", "grp": "科技成長", "note": "即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中", "ma5": 70.82, "ma20": 73.088, "rsi": 43, "sup": 68.85, "res": 83.0, "news": "11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。" }, "01398": { "name": "工商銀行", "price": 7.935, "target": 8.0, "y": "約5.7釐", "grp": "金融高息", "note": "國有大行，分紅穩定、估值低，距52周高點不足2%", "ma5": 7.957, "ma20": 7.789, "rsi": 58, "sup": 7.165, "res": 8.18, "news": "前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。" }, "00939": { "name": "建設銀行", "price": 10.51, "target": 10.5, "y": "約5.8釐", "grp": "金融高息", "note": "國有大行，高股息防禦底倉，H股折價提供安全墊", "ma5": 10.544, "ma20": 10.284, "rsi": 61, "sup": 9.61, "res": 10.73, "news": "11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。" }, "02318": { "name": "中國平安", "price": 50.7, "target": 50.0, "y": "5.5釐", "grp": "金融高息", "note": "保險藍籌，業績平穩、派息穩定，高股息防禦之選", "ma5": 51.5, "ma20": 50.939, "rsi": 43, "sup": 47.68, "res": 53.6, "news": "11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。" }, "00883": { "name": "中海油", "price": 22.28, "target": 23.0, "y": "約6.9釐", "grp": "能源資源", "note": "能源高息藍籌，原油景氣支撐，現金流強", "ma5": 22.74, "ma20": 23.449, "rsi": 35, "sup": 22.22, "res": 25.0, "news": "11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。" }, "01088": { "name": "中國神華", "price": 43.14, "target": 44.0, "y": "約5.4釐", "grp": "能源資源", "note": "煤電一體化，現金流穩定、分紅高，冬季用能旺季受益", "ma5": 43.372, "ma20": 42.402, "rsi": 52, "sup": 38.68, "res": 44.44, "news": "11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。" }, "00941": { "name": "中國移動", "price": 80.55, "target": 79.0, "y": "約6.1釐", "grp": "電訊公用", "note": "派息穩定有增長，財息兼收首選，防禦性強", "ma5": 80.53, "ma20": 79.797, "rsi": 56, "sup": 77.0, "res": 81.7, "news": "11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。" }, "00002": { "name": "中電控股", "price": 81.8, "target": 67.0, "y": "高息", "grp": "電訊公用", "note": "公用事業，防禦屬性強，本地收息之選", "ma5": 81.45, "ma20": 79.222, "rsi": 68, "sup": 75.6, "res": 81.95, "news": "公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。" }, "06823": { "name": "香港電訊", "price": 12.52, "target": 5.0, "y": "約6.7釐", "grp": "電訊公用", "note": "派息較穩定，本地電訊收息之選", "ma5": 12.354, "ma20": 12.168, "rsi": 65, "sup": 11.78, "res": 12.62, "news": "本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。" }, "06181": { "name": "老鋪黃金", "price": 279.2, "target": 270.0, "y": "約8.7釐", "grp": "消費黃金", "note": "派息大增但盈利與金價相關，8釐以上請特別留意風險", "ma5": 286.64, "ma20": 287.69, "rsi": 40, "sup": 257.4, "res": 315.0, "news": "金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。" }, "06862": { "name": "海底撈", "price": 10.4, "target": 9.8, "y": "約6.6釐", "grp": "消費黃金", "note": "藍籌消費，派息增加、盈利穩定", "ma5": 10.236, "ma20": 9.763, "rsi": 63, "sup": 9.015, "res": 10.66, "news": "消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。" }, "00981": { "name": "中芯國際", "price": 49.2, "target": 47.72, "y": "—", "grp": "科技成長", "note": "晶圓代工龍頭，先進製程與國產替代主線（自動目標：現價 −3%，可自行改 target）", "ma5": 48.348, "ma20": 46.534, "rsi": 49, "sup": 41.06, "res": 52.3, "news": "" }, "01211": { "name": "比亞迪股份", "price": 64.05, "target": 62.13, "y": "—", "grp": "科技成長", "note": "新能源車龍頭，整車+電池一體化，出海增長（自動目標：現價 −3%，可自行改 target）", "ma5": 65.17, "ma20": 69.58, "rsi": 31, "sup": 62.85, "res": 76.85, "news": "" }, "09618": { "name": "京東集團", "price": 97.65, "target": 94.72, "y": "—", "grp": "科技成長", "note": "自營電商+物流，即時零售競爭中估值偏低（自動目標：現價 −3%，可自行改 target）", "ma5": 105.13, "ma20": 104.978, "rsi": 36, "sup": 96.05, "res": 114.9, "news": "" }, "09999": { "name": "網易", "price": 188.3, "target": 182.65, "y": "—", "grp": "科技成長", "note": "遊戲長青，派息與回購穩定，現金流強（自動目標：現價 −3%，可自行改 target）", "ma5": 191.22, "ma20": 187.815, "rsi": 48, "sup": 171.5, "res": 206.6, "news": "" }, "09888": { "name": "百度集團", "price": 70.2, "target": 68.09, "y": "—", "grp": "科技成長", "note": "搜索+智能駕駛，AI 敘事但廣告承壓（自動目標：現價 −3%，可自行改 target）", "ma5": 73.47, "ma20": 76.05, "rsi": 32, "sup": 69.15, "res": 81.2, "news": "" }, "00005": { "name": "匯豐控股", "price": 136.0, "target": 131.92, "y": "—", "grp": "金融高息", "note": "國際銀行，息差與回購支撐，股息率較高（自動目標：現價 −3%，可自行改 target）", "ma5": 139.12, "ma20": 138.128, "rsi": 40, "sup": 130.316, "res": 145.616, "news": "" }, "01299": { "name": "友邦保險", "price": 76.85, "target": 74.54, "y": "—", "grp": "金融高息", "note": "泛亞保險，新業務價值增長，長期收息（自動目標：現價 −3%，可自行改 target）", "ma5": 77.9, "ma20": 75.76, "rsi": 55, "sup": 69.8, "res": 80.0, "news": "" }, "00388": { "name": "香港交易所", "price": 375.6, "target": 364.33, "y": "—", "grp": "金融高息", "note": "交易所壟斷業務，成交活躍度直接影響收入（自動目標：現價 −3%，可自行改 target）", "ma5": 378.4, "ma20": 376.75, "rsi": 46, "sup": 363.2, "res": 397.2, "news": "" }, "02388": { "name": "中銀香港", "price": 48.54, "target": 47.08, "y": "—", "grp": "金融高息", "note": "本地銀行，股息穩定，受益港元利率（自動目標：現價 −3%，可自行改 target）", "ma5": 49.468, "ma20": 49.225, "rsi": 44, "sup": 46.95, "res": 51.46, "news": "" }, "00823": { "name": "領展房產基金", "price": 41.0, "target": 39.77, "y": "—", "grp": "電訊公用", "note": "REITs，租金收入穩定，派息為主要回報（自動目標：現價 −3%，可自行改 target）", "ma5": 41.068, "ma20": 40.075, "rsi": 62, "sup": 37.2, "res": 41.78, "news": "" }, "01038": { "name": "長江基建", "price": 73.0, "target": 70.81, "y": "—", "grp": "電訊公用", "note": "基建公用組合，現金流穩、連續加派（自動目標：現價 −3%，可自行改 target）", "ma5": 72.5, "ma20": 70.617, "rsi": 66, "sup": 66.55, "res": 73.8, "news": "" }, "00003": { "name": "香港中華煤氣", "price": 7.455, "target": 7.23, "y": "—", "grp": "電訊公用", "note": "燃氣公用，防禦性強，派息歷史長（自動目標：現價 −3%，可自行改 target）", "ma5": 7.422, "ma20": 7.319, "rsi": 66, "sup": 7.075, "res": 7.465, "news": "" }, "00006": { "name": "電能實業", "price": 67.0, "target": 64.99, "y": "—", "grp": "電訊公用", "note": "港燈母公司，現金流穩定，收息之選（自動目標：現價 −3%，可自行改 target）", "ma5": 66.27, "ma20": 64.273, "rsi": 75, "sup": 59.7, "res": 67.5, "news": "" }, "00175": { "name": "吉利汽車", "price": 13.6, "target": 13.19, "y": "—", "grp": "科技成長", "note": "整車龍頭，銀河與極氪雙線，銷量修復（自動目標：現價 −3%，可自行改 target）", "ma5": 13.604, "ma20": 14.003, "rsi": 39, "sup": 13.15, "res": 14.95, "news": "" }, "02015": { "name": "理想汽車", "price": 45.54, "target": 44.17, "y": "—", "grp": "科技成長", "note": "增程+純電，盈利穩健但競爭激烈（自動目標：現價 −3%，可自行改 target）", "ma5": 45.676, "ma20": 45.442, "rsi": 49, "sup": 42.46, "res": 50.5, "news": "" }, "09868": { "name": "小鵬汽車", "price": 39.54, "target": 38.35, "y": "—", "grp": "科技成長", "note": "智能駕駛與新車周期，波動較大（自動目標：現價 −3%，可自行改 target）", "ma5": 37.744, "ma20": 37.576, "rsi": 55, "sup": 34.96, "res": 40.84, "news": "" }, "09866": { "name": "蔚來", "price": 22.72, "target": 22.04, "y": "—", "grp": "科技成長", "note": "換電模式與高端定位，現金消耗需留意（自動目標：現價 −3%，可自行改 target）", "ma5": 23.068, "ma20": 24.983, "rsi": 35, "sup": 21.04, "res": 26.96, "news": "" } };
+    var DATA = {"01810": {"name": "小米集團", "price": 29.66, "target": 28.5, "y": "低息·成長", "grp": "科技成長", "note": "人車家全生態，汽車+AI雙引擎，澎程系列熱銷", "ma5": 29.456, "ma20": 28.408, "rsi": 59, "sup": 25.4, "res": 31.74, "news": "10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。"}, "00700": {"name": "騰訊控股", "price": 372.8, "target": 360.0, "y": "低息·成長", "grp": "科技成長", "note": "遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入", "ma5": 384.92, "ma20": 395.02, "rsi": 35, "sup": 370.0, "res": 431.2, "news": "11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。"}, "09988": {"name": "阿里巴巴", "price": 85.25, "target": 90.0, "y": "低息·成長", "grp": "科技成長", "note": "電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌", "ma5": 89.04, "ma20": 97.388, "rsi": 29, "sup": 84.25, "res": 109.4, "news": "11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。"}, "03690": {"name": "美團", "price": 70.15, "target": 68.0, "y": "低息·成長", "grp": "科技成長", "note": "即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中", "ma5": 70.82, "ma20": 73.088, "rsi": 43, "sup": 68.85, "res": 83.0, "news": "11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。"}, "01398": {"name": "工商銀行", "price": 7.935, "target": 8.0, "y": "約5.7釐", "grp": "金融高息", "note": "國有大行，分紅穩定、估值低，距52周高點不足2%", "ma5": 7.957, "ma20": 7.789, "rsi": 58, "sup": 7.165, "res": 8.18, "news": "前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。"}, "00939": {"name": "建設銀行", "price": 10.51, "target": 10.5, "y": "約5.8釐", "grp": "金融高息", "note": "國有大行，高股息防禦底倉，H股折價提供安全墊", "ma5": 10.544, "ma20": 10.284, "rsi": 61, "sup": 9.61, "res": 10.73, "news": "11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。"}, "02318": {"name": "中國平安", "price": 50.7, "target": 50.0, "y": "5.5釐", "grp": "金融高息", "note": "保險藍籌，業績平穩、派息穩定，高股息防禦之選", "ma5": 51.5, "ma20": 50.939, "rsi": 43, "sup": 47.68, "res": 53.6, "news": "11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。"}, "00883": {"name": "中海油", "price": 22.28, "target": 23.0, "y": "約6.9釐", "grp": "能源資源", "note": "能源高息藍籌，原油景氣支撐，現金流強", "ma5": 22.74, "ma20": 23.449, "rsi": 35, "sup": 22.22, "res": 25.0, "news": "11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。"}, "01088": {"name": "中國神華", "price": 43.14, "target": 44.0, "y": "約5.4釐", "grp": "能源資源", "note": "煤電一體化，現金流穩定、分紅高，冬季用能旺季受益", "ma5": 43.372, "ma20": 42.402, "rsi": 52, "sup": 38.68, "res": 44.44, "news": "11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。"}, "00941": {"name": "中國移動", "price": 80.55, "target": 79.0, "y": "約6.1釐", "grp": "電訊公用", "note": "派息穩定有增長，財息兼收首選，防禦性強", "ma5": 80.53, "ma20": 79.797, "rsi": 56, "sup": 77.0, "res": 81.7, "news": "11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。"}, "00002": {"name": "中電控股", "price": 81.8, "target": 67.0, "y": "高息", "grp": "電訊公用", "note": "公用事業，防禦屬性強，本地收息之選", "ma5": 81.45, "ma20": 79.222, "rsi": 68, "sup": 75.6, "res": 81.95, "news": "公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。"}, "06823": {"name": "香港電訊", "price": 12.52, "target": 5.0, "y": "約6.7釐", "grp": "電訊公用", "note": "派息較穩定，本地電訊收息之選", "ma5": 12.354, "ma20": 12.168, "rsi": 65, "sup": 11.78, "res": 12.62, "news": "本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。"}, "06181": {"name": "老鋪黃金", "price": 279.2, "target": 270.0, "y": "約8.7釐", "grp": "消費黃金", "note": "派息大增但盈利與金價相關，8釐以上請特別留意風險", "ma5": 286.64, "ma20": 287.69, "rsi": 40, "sup": 257.4, "res": 315.0, "news": "金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。"}, "06862": {"name": "海底撈", "price": 10.4, "target": 9.8, "y": "約6.6釐", "grp": "消費黃金", "note": "藍籌消費，派息增加、盈利穩定", "ma5": 10.236, "ma20": 9.763, "rsi": 63, "sup": 9.015, "res": 10.66, "news": "消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。"}, "00981": {"name": "中芯國際", "price": 49.2, "target": 47.72, "y": "—", "grp": "科技成長", "note": "晶圓代工龍頭，先進製程與國產替代主線（自動目標：現價 −3%，可自行改 target）", "ma5": 48.348, "ma20": 46.534, "rsi": 49, "sup": 41.06, "res": 52.3, "news": ""}, "01211": {"name": "比亞迪股份", "price": 64.05, "target": 62.13, "y": "—", "grp": "科技成長", "note": "新能源車龍頭，整車+電池一體化，出海增長（自動目標：現價 −3%，可自行改 target）", "ma5": 65.17, "ma20": 69.58, "rsi": 31, "sup": 62.85, "res": 76.85, "news": ""}, "09618": {"name": "京東集團", "price": 97.65, "target": 94.72, "y": "—", "grp": "科技成長", "note": "自營電商+物流，即時零售競爭中估值偏低（自動目標：現價 −3%，可自行改 target）", "ma5": 105.13, "ma20": 104.978, "rsi": 36, "sup": 96.05, "res": 114.9, "news": ""}, "09999": {"name": "網易", "price": 188.3, "target": 182.65, "y": "—", "grp": "科技成長", "note": "遊戲長青，派息與回購穩定，現金流強（自動目標：現價 −3%，可自行改 target）", "ma5": 191.22, "ma20": 187.815, "rsi": 48, "sup": 171.5, "res": 206.6, "news": ""}, "09888": {"name": "百度集團", "price": 70.2, "target": 68.09, "y": "—", "grp": "科技成長", "note": "搜索+智能駕駛，AI 敘事但廣告承壓（自動目標：現價 −3%，可自行改 target）", "ma5": 73.47, "ma20": 76.05, "rsi": 32, "sup": 69.15, "res": 81.2, "news": ""}, "00005": {"name": "匯豐控股", "price": 136.0, "target": 131.92, "y": "—", "grp": "金融高息", "note": "國際銀行，息差與回購支撐，股息率較高（自動目標：現價 −3%，可自行改 target）", "ma5": 139.12, "ma20": 138.128, "rsi": 40, "sup": 130.316, "res": 145.616, "news": ""}, "01299": {"name": "友邦保險", "price": 76.85, "target": 74.54, "y": "—", "grp": "金融高息", "note": "泛亞保險，新業務價值增長，長期收息（自動目標：現價 −3%，可自行改 target）", "ma5": 77.9, "ma20": 75.76, "rsi": 55, "sup": 69.8, "res": 80.0, "news": ""}, "00388": {"name": "香港交易所", "price": 375.6, "target": 364.33, "y": "—", "grp": "金融高息", "note": "交易所壟斷業務，成交活躍度直接影響收入（自動目標：現價 −3%，可自行改 target）", "ma5": 378.4, "ma20": 376.75, "rsi": 46, "sup": 363.2, "res": 397.2, "news": ""}, "02388": {"name": "中銀香港", "price": 48.54, "target": 47.08, "y": "—", "grp": "金融高息", "note": "本地銀行，股息穩定，受益港元利率（自動目標：現價 −3%，可自行改 target）", "ma5": 49.468, "ma20": 49.225, "rsi": 44, "sup": 46.95, "res": 51.46, "news": ""}, "00823": {"name": "領展房產基金", "price": 41.0, "target": 39.77, "y": "—", "grp": "電訊公用", "note": "REITs，租金收入穩定，派息為主要回報（自動目標：現價 −3%，可自行改 target）", "ma5": 41.068, "ma20": 40.075, "rsi": 62, "sup": 37.2, "res": 41.78, "news": ""}, "01038": {"name": "長江基建", "price": 73.0, "target": 70.81, "y": "—", "grp": "電訊公用", "note": "基建公用組合，現金流穩、連續加派（自動目標：現價 −3%，可自行改 target）", "ma5": 72.5, "ma20": 70.617, "rsi": 66, "sup": 66.55, "res": 73.8, "news": ""}, "00003": {"name": "香港中華煤氣", "price": 7.455, "target": 7.23, "y": "—", "grp": "電訊公用", "note": "燃氣公用，防禦性強，派息歷史長（自動目標：現價 −3%，可自行改 target）", "ma5": 7.422, "ma20": 7.319, "rsi": 66, "sup": 7.075, "res": 7.465, "news": ""}, "00006": {"name": "電能實業", "price": 67.0, "target": 64.99, "y": "—", "grp": "電訊公用", "note": "港燈母公司，現金流穩定，收息之選（自動目標：現價 −3%，可自行改 target）", "ma5": 66.27, "ma20": 64.273, "rsi": 75, "sup": 59.7, "res": 67.5, "news": ""}, "00175": {"name": "吉利汽車", "price": 13.6, "target": 13.19, "y": "—", "grp": "科技成長", "note": "整車龍頭，銀河與極氪雙線，銷量修復（自動目標：現價 −3%，可自行改 target）", "ma5": 13.604, "ma20": 14.003, "rsi": 39, "sup": 13.15, "res": 14.95, "news": ""}, "02015": {"name": "理想汽車", "price": 45.54, "target": 44.17, "y": "—", "grp": "科技成長", "note": "增程+純電，盈利穩健但競爭激烈（自動目標：現價 −3%，可自行改 target）", "ma5": 45.676, "ma20": 45.442, "rsi": 49, "sup": 42.46, "res": 50.5, "news": ""}, "09868": {"name": "小鵬汽車", "price": 39.54, "target": 38.35, "y": "—", "grp": "科技成長", "note": "智能駕駛與新車周期，波動較大（自動目標：現價 −3%，可自行改 target）", "ma5": 37.744, "ma20": 37.576, "rsi": 55, "sup": 34.96, "res": 40.84, "news": ""}, "09866": {"name": "蔚來", "price": 22.72, "target": 22.04, "y": "—", "grp": "科技成長", "note": "換電模式與高端定位，現金消耗需留意（自動目標：現價 −3%，可自行改 target）", "ma5": 23.068, "ma20": 24.983, "rsi": 35, "sup": 21.04, "res": 26.96, "news": ""}};
     var cur = "01810";
     var risk = "mid";
     var watch = ["01810"];
@@ -2388,6 +2297,7 @@
       fetchQuote(code).then(function (q) {
         return fetchRows(code).catch(function () { return []; }).then(function (rows) {
           DATA[code] = buildLive(q, rows || []);
+          if (typeof renderNews === "function") { try { renderNews(); } catch (e) { } }
           var lv = [];
           try { lv = JSON.parse(localStorage.getItem(LIVE_KEY) || "[]"); } catch (e) { lv = []; }
           if (lv.indexOf(code) < 0) {
@@ -2401,6 +2311,54 @@
         if (!silent) toast("查不到 " + code + "，請確認是 5 位港股編號");
         done(false);
       });
+    }
+
+
+    function liveTag(d) { return (d.grp && d.grp.indexOf("即時") >= 0); }
+
+    function snapshotOf(d) {
+      var p = [];
+      p.push("收 " + fmt(d.price));
+      if (d.ma20) {
+        p.push("MA20 " + fmt(d.ma20) + "（現價在其" + (d.price >= d.ma20 ? "上方" : "下方") +
+          " " + Math.abs((d.price / d.ma20 - 1) * 100).toFixed(1) + "%）");
+      }
+      if (d.rsi !== null && d.rsi !== undefined) p.push("RSI(14) " + d.rsi);
+      if (d.sup && d.res) p.push("20 日區間 " + fmt(d.sup) + " – " + fmt(d.res));
+      return "今日行情快照：" + p.join("，") + "。";
+    }
+
+    function rankOf(d) {
+      var lv = compute(d.price, d.target, risk).lvl;
+      return lv === "買入" ? 0 : (lv === "觀望" ? 1 : 2);
+    }
+
+    function renderNews() {
+      var list = document.getElementById("newsList");
+      if (!list) return;
+      var codes = Object.keys(DATA);
+      codes.sort(function (a, b) {
+        var ra = rankOf(DATA[a]), rb = rankOf(DATA[b]);
+        return ra !== rb ? ra - rb : (a < b ? -1 : 1);
+      });
+      var html = "";
+      for (var i = 0; i < codes.length; i++) {
+        var c = codes[i], d = DATA[c], hasNews = !!(d.news && d.news.length > 3);
+        var msg = hasNews ? d.news : snapshotOf(d);
+        var snap = hasNews ? snapshotOf(d)
+          : (liveTag(d) ? "即時查詢股：未有編輯精選消息，以上為即時行情快照。"
+                        : "自動收錄股：未設定消息，以上為行情快照；可在 stocks.json 的 news 補上。");
+        html += '<div class="nitem" data-code="' + c + '">' +
+          '<span class="ncode">' + c + '</span>' +
+          '<div class="nbody"><div class="ntitle">' + d.name + ' · 當天相關</div>' +
+          '<div class="nmsg">' + msg + '</div>' +
+          '<div class="nsnap">' + snap + '</div></div></div>';
+      }
+      list.innerHTML = html;
+      var items = list.querySelectorAll(".nitem");
+      for (var j = 0; j < items.length; j++) {
+        (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(items[j]);
+      }
     }
 
     function fmt(n) { return (+n).toFixed(2); }
@@ -2539,7 +2497,7 @@
         '<div class="m-stat"><div class="lab">目標買入價</div><div class="val">' + fmt(d.target) + '</div></div>';
       var s = compute(d.price, d.target, risk);
       document.getElementById("mMsg").innerHTML = '<b style="color:' + s.color + '">' + s.lvl + '</b> · ' + s.msg;
-      document.getElementById("mNews").innerHTML = d.news;
+      document.getElementById("mNews").innerHTML = (d.news && d.news.length > 3) ? d.news : snapshotOf(d);
       var riskHtml = '<b>⚠ 給新手的提醒：</b>';
       if (d.y.indexOf("8釐") >= 0 || d.y.indexOf("8.7") >= 0 || d.y.indexOf("8.") === 0) riskHtml += ' 該股股息率偏高（' + d.y + '），屬「高息陷阱」高發區，須特別留意盈利能否持續、股價會否大跌。';
       riskHtml += (d.grp.indexOf("即時") >= 0
@@ -2605,10 +2563,7 @@
     for (var ci = 0; ci < rcs.length; ci++) {
       (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(rcs[ci]);
     }
-    var nis = document.querySelectorAll(".nitem");
-    for (var ni = 0; ni < nis.length; ni++) {
-      (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(nis[ni]);
-    }
+    /* 當天消息卡的點擊已在 renderNews() 內綁定 */
     var rds = document.querySelectorAll(".r-add");
     for (var di = 0; di < rds.length; di++) {
       (function (b) {
@@ -2639,6 +2594,7 @@
     loadHist();
     renderWatch();
     render();
+    renderNews();
     (function restoreLive() {
       var lv = [];
       try { lv = JSON.parse(localStorage.getItem(LIVE_KEY) || "[]"); } catch (e) { lv = []; }
@@ -2889,4 +2845,3 @@
 </body>
 
 </html>
-<!-- （注：内容由AI生成） -->
