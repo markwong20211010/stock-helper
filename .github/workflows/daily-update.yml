@@ -33,10 +33,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- index.html; then
+          if git diff --quiet -- index.html stocks.json; then
             echo "今日價格無變化，不提交"
           else
-            git add index.html
+            git add index.html stocks.json
             git commit -m "chore: 更新股票數據 $(TZ=Asia/Hong_Kong date +%F)"
             git push
           fi
