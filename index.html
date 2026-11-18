@@ -854,9 +854,23 @@
       width: 100%;
       max-height: 88vh;
       overflow: auto;
-      padding: 28px;
+      padding: 0px;
       position: relative;
       box-shadow: 0 20px 60px rgba(0, 0, 0, .2)
+    }
+
+    .modal-header {
+      background-color: #fff;
+      padding: 8px 12px 2px;
+      border-bottom: 1px solid #ccc;
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .modal-body {
+      padding: 28px;
     }
 
     .modal-close {
@@ -890,7 +904,8 @@
       padding-right: 40px
     }
 
-    .m-name {
+    .m-name,
+    .m-title {
       font-size: 22px;
       font-weight: 800;
       color: var(--t1)
@@ -1509,7 +1524,20 @@
     }
 
     .tab-panel.on {
-      display: block
+      display: block;
+      animation: tabIn .18s ease-out
+    }
+
+    @keyframes tabIn {
+      from {
+        opacity: 0;
+        transform: translateX(var(--tabFrom, 0px))
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
     }
 
     .tab-panel>.sec:first-child {
@@ -1582,8 +1610,7 @@
     <div class="topbar-in">
       <div class="logo">股</div>
       <h1>股票買入時機小助手</h1>
-      <button class="topbar-info" id="infoBtn" type="button" aria-label="使用說明與免責聲明"
-        title="使用說明與免責聲明">
+      <button class="topbar-info" id="infoBtn" type="button" aria-label="使用說明與免責聲明" title="使用說明與免責聲明">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10" />
@@ -2070,98 +2097,110 @@
 
   <div class="overlay" id="overlay">
     <div class="modal">
-      <button class="modal-close" id="modalClose"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <path d="M18 6 6 18" />
-          <path d="m6 6 12 12" />
-        </svg></button>
-      <div class="m-head">
-        <span class="m-name" id="mName"></span>
-        <span class="m-code" id="mCode"></span>
+      <div class="modal-header">
+        <button class="modal-close" id="modalClose"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg></button>
+        <div class="m-head">
+          <span class="m-name" id="mName"></span>
+          <span class="m-code" id="mCode"></span>
+        </div>
+
+        <div class="m-sub" id="mSub"></div>
       </div>
-      <div class="m-sub" id="mSub"></div>
-      <div class="m-price-row">
-        <span class="m-price" id="mPrice"></span>
-        <span class="m-yield" id="mYield"></span>
-      </div>
-      <div class="m-grid" id="mGrid"></div>
-      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-        </svg> 買賣信號</div>
-      <div class="m-msg" id="mMsg"></div>
-      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path
-            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
-          <path d="M18 14h-8" />
-          <path d="M15 18h-5" />
-          <path d="M10 6h8v4h-8V6Z" />
-        </svg> 當天消息</div>
-      <div class="m-risk" id="mNews"></div>
-      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path
-            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" />
-          <path d="M12 8v4" />
-          <path d="M12 16h.01" />
-        </svg> 風險提示</div>
-      <div class="m-risk" id="mRisk"></div>
-      <div class="m-btns">
-        <button class="addwatch-btn" id="mAddWatch">加入觀察名單</button>
+      <div class="modal-body">
+        <div class="m-price-row">
+          <span class="m-price" id="mPrice"></span>
+          <span class="m-yield" id="mYield"></span>
+        </div>
+
+        <div class="m-grid" id="mGrid"></div>
+        <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+          </svg> 買賣信號</div>
+        <div class="m-msg" id="mMsg"></div>
+        <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+            <path d="M18 14h-8" />
+            <path d="M15 18h-5" />
+            <path d="M10 6h8v4h-8V6Z" />
+          </svg> 當天消息</div>
+        <div class="m-risk" id="mNews"></div>
+        <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" />
+            <path d="M12 8v4" />
+            <path d="M12 16h.01" />
+          </svg> 風險提示</div>
+        <div class="m-risk" id="mRisk"></div>
+        <div class="m-btns">
+          <button class="addwatch-btn" id="mAddWatch">加入觀察名單</button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="overlay" id="infoOverlay">
     <div class="modal info-modal">
-      <button class="modal-close" id="infoClose" aria-label="關閉"><svg xmlns="http://www.w3.org/2000/svg" width="18"
-          height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <path d="M18 6 6 18" />
-          <path d="m6 6 12 12" />
-        </svg></button>
-      <div class="hero">
-        <div class="breadcrumb">新手友好 · 學習增強版</div>
-        <div class="hero-title">一隻股票，什麼時候買最好？</div>
-        <div class="hero-sub">把複雜的K線、均線、RSI都收進背後，你只需要看「買入 / 觀望 /
-          賣出」三個燈，配一句人話解釋。點任一隻股票就能看它的專屬買賣信號和技術指標，還能把心水的股票加進自己的觀察名單。所有內容僅供學習參考，不構成投資建議。</div>
-        <div class="hero-tags">
-          <span class="pill">適合新手</span>
-          <span class="pill">港股</span>
-          <span class="pill">自選觀察</span>
-          <span class="pill">推薦名單</span>
-          <span class="pill">當天消息</span><span class="pill">完全離線</span>
+      <div class="modal-header">
+        <div class="m-title" style="font-weight: bold;">說明</div>
+        <div class="m-sub-title">新手友好 · 學習增強版</div>
+        <button class="modal-close" id="infoClose" aria-label="關閉"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+            height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="hero">
+          <div class="breadcrumb"></div>
+          <div class="hero-title">一隻股票，什麼時候買最好？</div>
+          <div class="hero-sub">把複雜的K線、均線、RSI都收進背後，你只需要看「買入 / 觀望 /
+            賣出」三個燈，配一句人話解釋。點任一隻股票就能看它的專屬買賣信號和技術指標，還能把心水的股票加進自己的觀察名單。所有內容僅供學習參考，不構成投資建議。</div>
+          <div class="hero-tags">
+            <span class="pill">適合新手</span>
+            <span class="pill">港股</span>
+            <span class="pill">自選觀察</span>
+            <span class="pill">推薦名單</span>
+            <span class="pill">當天消息</span><span class="pill">完全離線</span>
+          </div>
         </div>
-      </div>
-      <div class="install-hint">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="5" y="2" width="14" height="20" rx="2" />
-          <path d="M12 18h.01" />
-        </svg>
-        <div><b>手機安裝提示：</b>在瀏覽器菜單點「添加到主屏幕 / 加入主屏幕」，就能像 App 一樣獨立打開。本工具<strong>數據全部內置、完全離線可用</strong>，斷網也能看。</div>
-      </div>
-      <div class="disclaimer">
-        <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        <div class="install-hint">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-            <path d="M12 9v4" />
-            <path d="M12 17h.01" />
-          </svg> 投資風險免責聲明</h3>
-        <ul>
-          <li>本工具所有價格、信號、技術指標與當天消息僅供學習參考，不構成任何投資建議或邀約。</li>
-          <li>股票價格可升可跌，過往表現不代表未來；投資者可能損失全部或部分本金，請量力而為。</li>
-          <li>「買入/觀望/賣出」信號由「現價 vs 目標買入價 + 風險偏好」的簡單教學規則生成，MA/RSI/支撐壓力位為教學參考值，不包含真實完整的技術面與基本面分析，不可作為實際交易依據。</li>
-          <li>當天消息為公開資訊的整理摘要，請以公司公告與官方披露為準。</li>
-          <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股價大跌或盈利不可持續所致，收息前請評估盈利穩定性、派息持續性與股價波動風險。</li>
-        </ul>
-      </div>
-      <div class="footer">
-        股票買入時機小助手 · 手機安裝版<br>
-        數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
-        生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
+            <rect x="5" y="2" width="14" height="20" rx="2" />
+            <path d="M12 18h.01" />
+          </svg>
+          <div><b>手機安裝提示：</b>在瀏覽器菜單點「添加到主屏幕 / 加入主屏幕」，就能像 App 一樣獨立打開。本工具<strong>數據全部內置、完全離線可用</strong>，斷網也能看。</div>
+        </div>
+        <div class="disclaimer">
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <path d="M12 9v4" />
+              <path d="M12 17h.01" />
+            </svg> 投資風險免責聲明</h3>
+          <ul>
+            <li>本工具所有價格、信號、技術指標與當天消息僅供學習參考，不構成任何投資建議或邀約。</li>
+            <li>股票價格可升可跌，過往表現不代表未來；投資者可能損失全部或部分本金，請量力而為。</li>
+            <li>「買入/觀望/賣出」信號由「現價 vs 目標買入價 + 風險偏好」的簡單教學規則生成，MA/RSI/支撐壓力位為教學參考值，不包含真實完整的技術面與基本面分析，不可作為實際交易依據。</li>
+            <li>當天消息為公開資訊的整理摘要，請以公司公告與官方披露為準。</li>
+            <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股價大跌或盈利不可持續所致，收息前請評估盈利穩定性、派息持續性與股價波動風險。</li>
+          </ul>
+        </div>
+        <div class="footer">
+          股票買入時機小助手 · 手機安裝版<br>
+          數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
+          生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
+        </div>
       </div>
     </div>
   </div>
@@ -2411,7 +2450,7 @@
       var KEY_TAB = "xh_stock_tab";
       var btns = nav.querySelectorAll(".tab-btn");
       var panels = document.querySelectorAll(".tab-panel");
-      function activate(id, save) {
+      function activate(id, save, fromX) {
         var valid = false, i;
         for (i = 0; i < btns.length; i++) {
           if (btns[i].getAttribute("data-panel") === id) { valid = true; break; }
@@ -2423,14 +2462,19 @@
           btns[i].setAttribute("aria-selected", on ? "true" : "false");
         }
         for (i = 0; i < panels.length; i++) {
-          panels[i].classList.toggle("on", panels[i].id === id);
+          var p = panels[i], show = p.id === id;
+          if (show) p.style.setProperty("--tabFrom", (fromX || 0) + "px");
+          p.classList.toggle("on", show);
         }
         if (save) { try { localStorage.setItem(KEY_TAB, id); } catch (e) { } }
       }
-      nav.addEventListener("click", function (e) {
-        var b = e.target && e.target.closest ? e.target.closest(".tab-btn") : null;
-        if (!b || !nav.contains(b)) return;
-        activate(b.getAttribute("data-panel"), true);
+      function currentIndex() {
+        for (var i = 0; i < btns.length; i++) {
+          if (btns[i].classList.contains("on")) return i;
+        }
+        return 0;
+      }
+      function scrollToNav() {
         var topbar = document.querySelector(".topbar");
         var stickyTop = topbar ? topbar.offsetHeight : 59;
         var target = Math.max(0, nav.offsetTop - stickyTop);
@@ -2439,7 +2483,45 @@
           var smooth = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth";
           window.scrollTo({ top: target, behavior: smooth });
         }
+      }
+      function goTo(idx, fromX) {
+        if (idx < 0 || idx >= btns.length) return;
+        activate(btns[idx].getAttribute("data-panel"), true, fromX);
+        scrollToNav();
+      }
+      nav.addEventListener("click", function (e) {
+        var b = e.target && e.target.closest ? e.target.closest(".tab-btn") : null;
+        if (!b || !nav.contains(b)) return;
+        var i = 0;
+        for (; i < btns.length; i++) if (btns[i] === b) break;
+        goTo(i);
       });
+
+      /* swipe left → next page, swipe right → previous page */
+      var sx = 0, sy = 0, tracking = false;
+      function blocked(t) {
+        return !!(t && t.closest && (t.closest(".overlay") || t.closest(".lock-screen") ||
+          t.closest(".tabnav") || t.closest("input") || t.closest("textarea")));
+      }
+      document.addEventListener("touchstart", function (e) {
+        tracking = false;
+        if (e.touches.length !== 1 || blocked(e.target)) return;
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+        tracking = true;
+      }, { passive: true });
+      document.addEventListener("touchend", function (e) {
+        if (!tracking) return;
+        tracking = false;
+        if (blocked(e.target) || !e.changedTouches || !e.changedTouches.length) return;
+        var dx = e.changedTouches[0].clientX - sx;
+        var dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) < 60 || Math.abs(dx) <= Math.abs(dy) * 1.2) return;
+        var idx = currentIndex();
+        if (dx < 0) goTo(idx + 1, 16);
+        else goTo(idx - 1, -16);
+      }, { passive: true });
+
       var saved = null;
       try { saved = localStorage.getItem(KEY_TAB); } catch (e) { }
       activate(saved, false);
