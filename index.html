@@ -1,987 +1,2381 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>股票买入时机小助手（手机版）</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#FF6900">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22%23FF6900%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2233%22%20width%3D%229%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%20opacity%3D%220.9%22%2F%3E%3Crect%20x%3D%2238%22%20y%3D%2222%22%20width%3D%229%22%20height%3D%2226%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpolyline%20points%3D%2214%2C45%2027%2C31%2036%2C36%2050%2C22%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22%23FF6900%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2233%22%20width%3D%229%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%20opacity%3D%220.9%22%2F%3E%3Crect%20x%3D%2238%22%20y%3D%2222%22%20width%3D%229%22%20height%3D%2226%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpolyline%20points%3D%2214%2C45%2027%2C31%2036%2C36%2050%2C22%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%E8%82%A1%E7%A5%A8%E4%B9%B0%E5%85%A5%E6%97%B6%E6%9C%BA%E5%B0%8F%E5%8A%A9%E6%89%8B%22%2C%22short_name%22%3A%22%E8%82%A1%E7%A5%A8%E5%8A%A9%E6%89%8B%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFFFF%22%2C%22theme_color%22%3A%22%23FF6900%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%252064%252064%2522%253E%253Crect%2520x%253D%25222%2522%2520y%253D%25222%2522%2520width%253D%252260%2522%2520height%253D%252260%2522%2520rx%253D%252214%2522%2520fill%253D%2522%2523FF6900%2522%252F%253E%253Crect%2520x%253D%252214%2522%2520y%253D%252233%2522%2520width%253D%25229%2522%2520height%253D%252215%2522%2520rx%253D%25222%2522%2520fill%253D%2522%2523FFFFFF%2522%2520opacity%253D%25220.9%2522%252F%253E%253Crect%2520x%253D%252238%2522%2520y%253D%252222%2522%2520width%253D%25229%2522%2520height%253D%252226%2522%2520rx%253D%25222%2522%2520fill%253D%2522%2523FFFFFF%2522%252F%253E%253Cpolyline%2520points%253D%252214%252C45%252027%252C31%252036%252C36%252050%252C22%2522%2520fill%253D%2522none%2522%2520stroke%253D%2522%2523FFFFFF%2522%2520stroke-width%253D%25224%2522%2520stroke-linecap%253D%2522round%2522%2520stroke-linejoin%253D%2522round%2522%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
-<style>
-:root{
-  --bg:#fff; --tint:#F7F8F9; --surface:#fff;
-  --t1:#1A1A1F; --t2:#595959; --t3:#A6A6A6;
-  --acc:#FF6900; --acc-h:#E85D00; --on:#1A1A1F;
-  --good:#0E7C3A; --warn:#B45309; --bad:#C62F1F;
-  --radius:16px; --btnr:10px;
-  --disp:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; --body:var(--disp);
-  --border:color-mix(in srgb,var(--t1) 9%,transparent);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--t2);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
-.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-.topbar-in{max-width:1060px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px}
-.logo{width:34px;height:34px;border-radius:9px;background:var(--acc);color:var(--on);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
-.topbar h1{font-size:15px;color:var(--t1);font-weight:700;flex:1}
-.topbar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--good);font-weight:600;white-space:nowrap}
-.topbar .dot{width:8px;height:8px;border-radius:50%;background:var(--good);animation:pulse 1.6s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero{padding:32px 0 4px}
-.breadcrumb{font-size:13px;color:var(--t3);margin-bottom:12px}
-.hero-title{font-size:clamp(24px,4vw,34px);font-weight:800;color:var(--t1);line-height:1.2}
-.hero-sub{margin-top:10px;color:var(--t2);font-size:15px;max-width:760px}
-.hero-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
-.pill{color:color-mix(in srgb,var(--acc) 85%,var(--t1));background:color-mix(in srgb,var(--acc) 14%,var(--surface));border-radius:var(--btnr);padding:4px 12px;font-size:12px;font-weight:600;border:1px solid color-mix(in srgb,var(--acc) 25%,transparent)}
-.sec{margin:40px 0}
-.sec-head{margin-bottom:16px}
-.sec-head h2{font-size:20px;font-weight:800;color:var(--t1);display:flex;align-items:center;gap:8px}
-.sec-head h2 i{color:var(--acc)}
-.sec-head .tag{font-size:12.5px;color:var(--t3);margin-top:4px}
-.query-card{background:var(--tint);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden}
-.query-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--acc)}
-.input-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.code-input{flex:1;min-width:200px;display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0 14px;height:46px}
-.code-input i{color:var(--t3)}
-.code-input input{flex:1;border:none;outline:none;font-size:15px;font-weight:600;color:var(--t1);background:transparent;font-family:inherit}
-.code-input input::placeholder{color:var(--t3);font-weight:400;font-size:13px}
-.btn{background:var(--acc);color:var(--on);border:none;border-radius:var(--btnr);padding:12px 24px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:.2s;height:46px}
-.btn:hover{background:var(--acc-h)}
-.btn:active{transform:translateY(1px)}
-.btn:focus{outline:2px solid var(--acc);outline-offset:2px}
-.hot-label{margin:16px 0 8px;font-size:13px;color:var(--t3)}
-.hot-row{display:flex;flex-wrap:wrap;gap:8px}
-.hot{background:var(--surface);border:1px solid var(--border);border-radius:var(--btnr);padding:8px 14px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--t1);font-weight:600;display:inline-flex;gap:7px;align-items:center;transition:.2s}
-.hot span{color:var(--t3);font-weight:400;font-size:12px}
-.hot:hover{border-color:var(--acc);color:var(--acc)}
-.hot.active{background:var(--acc);border-color:var(--acc);color:var(--on)}
-.hot.active span{color:color-mix(in srgb,var(--on) 70%,transparent)}
-.signal-card{background:var(--tint);border-radius:var(--radius);padding:26px;text-align:center}
-.signal-head{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-.signal-head .name{font-size:20px;font-weight:800;color:var(--t1)}
-.signal-head .code{font-size:13px;color:var(--t3);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2px 12px}
-.big-signal{width:210px;height:210px;border-radius:50%;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.12);transition:background .4s}
-.big-signal .sig-ico{width:56px;height:56px;display:flex;align-items:center;justify-content:center}
-.big-signal .sig-lvl{font-size:30px;font-weight:800;margin-top:4px;letter-spacing:.02em}
-.big-signal .sig-price{margin-top:5px;font-size:14px;opacity:.92}
-.sig-msg{margin:18px auto 0;max-width:660px;font-size:15px;color:var(--t1);font-weight:600;line-height:1.7}
-.sig-sub{margin:6px auto 0;max-width:660px;font-size:12.5px;color:var(--t3)}
-.sig-bar{margin:20px auto 0;max-width:540px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;text-align:left}
-.sig-bar .row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
-.sig-bar .row b{color:var(--t1);font-weight:600}
-.sig-bar .row .v{font-weight:700;color:var(--t1)}
-.risk-toggle{margin:16px auto 0;max-width:540px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px}
-.risk-toggle .lab{font-size:13px;color:var(--t3)}
-.seg{display:flex;border:1px solid var(--border);border-radius:var(--btnr);overflow:hidden}
-.seg button{border:none;background:var(--surface);padding:7px 16px;font-size:13px;font-weight:600;color:var(--t2);cursor:pointer;font-family:inherit;transition:.2s}
-.seg button.on{background:var(--acc);color:var(--on)}
-.seg button:focus{outline:none}
-.watch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.wcard{background:var(--tint);border-radius:var(--radius);padding:14px;cursor:pointer;transition:.2s;border:1px solid transparent;position:relative}
-.wcard:hover{border-color:var(--acc);transform:translateY(-2px)}
-.wcard .wtop{display:flex;justify-content:space-between;align-items:center;padding-right:18px}
-.wcard .wname{font-size:14px;font-weight:700;color:var(--t1)}
-.wcard .wcode{font-size:11px;color:var(--t3)}
-.wcard .wprice{font-size:20px;font-weight:800;color:var(--t1);margin:6px 0 2px}
-.wcard .wsig{font-size:12px;font-weight:700;padding:2px 8px;border-radius:8px;display:inline-block}
-.wcard .del{position:absolute;top:8px;right:8px;width:20px;height:20px;border:none;background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad);border-radius:6px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;font-family:inherit}
-.wcard:hover .del{opacity:1}
-.wcard .del:hover{background:var(--bad);color:#fff}
-.empty{background:var(--tint);border-radius:var(--radius);padding:26px;text-align:center;color:var(--t3);font-size:14px}
-.grp{margin-bottom:26px}
-.grp-head{display:flex;align-items:center;gap:10px;border-left:4px solid;padding-left:12px;margin-bottom:12px;flex-wrap:wrap}
-.grp-head h3{font-size:16px;font-weight:700;color:var(--t1)}
-.grp-head .gsub{font-size:12px;color:var(--t3);margin-left:8px}
-.grp-head .gcount{font-size:11px;color:var(--t3);background:var(--tint);padding:2px 10px;border-radius:20px;margin-left:auto}
-.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.rcard{background:var(--tint);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:.2s;border:1px solid transparent;position:relative}
-.rcard:hover{border-color:var(--acc);transform:translateY(-2px)}
-.r-top{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.r-name{font-size:15px;font-weight:700;color:var(--t1)}
-.r-code{font-size:12px;color:var(--t3)}
-.r-price{font-size:20px;font-weight:800;color:var(--t1);margin:8px 0 2px}
-.r-yield{font-size:12px;font-weight:700;color:var(--acc)}
-.r-note{font-size:12.5px;color:var(--t2);line-height:1.5;margin-top:4px}
-.r-cta{margin-top:10px;font-size:12.5px;color:var(--acc);font-weight:600;display:inline-flex;align-items:center;gap:4px}
-.r-add{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:.2s;font-size:14px;z-index:2}
-.r-add:hover{border-color:var(--good);color:var(--good)}
-.r-add.on{background:var(--good);border-color:var(--good);color:#fff}
-.news-list{display:grid;gap:10px}
-.nitem{background:var(--tint);border-radius:var(--radius);padding:14px 18px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.2s;border:1px solid transparent}
-.nitem:hover{border-color:var(--acc)}
-.nitem .ncode{flex-shrink:0;width:56px;font-size:12px;color:var(--acc);font-weight:700;padding-top:2px}
-.nitem .nbody .ntitle{font-size:14px;color:var(--t1);font-weight:600;line-height:1.5}
-.nitem .nbody .nmsg{font-size:12.5px;color:var(--t2);line-height:1.6;margin-top:3px}
-.hist{background:var(--tint);border-radius:var(--radius);padding:16px}
-.hist-item{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px dashed var(--border);cursor:pointer;transition:.2s;flex-wrap:wrap}
-.hist-item:last-child{border-bottom:none}
-.hist-item:hover .hn{color:var(--acc)}
-.hist-item .htime{font-size:12px;color:var(--t3);flex:1;min-width:110px;text-align:right}
-.hist-item .hn{font-size:14px;color:var(--t1);font-weight:600}
-.hist-item .hc{font-size:12px;color:var(--t3)}
-.hist-item .hp{font-size:14px;font-weight:700;color:var(--t1);margin-left:auto}
-.overlay{position:fixed;inset:0;background:rgba(15,15,20,.5);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-.overlay.show{display:flex}
-.modal{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:var(--tint);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t2);font-family:inherit}
-.modal-close:hover{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
-.m-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;padding-right:40px}
-.m-name{font-size:22px;font-weight:800;color:var(--t1)}
-.m-code{font-size:13px;color:var(--t3);background:var(--tint);border-radius:20px;padding:2px 12px}
-.m-sub{font-size:13px;color:var(--t3);margin-bottom:16px}
-.m-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.m-price{font-size:38px;font-weight:800;color:var(--t1)}
-.m-yield{font-size:14px;font-weight:700;color:var(--acc)}
-.m-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:18px}
-.m-stat{background:var(--tint);border-radius:12px;padding:12px 14px}
-.m-stat .lab{font-size:11px;color:var(--t3);margin-bottom:2px}
-.m-stat .val{font-size:16px;font-weight:700;color:var(--t1)}
-.m-sec{font-size:15px;font-weight:700;color:var(--t1);margin:18px 0 8px;display:flex;align-items:center;gap:6px}
-.m-sec i{color:var(--acc)}
-.m-msg{background:var(--tint);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--t1);line-height:1.7}
-.m-risk{background:color-mix(in srgb,var(--warn) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--t2);line-height:1.7}
-.m-risk b{color:var(--warn)}
-.m-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.addwatch-btn{background:var(--good);color:#fff;border:none;border-radius:var(--btnr);padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:.2s}
-.addwatch-btn:hover{filter:brightness(.92)}
-.addwatch-btn.off{background:var(--tint);color:var(--t3)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1A1A1F;color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:200;opacity:0;transition:.3s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
-.disclaimer{margin-top:36px;background:var(--tint);border-radius:var(--radius);padding:22px 24px;border-left:4px solid var(--warn)}
-.disclaimer h3{font-size:15px;color:var(--warn);font-weight:700;display:flex;align-items:center;gap:8px}
-.disclaimer ul{margin-top:10px;padding-left:20px;font-size:13px;color:var(--t2);display:grid;gap:6px}
-.disclaimer li::marker{color:var(--warn)}
-.footer{margin:36px 0 60px;text-align:center;font-size:12px;color:var(--t3);line-height:1.8}
-@media(max-width:640px){
-  .wrap{padding:0 16px}
-  .hero-title{font-size:22px}
-  .rec-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
-  .watch-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
-  .modal{padding:20px}
-  .m-price{font-size:30px}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-html{-webkit-text-size-adjust:100%}
-body{padding-bottom:env(safe-area-inset-bottom)}
-.topbar-in{padding-top:calc(12px + env(safe-area-inset-top))}
-.btn,.hot,.code-input,.seg button,.addwatch-btn,.r-add,.del,.modal-close{min-height:44px;min-width:44px}
-.btn{height:auto;min-height:48px;padding:14px 26px}
-.hot{padding:11px 16px}
-.seg button{padding:11px 18px}
-.code-input{height:48px}
-.rcard,.wcard,.nitem{padding:16px}
-.r-add{width:34px;height:34px;border-radius:10px}
-.del{width:30px;height:30px;border-radius:8px;opacity:.55}
-.modal-close{width:40px;height:40px}
-.addwatch-btn{min-height:48px;padding:13px 22px}
-.sig-bar .row{padding:7px 0;font-size:15px}
-.sig-ico svg{width:56px;height:56px}
-.install-hint{display:flex;align-items:center;gap:12px;background:color-mix(in srgb,var(--acc) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--acc) 28%,transparent);border-radius:var(--radius);padding:14px 18px;margin:22px 0 0;font-size:13px;color:var(--t1);line-height:1.6}
-.install-hint svg{flex-shrink:0;color:var(--acc)}
-.install-hint b{color:var(--t1)}
-@media(max-width:640px){
-  .install-hint{font-size:12.5px;padding:12px 14px}
-  .hero{padding:26px 0 4px}
-}
-.lock-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#1A1A1F 0%,#2b2b33 55%,#3a2c18 100%);padding:24px;overflow:auto}
-.lock-box{background:#fff;border-radius:24px;max-width:360px;width:100%;padding:34px 28px 30px;text-align:center;
-  box-shadow:0 24px 70px rgba(0,0,0,.45)}
-.lock-logo{width:72px;height:72px;border-radius:20px;background:#FF6900;margin:0 auto 16px;
-  display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 26px rgba(255,105,0,.35)}
-.lock-logo svg{width:42px;height:42px}
-.lock-title{font-size:21px;font-weight:800;color:#1A1A1F;line-height:1.3}
-.lock-sub{font-size:13px;color:#8a8a90;margin:8px 0 22px;line-height:1.5}
-.lock-field{display:flex;align-items:center;gap:8px;background:#F3F4F6;border:1.5px solid #E2E4E8;
-  border-radius:12px;padding:0 14px;height:50px;transition:border-color .2s}
-.lock-field:focus-within{border-color:#FF6900}
-.lock-field svg{color:#9aa0a8;flex-shrink:0}
-.lock-field input{flex:1;border:none;outline:none;background:transparent;font-size:16px;font-weight:600;color:#1A1A1F;font-family:inherit}
-.lock-field input::placeholder{color:#b9bec7;font-weight:400}
-.lock-field .show-eye{border:none;background:none;color:#9aa0a8;cursor:pointer;padding:4px;display:flex}
-.lock-field .show-eye:hover{color:#1A1A1F}
-.lock-btn{width:100%;height:50px;border:none;border-radius:12px;background:#FF6900;color:#fff;
-  font-size:16px;font-weight:800;cursor:pointer;margin-top:16px;font-family:inherit;transition:.2s}
-.lock-btn:hover{background:#E85D00}
-.lock-btn:active{transform:translateY(1px)}
-.lock-btn:focus{outline:3px solid rgba(255,105,0,.4);outline-offset:2px}
-.lock-err{min-height:22px;margin-top:10px;font-size:13px;font-weight:700;color:#C62F1F;display:flex;align-items:center;justify-content:center;gap:5px}
-.lock-remember{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;cursor:pointer;user-select:none;font-size:13px;color:#6a6e76}
-.lock-remember input{width:17px;height:17px;accent-color:#FF6900}
-.lock-hint{margin-top:16px;padding-top:14px;border-top:1px solid #eee;font-size:11px;color:#b0b4bb;line-height:1.6}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
-.lock-box.shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
-@media(max-width:640px){.lock-box{padding:30px 22px 26px}.lock-logo{width:64px;height:64px}}
-@media(prefers-reduced-motion:reduce){.lock-box.shake{animation:none}}
-</style>
-</head>
-<body>
-<!-- ===== 密码锁：全屏解锁界面 ===== -->
-<div class="lock-screen" id="lockScreen" style="display:none">
-  <div class="lock-box" id="lockBox">
-    <div class="lock-logo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="14" y="33" width="9" height="15" rx="2" fill="currentColor" opacity=".85" stroke="none"/>
-        <rect x="38" y="22" width="9" height="26" rx="2" fill="currentColor" opacity=".85" stroke="none"/>
-        <polyline points="14,45 27,31 36,36 50,22"/>
-      </svg>
-    </div>
-    <div class="lock-title">股票买入时机小助手</div>
-    <div class="lock-sub">私密版 · 请输入访问密码解锁</div>
-    <div class="lock-field" id="lockField">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <input id="lockInput" type="password" inputmode="text" placeholder="请输入密码" autocomplete="off" enterkeyhint="go">
-      <button class="show-eye" id="lockEye" type="button" aria-label="显示/隐藏密码">
-        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-      </button>
-    </div>
-    <button class="lock-btn" id="lockBtn" type="button">解锁</button>
-    <div class="lock-err" id="lockErr"></div>
-    <label class="lock-remember">
-      <input type="checkbox" id="lockRemember"> 记住我（此设备下次免输密码）
-    </label>
-    <div class="lock-hint">此私密页仅供本人使用。忘记密码请将本 HTML 中 SHX 变量替换为新密码的 SHA-256 哈希值（修改步骤见代码注释）。</div>
-  </div>
-</div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>股票買入時機小助手（手機版）</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FF6900">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22%23FF6900%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2233%22%20width%3D%229%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%20opacity%3D%220.9%22%2F%3E%3Crect%20x%3D%2238%22%20y%3D%2222%22%20width%3D%229%22%20height%3D%2226%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpolyline%20points%3D%2214%2C45%2027%2C31%2036%2C36%2050%2C22%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+  <link rel="apple-touch-icon"
+    href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22%23FF6900%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2233%22%20width%3D%229%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%20opacity%3D%220.9%22%2F%3E%3Crect%20x%3D%2238%22%20y%3D%2222%22%20width%3D%229%22%20height%3D%2226%22%20rx%3D%222%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpolyline%20points%3D%2214%2C45%2027%2C31%2036%2C36%2050%2C22%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+  <link rel="manifest"
+    href="data:application/manifest+json,%7B%22name%22%3A%22%E8%82%A1%E7%A5%A8%E4%B9%B0%E5%85%A5%E6%97%B6%E6%9C%BA%E5%B0%8F%E5%8A%A9%E6%89%8B%22%2C%22short_name%22%3A%22%E8%82%A1%E7%A5%A8%E5%8A%A9%E6%89%8B%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFFFF%22%2C%22theme_color%22%3A%22%23FF6900%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%252064%252064%2522%253E%253Crect%2520x%253D%25222%2522%2520y%253D%25222%2522%2520width%253D%252260%2522%2520height%253D%252260%2522%2520rx%253D%252214%2522%2520fill%253D%2522%2523FF6900%2522%252F%253E%253Crect%2520x%253D%252214%2522%2520y%253D%252233%2522%2520width%253D%25229%2522%2520height%253D%252215%2522%2520rx%253D%25222%2522%2520fill%253D%2522%2523FFFFFF%2522%2520opacity%253D%25220.9%2522%252F%253E%253Crect%2520x%253D%252238%2522%2520y%253D%252222%2522%2520width%253D%25229%2522%2520height%253D%252226%2522%2520rx%253D%25222%2522%2520fill%253D%2522%2523FFFFFF%2522%252F%253E%253Cpolyline%2520points%253D%252214%252C45%252027%252C31%252036%252C36%252050%252C22%2522%2520fill%253D%2522none%2522%2520stroke%253D%2522%2523FFFFFF%2522%2520stroke-width%253D%25224%2522%2520stroke-linecap%253D%2522round%2522%2520stroke-linejoin%253D%2522round%2522%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+  <style>
+    :root {
+      --bg: #fff;
+      --tint: #F7F8F9;
+      --surface: #fff;
+      --t1: #1A1A1F;
+      --t2: #595959;
+      --t3: #A6A6A6;
+      --acc: #FF6900;
+      --acc-h: #E85D00;
+      --on: #1A1A1F;
+      --good: #0E7C3A;
+      --warn: #B45309;
+      --bad: #C62F1F;
+      --radius: 16px;
+      --btnr: 10px;
+      --disp: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --body: var(--disp);
+      --border: color-mix(in srgb, var(--t1) 9%, transparent);
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-<div class="topbar">
-  <div class="topbar-in">
-    <div class="logo">股</div>
-    <h1>股票买入时机小助手</h1>
-    <span class="live"><span class="dot"></span>离线·教学参考</span>
-  </div>
-</div>
+    body {
+      background: var(--bg);
+      color: var(--t2);
+      font-family: var(--body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased
+    }
 
-<div class="wrap">
+    .wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px
+    }
 
-  <div class="hero">
-    <div class="breadcrumb">新手友好 · 学习增强版</div>
-    <div class="hero-title">一只股票，什么时候买最好？</div>
-    <div class="hero-sub">把复杂的K线、均线、RSI都收进背后，你只需要看「买入 / 观望 / 卖出」三个灯，配一句人话解释。点任一只股票就能看它的专属买卖信号和技术指标，还能把心水的股票加进自己的观察名单。所有内容仅供学习参考，不构成投资建议。</div>
-    <div class="hero-tags">
-      <span class="pill">适合新手</span>
-      <span class="pill">港股</span>
-      <span class="pill">自选观察</span>
-      <span class="pill">推荐名单</span>
-      <span class="pill">当天消息</span><span class="pill">完全离线</span>
-    </div>
-  </div>
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, .9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border)
+    }
 
-  <div class="install-hint">
-  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-  <div><b>手机安装提示：</b>在浏览器菜单点「添加到主屏幕 / 加入主屏幕」，就能像 App 一样独立打开。本工具<strong>数据全部内置、完全离线可用</strong>，断网也能看。</div>
-</div>
-  <div class="sec" style="margin-top:22px">
-    <div class="query-card">
-      <div class="input-row">
-        <div class="code-input">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input id="code" type="text" placeholder="输入港股编号，如 01810" maxlength="5">
-        </div>
-        <button class="btn" id="go">查信号</button>
-      </div>
-      <div class="hot-label">热门股票快捷选择：</div>
-      <div class="hot-row" id="hotRow">
-        <button class="hot" data-code="01810">小米集团<span>01810</span></button><button class="hot" data-code="00700">腾讯控股<span>00700</span></button><button class="hot" data-code="09988">阿里巴巴<span>09988</span></button><button class="hot" data-code="03690">美团<span>03690</span></button><button class="hot" data-code="00883">中海油<span>00883</span></button><button class="hot" data-code="01398">工商银行<span>01398</span></button><button class="hot" data-code="00939">建设银行<span>00939</span></button><button class="hot" data-code="00941">中国移动<span>00941</span></button><button class="hot" data-code="01088">中国神华<span>01088</span></button><button class="hot" data-code="02318">中国平安<span>02318</span></button>
-      </div>
-    </div>
-  </div>
+    .topbar-in {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
 
-  <div class="sec" style="margin-top:0">
-    <div class="signal-card">
-      <div class="signal-head">
-        <span class="name" id="sigName">小米集团</span>
-        <span class="code" id="sigCode">01810</span>
-      </div>
-      <div class="big-signal" id="bigSig" style="background:#B45309">
-        <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg></div>
-        <div class="sig-lvl" id="sigLvl">观望</div>
-        <div class="sig-price" id="sigPrice">现价 29.70</div>
-      </div>
-      <div class="sig-msg" id="sigMsg">股价还高于你设定的目标价，先别急，等等回调。</div>
-      <div class="sig-sub" id="sigSub">信号由「现价 vs 你的目标买入价」+「风险偏好」得出，仅供学习参考。点下面的「看完整分析」可查看技术指标与当天消息。</div>
-      <div class="sig-bar">
-        <div class="row"><span>现价 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span></div>
-        <div class="row"><span>我的目标买入价 <b id="barTarget">28.50</b></span><span class="v" id="barTargetV">28.50</span></div>
-        <div class="row"><span>价差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
-      </div>
-      <div class="risk-toggle">
-        <span class="lab">我的风险偏好：</span>
-        <div class="seg" id="riskSeg">
-          <button data-r="calm">稳健</button>
-          <button data-r="mid" class="on">均衡</button>
-          <button data-r="agg">进取</button>
-        </div>
-      </div>
-      <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 看当前股票的完整分析</button></div>
-    </div>
-  </div>
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--acc);
+      color: var(--on);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px
+    }
 
-  <div class="sec" id="watchSec">
-    <div class="sec-head">
-      <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg> 我的观察名单</h2>
-      <div class="tag">把你心水的股票加进来，点击任意一只可看专属分析。保存本页后名单自动留存。</div>
-    </div>
-    <div class="watch-grid" id="watchGrid"></div>
-  </div>
+    .topbar h1 {
+      font-size: 15px;
+      color: var(--t1);
+      font-weight: 700;
+      flex: 1
+    }
 
-  <div class="sec" id="recSec">
-    <div class="sec-head">
-      <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3Z"/></svg> 为你推荐 · 分组名单</h2>
-      <div class="tag">按「科技成长 / 金融高息 / 能源资源 / 电讯公用 / 消费黄金」分组，点卡片看专属分析，点右上角 ⊕ 加入观察名单。</div>
-    </div>
-    <div class="grp">
-      <div class="grp-head" style="border-left-color:#1A1A1F">
-        <h3>科技成长</h3><span class="gsub">进攻型 · 波动大、想象空间大，适合有承受力的人</span><span class="gcount">4 只</span>
-      </div>
-      <div class="rec-grid"><div class="rcard" data-code="01810">
-          <button class="r-add" data-code="01810" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">小米集团</span><span class="r-code">01810</span></div>
-          <div class="r-price">29.70</div>
-          <div class="r-yield">股息率 低息·成长</div>
-          <div class="r-note">人车家全生态，汽车+AI双引擎，澎程系列热销</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="00700">
-          <button class="r-add" data-code="00700" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">腾讯控股</span><span class="r-code">00700</span></div>
-          <div class="r-price">376.00</div>
-          <div class="r-yield">股息率 低息·成长</div>
-          <div class="r-note">游戏+广告+金融科技，AI混元模型推进，北水连续净买入</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="09988">
-          <button class="r-add" data-code="09988" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">阿里巴巴</span><span class="r-code">09988</span></div>
-          <div class="r-price">85.45</div>
-          <div class="r-yield">股息率 低息·成长</div>
-          <div class="r-note">电商+云+AI，云资本开支与自研芯片叙事；短线超跌</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="03690">
-          <button class="r-add" data-code="03690" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">美团</span><span class="r-code">03690</span></div>
-          <div class="r-price">70.50</div>
-          <div class="r-yield">股息率 低息·成长</div>
-          <div class="r-note">即时零售+外卖龙头，补贴竞争压制利润率，52周低点修复中</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div></div>
-    </div><div class="grp">
-      <div class="grp-head" style="border-left-color:#FF6900">
-        <h3>金融高息</h3><span class="gsub">收息型 · 派息稳、估值低，防御底仓</span><span class="gcount">3 只</span>
-      </div>
-      <div class="rec-grid"><div class="rcard" data-code="01398">
-          <button class="r-add" data-code="01398" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">工商银行</span><span class="r-code">01398</span></div>
-          <div class="r-price">8.01</div>
-          <div class="r-yield">股息率 约5.7厘</div>
-          <div class="r-note">国有大行，分红稳定、估值低，距52周高点不足2%</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="00939">
-          <button class="r-add" data-code="00939" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">建设银行</span><span class="r-code">00939</span></div>
-          <div class="r-price">10.59</div>
-          <div class="r-yield">股息率 约5.8厘</div>
-          <div class="r-note">国有大行，高股息防御底仓，H股折价提供安全垫</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="02318">
-          <button class="r-add" data-code="02318" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">中国平安</span><span class="r-code">02318</span></div>
-          <div class="r-price">51.25</div>
-          <div class="r-yield">股息率 5.5厘</div>
-          <div class="r-note">保险蓝筹，业绩平稳、派息稳定，高股息防御之选</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div></div>
-    </div><div class="grp">
-      <div class="grp-head" style="border-left-color:#B45309">
-        <h3>能源资源</h3><span class="gsub">收息型 · 高股息+景气，现金流强</span><span class="gcount">2 只</span>
-      </div>
-      <div class="rec-grid"><div class="rcard" data-code="00883">
-          <button class="r-add" data-code="00883" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">中海油</span><span class="r-code">00883</span></div>
-          <div class="r-price">22.62</div>
-          <div class="r-yield">股息率 约6.9厘</div>
-          <div class="r-note">能源高息蓝筹，原油景气支撑，现金流强</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="01088">
-          <button class="r-add" data-code="01088" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">中国神华</span><span class="r-code">01088</span></div>
-          <div class="r-price">43.56</div>
-          <div class="r-yield">股息率 约5.4厘</div>
-          <div class="r-note">煤电一体化，现金流稳定、分红高，冬季用能旺季受益</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div></div>
-    </div><div class="grp">
-      <div class="grp-head" style="border-left-color:#0E7C3A">
-        <h3>电讯公用</h3><span class="gsub">收息型 · 现金流稳、防御性强</span><span class="gcount">3 只</span>
-      </div>
-      <div class="rec-grid"><div class="rcard" data-code="00941">
-          <button class="r-add" data-code="00941" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">中国移动</span><span class="r-code">00941</span></div>
-          <div class="r-price">80.50</div>
-          <div class="r-yield">股息率 约6.1厘</div>
-          <div class="r-note">派息稳定有增长，财息兼收首选，防御性强</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="00002">
-          <button class="r-add" data-code="00002" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">中电控股</span><span class="r-code">00002</span></div>
-          <div class="r-price">68.50</div>
-          <div class="r-yield">股息率 高息</div>
-          <div class="r-note">公用事业，防御属性强，本地收息之选</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="06823">
-          <button class="r-add" data-code="06823" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">香港电讯</span><span class="r-code">06823</span></div>
-          <div class="r-price">5.20</div>
-          <div class="r-yield">股息率 约6.7厘</div>
-          <div class="r-note">派息较稳定，本地电讯收息之选</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div></div>
-    </div><div class="grp">
-      <div class="grp-head" style="border-left-color:#C62F1F">
-        <h3>消费黄金</h3><span class="gsub">混合型 · 含高息与高波动，请特别留意风险</span><span class="gcount">2 只</span>
-      </div>
-      <div class="rec-grid"><div class="rcard" data-code="06181">
-          <button class="r-add" data-code="06181" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">老铺黄金</span><span class="r-code">06181</span></div>
-          <div class="r-price">297.60</div>
-          <div class="r-yield">股息率 约8.7厘</div>
-          <div class="r-note">派息大增但盈利与金价相关，8厘以上请特别留意风险</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div><div class="rcard" data-code="06862">
-          <button class="r-add" data-code="06862" title="加入/移出观察名单"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <div class="r-top"><span class="r-name">海底捞</span><span class="r-code">06862</span></div>
-          <div class="r-price">10.38</div>
-          <div class="r-yield">股息率 约6.6厘</div>
-          <div class="r-note">蓝筹消费，派息增加、盈利稳定</div>
-          <div class="r-cta">看专属分析 ›</div>
-        </div></div>
-    </div>
-  </div>
+    .topbar .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--good);
+      font-weight: 600;
+      white-space: nowrap
+    }
 
-  <div class="sec" id="newsSec">
-    <div class="sec-head">
-      <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg> 相关服务 · 当天消息</h2>
-      <div class="tag">每只股票当天相关资讯 / 消息（教学整理，非实时），点击可跳到该股分析。</div>
-    </div>
-    <div class="news-list">
-      <div class="nitem" data-code="01810">
-      <span class="ncode">01810</span>
-      <div class="nbody">
-        <div class="ntitle">小米集团 · 当天相关</div>
-        <div class="nmsg">10月汽车交付超5万创单月纪录；11/9回购约5000万港元、年内累计回购128.6亿；澎程系列首月锁单超7万、N70居增程车销量第一。</div>
-      </div>
-    </div><div class="nitem" data-code="00700">
-      <span class="ncode">00700</span>
-      <div class="nbody">
-        <div class="ntitle">腾讯控股 · 当天相关</div>
-        <div class="nmsg">11/17南下资金净买入腾讯15.96亿港元居首；业绩周临近，AI混元推出Hy4 flash；美国BIS新规限制远程算力偏负面。</div>
-      </div>
-    </div><div class="nitem" data-code="09988">
-      <span class="ncode">09988</span>
-      <div class="nbody">
-        <div class="ntitle">阿里巴巴 · 当天相关</div>
-        <div class="nmsg">11/17跌5.21%收85.45，南向连续3日净卖出共40.9亿；阿里跌见52周低附近；里昂估双十一GMV增约5%。</div>
-      </div>
-    </div><div class="nitem" data-code="03690">
-      <span class="ncode">03690</span>
-      <div class="nbody">
-        <div class="ntitle">美团 · 当天相关</div>
-        <div class="nmsg">11/17跌1.47%收70.5，南向小幅净买入1.23亿；京东、美团即时零售补贴竞争受关注。</div>
-      </div>
-    </div><div class="nitem" data-code="01398">
-      <span class="ncode">01398</span>
-      <div class="nbody">
-        <div class="ntitle">工商银行 · 当天相关</div>
-        <div class="nmsg">前三季度上市银行净利增3.78%，息差企稳；国有大行中期分红比例上调至31%，银行板块估值上行。</div>
-      </div>
-    </div><div class="nitem" data-code="00939">
-      <span class="ncode">00939</span>
-      <div class="nbody">
-        <div class="ntitle">建设银行 · 当天相关</div>
-        <div class="nmsg">11/17南向净买入建设银行5.5亿港元；中期分红比例上调，股息率约5.8%，防御属性受资金青睐。</div>
-      </div>
-    </div><div class="nitem" data-code="02318">
-      <span class="ncode">02318</span>
-      <div class="nbody">
-        <div class="ntitle">中国平安 · 当天相关</div>
-        <div class="nmsg">11/17跌0.77%收51.25；保险板块随大盘小幅调整，高股息属性下资金承接相对稳健。</div>
-      </div>
-    </div><div class="nitem" data-code="00883">
-      <span class="ncode">00883</span>
-      <div class="nbody">
-        <div class="ntitle">中海油 · 当天相关</div>
-        <div class="nmsg">11/17跌2.16%收22.62，南向小幅净卖出；油价与中东地缘扰动，高股息+能源景气兼具配置价值。</div>
-      </div>
-    </div><div class="nitem" data-code="01088">
-      <span class="ncode">01088</span>
-      <div class="nbody">
-        <div class="ntitle">中国神华 · 当天相关</div>
-        <div class="nmsg">11/17微跌0.95%收43.56；10月原煤产量同比降5.8%，供给收缩预期升温，高股息能源股受青睐。</div>
-      </div>
-    </div><div class="nitem" data-code="00941">
-      <span class="ncode">00941</span>
-      <div class="nbody">
-        <div class="ntitle">中国移动 · 当天相关</div>
-        <div class="nmsg">11/17平收80.5；红筹股收息首选，股息率约6.1%，在弱市中表现抗跌。</div>
-      </div>
-    </div><div class="nitem" data-code="00002">
-      <span class="ncode">00002</span>
-      <div class="nbody">
-        <div class="ntitle">中电控股 · 当天相关</div>
-        <div class="nmsg">公用事业防御属性受青睐，派息相对稳定，适合作为收息底仓配置。</div>
-      </div>
-    </div><div class="nitem" data-code="06823">
-      <span class="ncode">06823</span>
-      <div class="nbody">
-        <div class="ntitle">香港电讯 · 当天相关</div>
-        <div class="nmsg">本地电讯服务现金流稳定，股息率约6.7%，属稳健收息标的。</div>
-      </div>
-    </div><div class="nitem" data-code="06181">
-      <span class="ncode">06181</span>
-      <div class="nbody">
-        <div class="ntitle">老铺黄金 · 当天相关</div>
-        <div class="nmsg">金价高位回落，纽约期金失守3970美元，金饰克价跌破1200元；高价黄金股对金价敏感，回调风险大。</div>
-      </div>
-    </div><div class="nitem" data-code="06862">
-      <span class="ncode">06862</span>
-      <div class="nbody">
-        <div class="ntitle">海底捞 · 当天相关</div>
-        <div class="nmsg">消费板块随社零温和复苏，餐饮龙头盈利与派息稳定，属稳健高息消费标的。</div>
-      </div>
-    </div>
-    </div>
-  </div>
+    .topbar .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--good);
+      animation: pulse 1.6s infinite
+    }
 
-  <div class="sec" id="histSec">
-    <div class="sec-head">
-      <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> 查询历史记录</h2>
-      <div class="tag">你最近查过的股票（保存在本机），点击可回看。</div>
-    </div>
-    <div class="hist" id="histBox">
-      <div class="empty">还没有查询记录，去上面查一只股票吧。</div>
-    </div>
-  </div>
+    @keyframes pulse {
 
-  <div class="disclaimer">
-    <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> 投资风险免责声明</h3>
-    <ul>
-      <li>本工具所有价格、信号、技术指标与当天消息仅供学习参考，不构成任何投资建议或邀约。</li>
-      <li>股票价格可升可跌，过往表现不代表未来；投资者可能损失全部或部分本金，请量力而为。</li>
-      <li>「买入/观望/卖出」信号由「现价 vs 目标买入价 + 风险偏好」的简单教学规则生成，MA/RSI/支撑压力位为教学参考值，不包含真实完整的技术面与基本面分析，不可作为实际交易依据。</li>
-      <li>当天消息为公开资讯的整理摘要，请以公司公告与官方披露为准。</li>
-      <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股价大跌或盈利不可持续所致，收息前请评估盈利稳定性、派息持续性与股价波动风险。</li>
-    </ul>
-  </div>
-
-  <div class="footer">
-    股票买入时机小助手 · 手机安装版<br>
-    数据为内置教学参考、非实时 · 完全离线可用，可添加至手机主屏幕当 App 使用<br>
-    生成于 2026年11月18日 · 仅作学习与参考，不构成投资建议
-  </div>
-</div>
-
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <button class="modal-close" id="modalClose"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-    <div class="m-head">
-      <span class="m-name" id="mName"></span>
-      <span class="m-code" id="mCode"></span>
-    </div>
-    <div class="m-sub" id="mSub"></div>
-    <div class="m-price-row">
-      <span class="m-price" id="mPrice"></span>
-      <span class="m-yield" id="mYield"></span>
-    </div>
-    <div class="m-grid" id="mGrid"></div>
-    <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> 买卖信号</div>
-    <div class="m-msg" id="mMsg"></div>
-    <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg> 当天消息</div>
-    <div class="m-risk" id="mNews"></div>
-    <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 风险提示</div>
-    <div class="m-risk" id="mRisk"></div>
-    <div class="m-btns">
-      <button class="addwatch-btn" id="mAddWatch">加入观察名单</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-var ICON = {
-  "trending-up": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
-  "pause": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>',
-  "shield-alert": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'
-};
-
-var DATA = {"01810": {"name": "小米集团", "price": 29.7, "target": 28.5, "y": "低息·成长", "grp": "科技成长", "note": "人车家全生态，汽车+AI双引擎，澎程系列热销", "ma5": 29.9, "ma20": 29.0, "rsi": 52, "sup": 28.5, "res": 31.5, "news": "10月汽车交付超5万创单月纪录；11/9回购约5000万港元、年内累计回购128.6亿；澎程系列首月锁单超7万、N70居增程车销量第一。"}, "00700": {"name": "腾讯控股", "price": 376.0, "target": 360.0, "y": "低息·成长", "grp": "科技成长", "note": "游戏+广告+金融科技，AI混元模型推进，北水连续净买入", "ma5": 388, "ma20": 398, "rsi": 38, "sup": 360, "res": 400, "news": "11/17南下资金净买入腾讯15.96亿港元居首；业绩周临近，AI混元推出Hy4 flash；美国BIS新规限制远程算力偏负面。"}, "09988": {"name": "阿里巴巴", "price": 85.45, "target": 90.0, "y": "低息·成长", "grp": "科技成长", "note": "电商+云+AI，云资本开支与自研芯片叙事；短线超跌", "ma5": 92, "ma20": 96, "rsi": 32, "sup": 82, "res": 95, "news": "11/17跌5.21%收85.45，南向连续3日净卖出共40.9亿；阿里跌见52周低附近；里昂估双十一GMV增约5%。"}, "03690": {"name": "美团", "price": 70.5, "target": 68.0, "y": "低息·成长", "grp": "科技成长", "note": "即时零售+外卖龙头，补贴竞争压制利润率，52周低点修复中", "ma5": 71, "ma20": 69, "rsi": 47, "sup": 65, "res": 75, "news": "11/17跌1.47%收70.5，南向小幅净买入1.23亿；京东、美团即时零售补贴竞争受关注。"}, "01398": {"name": "工商银行", "price": 8.01, "target": 8.0, "y": "约5.7厘", "grp": "金融高息", "note": "国有大行，分红稳定、估值低，距52周高点不足2%", "ma5": 8.0, "ma20": 7.9, "rsi": 55, "sup": 7.7, "res": 8.18, "news": "前三季度上市银行净利增3.78%，息差企稳；国有大行中期分红比例上调至31%，银行板块估值上行。"}, "00939": {"name": "建设银行", "price": 10.59, "target": 10.5, "y": "约5.8厘", "grp": "金融高息", "note": "国有大行，高股息防御底仓，H股折价提供安全垫", "ma5": 10.6, "ma20": 10.4, "rsi": 54, "sup": 10.1, "res": 10.9, "news": "11/17南向净买入建设银行5.5亿港元；中期分红比例上调，股息率约5.8%，防御属性受资金青睐。"}, "02318": {"name": "中国平安", "price": 51.25, "target": 50.0, "y": "5.5厘", "grp": "金融高息", "note": "保险蓝筹，业绩平稳、派息稳定，高股息防御之选", "ma5": 51.5, "ma20": 50.5, "rsi": 50, "sup": 48.5, "res": 53, "news": "11/17跌0.77%收51.25；保险板块随大盘小幅调整，高股息属性下资金承接相对稳健。"}, "00883": {"name": "中海油", "price": 22.62, "target": 23.0, "y": "约6.9厘", "grp": "能源资源", "note": "能源高息蓝筹，原油景气支撑，现金流强", "ma5": 23.1, "ma20": 23.0, "rsi": 45, "sup": 21.5, "res": 24, "news": "11/17跌2.16%收22.62，南向小幅净卖出；油价与中东地缘扰动，高股息+能源景气兼具配置价值。"}, "01088": {"name": "中国神华", "price": 43.56, "target": 44.0, "y": "约5.4厘", "grp": "能源资源", "note": "煤电一体化，现金流稳定、分红高，冬季用能旺季受益", "ma5": 43.8, "ma20": 43.0, "rsi": 55, "sup": 41.5, "res": 46, "news": "11/17微跌0.95%收43.56；10月原煤产量同比降5.8%，供给收缩预期升温，高股息能源股受青睐。"}, "00941": {"name": "中国移动", "price": 80.5, "target": 79.0, "y": "约6.1厘", "grp": "电讯公用", "note": "派息稳定有增长，财息兼收首选，防御性强", "ma5": 80.5, "ma20": 80.0, "rsi": 52, "sup": 78, "res": 82, "news": "11/17平收80.5；红筹股收息首选，股息率约6.1%，在弱市中表现抗跌。"}, "00002": {"name": "中电控股", "price": 68.5, "target": 67.0, "y": "高息", "grp": "电讯公用", "note": "公用事业，防御属性强，本地收息之选", "ma5": 68.8, "ma20": 68.0, "rsi": 50, "sup": 66, "res": 70, "news": "公用事业防御属性受青睐，派息相对稳定，适合作为收息底仓配置。"}, "06823": {"name": "香港电讯", "price": 5.2, "target": 5.0, "y": "约6.7厘", "grp": "电讯公用", "note": "派息较稳定，本地电讯收息之选", "ma5": 5.2, "ma20": 5.1, "rsi": 52, "sup": 4.9, "res": 5.4, "news": "本地电讯服务现金流稳定，股息率约6.7%，属稳健收息标的。"}, "06181": {"name": "老铺黄金", "price": 297.6, "target": 270.0, "y": "约8.7厘", "grp": "消费黄金", "note": "派息大增但盈利与金价相关，8厘以上请特别留意风险", "ma5": 305, "ma20": 310, "rsi": 35, "sup": 280, "res": 330, "news": "金价高位回落，纽约期金失守3970美元，金饰克价跌破1200元；高价黄金股对金价敏感，回调风险大。"}, "06862": {"name": "海底捞", "price": 10.38, "target": 9.8, "y": "约6.6厘", "grp": "消费黄金", "note": "蓝筹消费，派息增加、盈利稳定", "ma5": 10.5, "ma20": 10.2, "rsi": 48, "sup": 9.5, "res": 11, "news": "消费板块随社零温和复苏，餐饮龙头盈利与派息稳定，属稳健高息消费标的。"}};
-var cur = "01810";
-var risk = "mid";
-var watch = ["01810"];
-
-function fmt(n){ return (+n).toFixed(2); }
-function compute(price, target, r){
-  var mult = r==="calm" ? 1.05 : (r==="mid" ? 1.10 : 1.15);
-  if(price <= target){
-    return {lvl:"买入", color:"#0E7C3A", icon:"trending-up", msg:"股价已到（或低于）你设定的目标买入价，符合分批进场条件。可以开始小额分批买，别一次梭哈。"};
-  } else if(price < target*mult){
-    return {lvl:"观望", color:"#B45309", icon:"pause", msg:"股价还略高于目标价，先别急着追，可以挂着等它回调到目标价附近再动手。"};
-  } else {
-    return {lvl:"卖出 / 等待", color:"#C62F1F", icon:"shield-alert", msg:"股价明显高于你的目标价（追高风险），现在买不划算。建议等待回落，或先观察基本面变化。"};
-  }
-}
-
-function render(){
-  var d = DATA[cur];
-  if(!d) return;
-  var s = compute(d.price, d.target, risk);
-  var big = document.getElementById("bigSig");
-  big.style.background = s.color;
-  document.getElementById("sigIco").innerHTML = ICON[s.icon] || '';
-  document.getElementById("sigLvl").textContent = s.lvl;
-  document.getElementById("sigPrice").textContent = "现价 "+fmt(d.price);
-  document.getElementById("sigMsg").textContent = s.msg;
-  document.getElementById("sigName").textContent = d.name;
-  document.getElementById("sigCode").textContent = cur;
-  document.getElementById("barPrice").textContent = fmt(d.price);
-  document.getElementById("barPriceV").textContent = fmt(d.price);
-  document.getElementById("barTarget").textContent = fmt(d.target);
-  document.getElementById("barTargetV").textContent = fmt(d.target);
-  var gap = ((d.price-d.target)/d.target*100);
-  var gapTxt = (gap>=0?"+":"")+gap.toFixed(1)+"%";
-  document.getElementById("barGap").textContent = gapTxt;
-  document.getElementById("barGapV").textContent = gapTxt;
-  var hots = document.querySelectorAll("#hotRow .hot");
-  for(var i=0;i<hots.length;i++) hots[i].classList.toggle("active", hots[i].dataset.code===cur);
-}
-
-function saveWatch(){ try{ localStorage.setItem("watch", JSON.stringify(watch)); }catch(e){} }
-function loadWatch(){ try{ var w=JSON.parse(localStorage.getItem("watch")||"[]"); if(Object.prototype.toString.call(w)==="[object Array]") watch=w.filter(function(c){return DATA[c];}); }catch(e){ watch=[]; } }
-
-function sigTag(code){
-  var d=DATA[code]; if(!d) return "";
-  var lvl, col;
-  if(d.price<=d.target){ lvl="买入"; col="#0E7C3A"; }
-  else if(d.price<d.target*(risk==="calm"?1.05:(risk==="mid"?1.10:1.15))){ lvl="观望"; col="#B45309"; }
-  else { lvl="卖出/等待"; col="#C62F1F"; }
-  return '<span class="wsig" style="background:'+col+';color:#fff">'+lvl+'</span>';
-}
-
-function renderWatch(){
-  var g = document.getElementById("watchGrid");
-  if(watch.length===0){
-    g.innerHTML = '<div class="empty">名单还是空的。到下面「推荐名单」点卡片右上角的 ⊕，或查一只股票后点「加入观察名单」，就能把股票收藏到这里。</div>';
-    return;
-  }
-  var html="";
-  for(var i=0;i<watch.length;i++){
-    var code=watch[i], d=DATA[code]; if(!d) continue;
-    html += '<div class="wcard" data-code="'+code+'">'+
-      '<button class="del" data-code="'+code+'" title="移除">×</button>'+
-      '<div class="wtop"><span class="wname">'+d.name+'</span><span class="wcode">'+code+'</span></div>'+
-      '<div class="wprice">'+fmt(d.price)+'</div>'+
-      sigTag(code)+
-    '</div>';
-  }
-  g.innerHTML = html;
-  var wcs = g.querySelectorAll(".wcard");
-  for(var j=0;j<wcs.length;j++){
-    (function(card){
-      card.addEventListener("click", function(){ openModal(card.dataset.code); });
-    })(wcs[j]);
-  }
-  var dels = g.querySelectorAll(".del");
-  for(var k=0;k<dels.length;k++){
-    (function(btn){
-      btn.addEventListener("click", function(e){ e.stopPropagation(); removeWatch(btn.dataset.code); });
-    })(dels[k]);
-  }
-}
-
-function addWatch(code){
-  if(watch.indexOf(code)===-1){ watch.push(code); saveWatch(); renderWatch(); toast("已加入观察名单"); }
-  var ab=document.getElementById("mAddWatch"); if(ab) ab.textContent="已在观察名单 ✓";
-}
-function removeWatch(code){
-  watch = watch.filter(function(c){return c!==code;}); saveWatch(); renderWatch(); toast("已移出观察名单");
-  var ab=document.getElementById("mAddWatch"); if(ab) ab.textContent="加入观察名单";
-}
-
-function saveHist(){
-  try{
-    var h=JSON.parse(localStorage.getItem("hist")||"[]");
-    h=h.filter(function(x){return x.code!==cur;});
-    h.unshift({code:cur, name:DATA[cur].name, price:DATA[cur].price, t:new Date().toLocaleTimeString("zh-HK",{hour:"2-digit",minute:"2-digit"})});
-    if(h.length>10) h=h.slice(0,10);
-    localStorage.setItem("hist", JSON.stringify(h));
-    renderHist(h);
-  }catch(e){}
-}
-function renderHist(h){
-  var box=document.getElementById("histBox");
-  if(!h || h.length===0){ box.innerHTML='<div class="empty">还没有查询记录，去上面查一只股票吧。</div>'; return; }
-  var html="";
-  for(var i=0;i<h.length;i++){
-    var it=h[i], d=DATA[it.code]; if(!d) continue;
-    html += '<div class="hist-item" data-code="'+it.code+'">'+
-      '<span class="hn">'+d.name+'</span><span class="hc">'+it.code+'</span>'+
-      '<span class="hp">'+fmt(it.price)+'</span>'+
-      '<span class="htime">'+it.t+'</span>'+
-    '</div>';
-  }
-  box.innerHTML = html;
-  var items=box.querySelectorAll(".hist-item");
-  for(var j=0;j<items.length;j++){
-    (function(el){ el.addEventListener("click", function(){ openModal(el.dataset.code); }); })(items[j]);
-  }
-}
-function loadHist(){ try{ renderHist(JSON.parse(localStorage.getItem("hist")||"[]")); }catch(e){} }
-
-function openModal(code){
-  var d=DATA[code]; if(!d) return;
-  cur=code; render();
-  document.getElementById("mName").textContent=d.name;
-  document.getElementById("mCode").textContent=code;
-  document.getElementById("mSub").textContent=d.grp+" · "+d.note;
-  document.getElementById("mPrice").textContent=fmt(d.price);
-  document.getElementById("mYield").textContent="股息率 "+d.y;
-  var g=document.getElementById("mGrid");
-  g.innerHTML =
-    '<div class="m-stat"><div class="lab">MA5</div><div class="val">'+fmt(d.ma5)+'</div></div>'+
-    '<div class="m-stat"><div class="lab">MA20</div><div class="val">'+fmt(d.ma20)+'</div></div>'+
-    '<div class="m-stat"><div class="lab">RSI(14)</div><div class="val">'+d.rsi+'</div></div>'+
-    '<div class="m-stat"><div class="lab">支撑位</div><div class="val">'+fmt(d.sup)+'</div></div>'+
-    '<div class="m-stat"><div class="lab">压力位</div><div class="val">'+fmt(d.res)+'</div></div>'+
-    '<div class="m-stat"><div class="lab">目标买入价</div><div class="val">'+fmt(d.target)+'</div></div>';
-  var s=compute(d.price,d.target,risk);
-  document.getElementById("mMsg").innerHTML = '<b style="color:'+s.color+'">'+s.lvl+'</b> · '+s.msg;
-  document.getElementById("mNews").innerHTML = d.news;
-  var riskHtml = '<b>⚠ 给新手的提醒：</b>';
-  if(d.y.indexOf("8厘")>=0 || d.y.indexOf("8.7")>=0 || d.y.indexOf("8.")===0) riskHtml += ' 该股股息率偏高（'+d.y+'），属「高息陷阱」高发区，须特别留意盈利能否持续、股价会否大跌。';
-  riskHtml += (d.grp==="科技成长" ? ' 科技股波动较大，价格可上可下，务必量力而为、分批参与。' : ' 该股属收息型标的，看重的是长期稳定收息，别指望短线暴涨。') + ' 以上仅教学参考，非投资建议。';
-  document.getElementById("mRisk").innerHTML = riskHtml;
-  var ab=document.getElementById("mAddWatch");
-  ab.textContent = watch.indexOf(code)!==-1 ? "已在观察名单 ✓" : "加入观察名单";
-  document.getElementById("overlay").classList.add("show");
-}
-
-document.getElementById("go").addEventListener("click", function(){
-  var code = document.getElementById("code").value.replace(/\D/g,"").trim();
-  if(!code){ toast("请先输入港股编号，如 01810"); return; }
-  if(DATA[code]){ cur=code; render(); saveHist(); openModal(code); }
-  else{ toast("暂未收录该编号，可试试热门股"); }
-});
-document.getElementById("code").addEventListener("keydown", function(e){ if(e.key==="Enter") document.getElementById("go").click(); });
-
-var hotBtns = document.querySelectorAll("#hotRow .hot");
-for(var hi=0;hi<hotBtns.length;hi++){
-  (function(b){
-    b.addEventListener("click", function(){
-      document.getElementById("code").value = b.dataset.code;
-      cur=b.dataset.code; render(); saveHist(); openModal(b.dataset.code);
-    });
-  })(hotBtns[hi]);
-}
-
-var riskBtns = document.querySelectorAll("#riskSeg button");
-for(var ri=0;ri<riskBtns.length;ri++){
-  (function(b){
-    b.addEventListener("click", function(){
-      var segs=document.querySelectorAll("#riskSeg button");
-      for(var x=0;x<segs.length;x++) segs[x].classList.remove("on");
-      b.classList.add("on");
-      risk = b.dataset.r;
-      render(); renderWatch();
-    });
-  })(riskBtns[ri]);
-}
-
-document.getElementById("fullBtn").addEventListener("click", function(){ openModal(cur); });
-document.getElementById("modalClose").addEventListener("click", function(){ document.getElementById("overlay").classList.remove("show"); });
-document.getElementById("overlay").addEventListener("click", function(e){ if(e.target===document.getElementById("overlay")) document.getElementById("overlay").classList.remove("show"); });
-document.getElementById("mAddWatch").addEventListener("click", function(){
-  if(watch.indexOf(cur)!==-1){ removeWatch(cur); document.getElementById("mAddWatch").textContent="加入观察名单"; }
-  else addWatch(cur);
-});
-
-var rcs = document.querySelectorAll(".rcard");
-for(var ci=0;ci<rcs.length;ci++){
-  (function(el){ el.addEventListener("click", function(){ openModal(el.dataset.code); }); })(rcs[ci]);
-}
-var nis = document.querySelectorAll(".nitem");
-for(var ni=0;ni<nis.length;ni++){
-  (function(el){ el.addEventListener("click", function(){ openModal(el.dataset.code); }); })(nis[ni]);
-}
-var rds = document.querySelectorAll(".r-add");
-for(var di=0;di<rds.length;di++){
-  (function(b){
-    b.addEventListener("click", function(e){
-      e.stopPropagation();
-      var c=b.dataset.code;
-      if(watch.indexOf(c)!==-1){
-        removeWatch(c);
-        b.classList.remove("on");
-        b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
-      } else {
-        addWatch(c);
-        b.classList.add("on");
-        b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      0%,
+      100% {
+        opacity: 1
       }
-    });
-  })(rds[di]);
-}
 
-function toast(msg){
-  var t=document.getElementById("toast");
-  t.textContent=msg; t.classList.add("show");
-  clearTimeout(t._t);
-  t._t=setTimeout(function(){ t.classList.remove("show"); }, 2200);
-}
-
-loadWatch();
-loadHist();
-renderWatch();
-render();
-</script>
-
-<script>
-/* =====================================================
-   密码锁逻辑 · 私密版（已修复 SHA-256 Bug）
-   -----------------------------------------------------
-   【如何修改密码】
-   1. 在下方 `SHX` 一行，把旧哈希替换成新密码的 SHA-256 十六进制值
-   2. 用任意 SHA-256 工具计算新密码，例如：
-       - 浏览器控制台（HTTPS 或 localhost）：
-         crypto.subtle.digest('SHA-256', new TextEncoder().encode('你的新密码'))
-         .then(d => console.log([...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')))
-       - Python:  import hashlib; hashlib.sha256('你的新密码'.encode()).hexdigest()
-   3. 把算出的 64 位哈希粘到 SHX = '...' 保存即可，无需改其它代码。
-   4. 当前密码为 Ws123456，页面只内置其哈希，不含明文。
-   ===================================================== */
-(function(){
-  var SHX = '8fe611ea5431b7eb8712e98049d2822d7bb15220c93a07809c14f3474c581994';
-  var KEY = 'xh_stock_unlock';
-
-  /* ---- 自写 SHA-256（备用，用于 file:// 等 crypto.subtle 不可用的场景） ---- */
-  var sha256Fallback = (function(){
-    function R(n,c){ return (n<<c)|(n>>>(32-c)); }
-    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
-      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,
-      0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,
-      0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,
-      0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,
-      0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,
-      0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,
-      0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,
-      0xc67178f2];
-    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-    function str2bin(s){var a=[];for(var i=0;i<s.length;i++)a.push(s.charCodeAt(i));return a;}
-    return function(msg){
-      /* ========== 修复核心：用 orig.length 而非 m.length ========== */
-      var orig = str2bin(msg);       // 原始訊息位元組（不含 0x80）
-      var m = [].concat(orig, [0x80]); // 加入 padding 起始位元組
-      var l = orig.length;           // ✅ 正確：原始訊息長度，不含 0x80
-      /* ============================================================ */
-      while((m.length % 64) !== 56) m.push(0);
-      var bits = (l*8)>>>0, hibits = Math.floor((l*8)/0x100000000);
-      m.push((hibits>>>24)&255,(hibits>>>16)&255,(hibits>>>8)&255,hibits&255,
-             (bits>>>24)&255,(bits>>>16)&255,(bits>>>8)&255,bits&255);
-      var h=H.slice();
-      for(var i=0;i<m.length;i+=64){
-        var w=new Array(64),j;
-        for(j=0;j<16;j++)w[j]=((m[i+j*4]<<24)|(m[i+j*4+1]<<16)|(m[i+j*4+2]<<8)|(m[i+j*4+3]))>>>0;
-        for(j=16;j<64;j++){
-          var s0=R(w[j-15],7)^R(w[j-15],18)^(w[j-15]>>>3);
-          var s1=R(w[j-2],17)^R(w[j-2],19)^(w[j-2]>>>10);
-          w[j]=(w[j-16]+s0+w[j-7]+s1)>>>0;
-        }
-        var a0=h[0],b0=h[1],c0=h[2],d0=h[3],e0=h[4],f0=h[5],g0=h[6],h0=h[7];
-        for(j=0;j<64;j++){
-          var S1=R(e0,6)^R(e0,11)^R(e0,25);
-          var ch=(e0&f0)^(~e0&g0);
-          var t1=(h0+S1+ch+K[j]+w[j])>>>0;
-          var S0=R(a0,2)^R(a0,13)^R(a0,22);
-          var maj=(a0&b0)^(a0&c0)^(b0&c0);
-          var t2=(S0+maj)>>>0;
-          h0=g0;g0=f0;f0=e0;e0=(d0+t1)>>>0;d0=c0;c0=b0;b0=a0;a0=(t1+t2)>>>0;
-        }
-        h[0]=(h[0]+a0)>>>0;h[1]=(h[1]+b0)>>>0;h[2]=(h[2]+c0)>>>0;h[3]=(h[3]+d0)>>>0;
-        h[4]=(h[4]+e0)>>>0;h[5]=(h[5]+f0)>>>0;h[6]=(h[6]+g0)>>>0;h[7]=(h[7]+h0)>>>0;
-      }
-      var out='';
-      for(var i=0;i<8;i++)out+=('00000000'+h[i].toString(16)).slice(-8);
-      return out;
-    };
-  })();
-
-  /* ---- 優先用 crypto.subtle（更可靠），不可用時 fallback ---- */
-  function sha256(msg){
-    if(window.crypto && window.crypto.subtle && window.crypto.subtle.digest){
-      try {
-        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg))
-          .then(function(buf){
-            return Array.prototype.map.call(new Uint8Array(buf), function(b){
-              return ('00'+b.toString(16)).slice(-2);
-            }).join('');
-          })
-          .catch(function(){ return sha256Fallback(msg); });
-      } catch(e){
-        return Promise.resolve(sha256Fallback(msg));
+      50% {
+        opacity: .3
       }
     }
-    return Promise.resolve(sha256Fallback(msg));
-  }
 
-  function tryUnlock(){
-    var v = document.getElementById('lockInput').value;
-    sha256(v).then(function(hash){
-      if(hash === SHX){
-        var r = document.getElementById('lockRemember').checked;
-        try{
-          if(r){ localStorage.setItem(KEY,'1'); }
-          else { localStorage.removeItem(KEY); }
-        }catch(e){}
-        unlock();
-      } else {
-        var box=document.getElementById('lockBox'), err=document.getElementById('lockErr');
-        box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
-        err.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 密码错误，请重试';
+    .hero {
+      padding: 32px 0 4px
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--t3);
+      margin-bottom: 12px
+    }
+
+    .hero-title {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      color: var(--t1);
+      line-height: 1.2
+    }
+
+    .hero-sub {
+      margin-top: 10px;
+      color: var(--t2);
+      font-size: 15px;
+      max-width: 760px
+    }
+
+    .hero-tags {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .pill {
+      color: color-mix(in srgb, var(--acc) 85%, var(--t1));
+      background: color-mix(in srgb, var(--acc) 14%, var(--surface));
+      border-radius: var(--btnr);
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid color-mix(in srgb, var(--acc) 25%, transparent)
+    }
+
+    .sec {
+      margin: 40px 0
+    }
+
+    .sec-head {
+      margin-bottom: 16px
+    }
+
+    .sec-head h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--t1);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .sec-head h2 i {
+      color: var(--acc)
+    }
+
+    .sec-head .tag {
+      font-size: 12.5px;
+      color: var(--t3);
+      margin-top: 4px
+    }
+
+    .query-card {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .query-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--acc)
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .code-input {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 14px;
+      height: 46px
+    }
+
+    .code-input i {
+      color: var(--t3)
+    }
+
+    .code-input input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--t1);
+      background: transparent;
+      font-family: inherit
+    }
+
+    .code-input input::placeholder {
+      color: var(--t3);
+      font-weight: 400;
+      font-size: 13px
+    }
+
+    .btn {
+      background: var(--acc);
+      color: var(--on);
+      border: none;
+      border-radius: var(--btnr);
+      padding: 12px 24px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: .2s;
+      height: 46px
+    }
+
+    .btn:hover {
+      background: var(--acc-h)
+    }
+
+    .btn:active {
+      transform: translateY(1px)
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px
+    }
+
+    .hot-label {
+      margin: 16px 0 8px;
+      font-size: 13px;
+      color: var(--t3)
+    }
+
+    .hot-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .hot {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--btnr);
+      padding: 8px 14px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--t1);
+      font-weight: 600;
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      transition: .2s
+    }
+
+    .hot span {
+      color: var(--t3);
+      font-weight: 400;
+      font-size: 12px
+    }
+
+    .hot:hover {
+      border-color: var(--acc);
+      color: var(--acc)
+    }
+
+    .hot.active {
+      background: var(--acc);
+      border-color: var(--acc);
+      color: var(--on)
+    }
+
+    .hot.active span {
+      color: color-mix(in srgb, var(--on) 70%, transparent)
+    }
+
+    .signal-card {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 26px;
+      text-align: center
+    }
+
+    .signal-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px
+    }
+
+    .signal-head .name {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--t1)
+    }
+
+    .signal-head .code {
+      font-size: 13px;
+      color: var(--t3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 12px
+    }
+
+    .big-signal {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+      transition: background .4s
+    }
+
+    .big-signal .sig-ico {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .big-signal .sig-lvl {
+      font-size: 30px;
+      font-weight: 800;
+      margin-top: 4px;
+      letter-spacing: .02em
+    }
+
+    .big-signal .sig-price {
+      margin-top: 5px;
+      font-size: 14px;
+      opacity: .92
+    }
+
+    .sig-msg {
+      margin: 18px auto 0;
+      max-width: 660px;
+      font-size: 15px;
+      color: var(--t1);
+      font-weight: 600;
+      line-height: 1.7
+    }
+
+    .sig-sub {
+      margin: 6px auto 0;
+      max-width: 660px;
+      font-size: 12.5px;
+      color: var(--t3)
+    }
+
+    .sig-bar {
+      margin: 20px auto 0;
+      max-width: 540px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      text-align: left
+    }
+
+    .sig-bar .row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 4px 0
+    }
+
+    .sig-bar .row b {
+      color: var(--t1);
+      font-weight: 600
+    }
+
+    .sig-bar .row .v {
+      font-weight: 700;
+      color: var(--t1)
+    }
+
+    .risk-toggle {
+      margin: 16px auto 0;
+      max-width: 540px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px
+    }
+
+    .risk-toggle .lab {
+      font-size: 13px;
+      color: var(--t3)
+    }
+
+    .seg {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--btnr);
+      overflow: hidden
+    }
+
+    .seg button {
+      border: none;
+      background: var(--surface);
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--t2);
+      cursor: pointer;
+      font-family: inherit;
+      transition: .2s
+    }
+
+    .seg button.on {
+      background: var(--acc);
+      color: var(--on)
+    }
+
+    .seg button:focus {
+      outline: none
+    }
+
+    .watch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px
+    }
+
+    .wcard {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 14px;
+      cursor: pointer;
+      transition: .2s;
+      border: 1px solid transparent;
+      position: relative
+    }
+
+    .wcard:hover {
+      border-color: var(--acc);
+      transform: translateY(-2px)
+    }
+
+    .wcard .wtop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 18px
+    }
+
+    .wcard .wname {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--t1)
+    }
+
+    .wcard .wcode {
+      font-size: 11px;
+      color: var(--t3)
+    }
+
+    .wcard .wprice {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--t1);
+      margin: 6px 0 2px
+    }
+
+    .wcard .wsig {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block
+    }
+
+    .wcard .del {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: color-mix(in srgb, var(--bad) 12%, transparent);
+      color: var(--bad);
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: .2s;
+      font-family: inherit
+    }
+
+    .wcard:hover .del {
+      opacity: 1
+    }
+
+    .wcard .del:hover {
+      background: var(--bad);
+      color: #fff
+    }
+
+    .empty {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 26px;
+      text-align: center;
+      color: var(--t3);
+      font-size: 14px
+    }
+
+    .grp {
+      margin-bottom: 26px
+    }
+
+    .grp-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 4px solid;
+      padding-left: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap
+    }
+
+    .grp-head h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--t1)
+    }
+
+    .grp-head .gsub {
+      font-size: 12px;
+      color: var(--t3);
+      margin-left: 8px
+    }
+
+    .grp-head .gcount {
+      font-size: 11px;
+      color: var(--t3);
+      background: var(--tint);
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-left: auto
+    }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px
+    }
+
+    .rcard {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: .2s;
+      border: 1px solid transparent;
+      position: relative
+    }
+
+    .rcard:hover {
+      border-color: var(--acc);
+      transform: translateY(-2px)
+    }
+
+    .r-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px
+    }
+
+    .r-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--t1)
+    }
+
+    .r-code {
+      font-size: 12px;
+      color: var(--t3)
+    }
+
+    .r-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--t1);
+      margin: 8px 0 2px
+    }
+
+    .r-yield {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--acc)
+    }
+
+    .r-note {
+      font-size: 12.5px;
+      color: var(--t2);
+      line-height: 1.5;
+      margin-top: 4px
+    }
+
+    .r-cta {
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--acc);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .r-add {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--t3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      transition: .2s;
+      font-size: 14px;
+      z-index: 2
+    }
+
+    .r-add:hover {
+      border-color: var(--good);
+      color: var(--good)
+    }
+
+    .r-add.on {
+      background: var(--good);
+      border-color: var(--good);
+      color: #fff
+    }
+
+    .news-list {
+      display: grid;
+      gap: 10px
+    }
+
+    .nitem {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: .2s;
+      border: 1px solid transparent
+    }
+
+    .nitem:hover {
+      border-color: var(--acc)
+    }
+
+    .nitem .ncode {
+      flex-shrink: 0;
+      width: 56px;
+      font-size: 12px;
+      color: var(--acc);
+      font-weight: 700;
+      padding-top: 2px
+    }
+
+    .nitem .nbody .ntitle {
+      font-size: 14px;
+      color: var(--t1);
+      font-weight: 600;
+      line-height: 1.5
+    }
+
+    .nitem .nbody .nmsg {
+      font-size: 12.5px;
+      color: var(--t2);
+      line-height: 1.6;
+      margin-top: 3px
+    }
+
+    .hist {
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 16px
+    }
+
+    .hist-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 4px;
+      border-bottom: 1px dashed var(--border);
+      cursor: pointer;
+      transition: .2s;
+      flex-wrap: wrap
+    }
+
+    .hist-item:last-child {
+      border-bottom: none
+    }
+
+    .hist-item:hover .hn {
+      color: var(--acc)
+    }
+
+    .hist-item .htime {
+      font-size: 12px;
+      color: var(--t3);
+      flex: 1;
+      min-width: 110px;
+      text-align: right
+    }
+
+    .hist-item .hn {
+      font-size: 14px;
+      color: var(--t1);
+      font-weight: 600
+    }
+
+    .hist-item .hc {
+      font-size: 12px;
+      color: var(--t3)
+    }
+
+    .hist-item .hp {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--t1);
+      margin-left: auto
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 20, .5);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    .overlay.show {
+      display: flex
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 88vh;
+      overflow: auto;
+      padding: 28px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .2)
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: var(--tint);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--t2);
+      font-family: inherit
+    }
+
+    .modal-close:hover {
+      background: color-mix(in srgb, var(--bad) 12%, transparent);
+      color: var(--bad)
+    }
+
+    .m-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+      padding-right: 40px
+    }
+
+    .m-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--t1)
+    }
+
+    .m-code {
+      font-size: 13px;
+      color: var(--t3);
+      background: var(--tint);
+      border-radius: 20px;
+      padding: 2px 12px
+    }
+
+    .m-sub {
+      font-size: 13px;
+      color: var(--t3);
+      margin-bottom: 16px
+    }
+
+    .m-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap
+    }
+
+    .m-price {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--t1)
+    }
+
+    .m-yield {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--acc)
+    }
+
+    .m-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px
+    }
+
+    .m-stat {
+      background: var(--tint);
+      border-radius: 12px;
+      padding: 12px 14px
+    }
+
+    .m-stat .lab {
+      font-size: 11px;
+      color: var(--t3);
+      margin-bottom: 2px
+    }
+
+    .m-stat .val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--t1)
+    }
+
+    .m-sec {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--t1);
+      margin: 18px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .m-sec i {
+      color: var(--acc)
+    }
+
+    .m-msg {
+      background: var(--tint);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--t1);
+      line-height: 1.7
+    }
+
+    .m-risk {
+      background: color-mix(in srgb, var(--warn) 10%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--t2);
+      line-height: 1.7
+    }
+
+    .m-risk b {
+      color: var(--warn)
+    }
+
+    .m-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px
+    }
+
+    .addwatch-btn {
+      background: var(--good);
+      color: #fff;
+      border: none;
+      border-radius: var(--btnr);
+      padding: 11px 20px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: .2s
+    }
+
+    .addwatch-btn:hover {
+      filter: brightness(.92)
+    }
+
+    .addwatch-btn.off {
+      background: var(--tint);
+      color: var(--t3)
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1A1A1F;
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 200;
+      opacity: 0;
+      transition: .3s;
+      pointer-events: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2)
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px)
+    }
+
+    .disclaimer {
+      margin-top: 36px;
+      background: var(--tint);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      border-left: 4px solid var(--warn)
+    }
+
+    .disclaimer h3 {
+      font-size: 15px;
+      color: var(--warn);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .disclaimer ul {
+      margin-top: 10px;
+      padding-left: 20px;
+      font-size: 13px;
+      color: var(--t2);
+      display: grid;
+      gap: 6px
+    }
+
+    .disclaimer li::marker {
+      color: var(--warn)
+    }
+
+    .footer {
+      margin: 36px 0 60px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--t3);
+      line-height: 1.8
+    }
+
+    @media(max-width:640px) {
+      .wrap {
+        padding: 0 16px
       }
+
+      .hero-title {
+        font-size: 22px
+      }
+
+      .rec-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))
+      }
+
+      .watch-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))
+      }
+
+      .modal {
+        padding: 20px
+      }
+
+      .m-price {
+        font-size: 30px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      padding-bottom: env(safe-area-inset-bottom)
+    }
+
+    .topbar-in {
+      padding-top: calc(12px + env(safe-area-inset-top))
+    }
+
+    .btn,
+    .hot,
+    .code-input,
+    .seg button,
+    .addwatch-btn,
+    .r-add,
+    .del,
+    .modal-close {
+      min-height: 44px;
+      min-width: 44px
+    }
+
+    .btn {
+      height: auto;
+      min-height: 48px;
+      padding: 14px 26px
+    }
+
+    .hot {
+      padding: 11px 16px
+    }
+
+    .seg button {
+      padding: 11px 18px
+    }
+
+    .code-input {
+      height: 48px
+    }
+
+    .rcard,
+    .wcard,
+    .nitem {
+      padding: 16px
+    }
+
+    .r-add {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px
+    }
+
+    .del {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      opacity: .55
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px
+    }
+
+    .addwatch-btn {
+      min-height: 48px;
+      padding: 13px 22px
+    }
+
+    .sig-bar .row {
+      padding: 7px 0;
+      font-size: 15px
+    }
+
+    .sig-ico svg {
+      width: 56px;
+      height: 56px
+    }
+
+    .install-hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: color-mix(in srgb, var(--acc) 10%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--acc) 28%, transparent);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 0;
+      font-size: 13px;
+      color: var(--t1);
+      line-height: 1.6
+    }
+
+    .install-hint svg {
+      flex-shrink: 0;
+      color: var(--acc)
+    }
+
+    .install-hint b {
+      color: var(--t1)
+    }
+
+    @media(max-width:640px) {
+      .install-hint {
+        font-size: 12.5px;
+        padding: 12px 14px
+      }
+
+      .hero {
+        padding: 26px 0 4px
+      }
+    }
+
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #1A1A1F 0%, #2b2b33 55%, #3a2c18 100%);
+      padding: 24px;
+      overflow: auto
+    }
+
+    .lock-box {
+      background: #fff;
+      border-radius: 24px;
+      max-width: 360px;
+      width: 100%;
+      padding: 34px 28px 30px;
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .45)
+    }
+
+    .lock-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: #FF6900;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(255, 105, 0, .35)
+    }
+
+    .lock-logo svg {
+      width: 42px;
+      height: 42px
+    }
+
+    .lock-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #1A1A1F;
+      line-height: 1.3
+    }
+
+    .lock-sub {
+      font-size: 13px;
+      color: #8a8a90;
+      margin: 8px 0 22px;
+      line-height: 1.5
+    }
+
+    .lock-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F3F4F6;
+      border: 1.5px solid #E2E4E8;
+      border-radius: 12px;
+      padding: 0 14px;
+      height: 50px;
+      transition: border-color .2s
+    }
+
+    .lock-field:focus-within {
+      border-color: #FF6900
+    }
+
+    .lock-field svg {
+      color: #9aa0a8;
+      flex-shrink: 0
+    }
+
+    .lock-field input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1A1A1F;
+      font-family: inherit
+    }
+
+    .lock-field input::placeholder {
+      color: #b9bec7;
+      font-weight: 400
+    }
+
+    .lock-field .show-eye {
+      border: none;
+      background: none;
+      color: #9aa0a8;
+      cursor: pointer;
+      padding: 4px;
+      display: flex
+    }
+
+    .lock-field .show-eye:hover {
+      color: #1A1A1F
+    }
+
+    .lock-btn {
+      width: 100%;
+      height: 50px;
+      border: none;
+      border-radius: 12px;
+      background: #FF6900;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 16px;
+      font-family: inherit;
+      transition: .2s
+    }
+
+    .lock-btn:hover {
+      background: #E85D00
+    }
+
+    .lock-btn:active {
+      transform: translateY(1px)
+    }
+
+    .lock-btn:focus {
+      outline: 3px solid rgba(255, 105, 0, .4);
+      outline-offset: 2px
+    }
+
+    .lock-err {
+      min-height: 22px;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #C62F1F;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px
+    }
+
+    .lock-remember {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 13px;
+      color: #6a6e76
+    }
+
+    .lock-remember input {
+      width: 17px;
+      height: 17px;
+      accent-color: #FF6900
+    }
+
+    .lock-hint {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+      font-size: 11px;
+      color: #b0b4bb;
+      line-height: 1.6
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      20% {
+        transform: translateX(-9px)
+      }
+
+      40% {
+        transform: translateX(9px)
+      }
+
+      60% {
+        transform: translateX(-6px)
+      }
+
+      80% {
+        transform: translateX(6px)
+      }
+    }
+
+    .lock-box.shake {
+      animation: shake .45s cubic-bezier(.36, .07, .19, .97)
+    }
+
+    @media(max-width:640px) {
+      .lock-box {
+        padding: 30px 22px 26px
+      }
+
+      .lock-logo {
+        width: 64px;
+        height: 64px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .lock-box.shake {
+        animation: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== 密碼鎖：全屏解鎖界面 ===== -->
+  <div class="lock-screen" id="lockScreen" style="display:none">
+    <div class="lock-box" id="lockBox">
+      <div class="lock-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="14" y="33" width="9" height="15" rx="2" fill="currentColor" opacity=".85" stroke="none" />
+          <rect x="38" y="22" width="9" height="26" rx="2" fill="currentColor" opacity=".85" stroke="none" />
+          <polyline points="14,45 27,31 36,36 50,22" />
+        </svg>
+      </div>
+      <div class="lock-title">股票買入時機小助手</div>
+      <div class="lock-sub">私密版 · 請輸入訪問密碼解鎖</div>
+      <div class="lock-field" id="lockField">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <input id="lockInput" type="password" inputmode="text" placeholder="請輸入密碼" autocomplete="off" enterkeyhint="go">
+        <button class="show-eye" id="lockEye" type="button" aria-label="顯示/隱藏密碼">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
+      </div>
+      <button class="lock-btn" id="lockBtn" type="button">解鎖</button>
+      <div class="lock-err" id="lockErr"></div>
+      <label class="lock-remember">
+        <input type="checkbox" id="lockRemember"> 記住我（此設備下次免輸密碼）
+      </label>
+      <div class="lock-hint">此私密頁僅供本人使用。忘記密碼請將本 HTML 中 SHX 變量替換為新密碼的 SHA-256 哈希值（修改步驟見代碼註釋）。</div>
+    </div>
+  </div>
+
+
+  <div class="topbar">
+    <div class="topbar-in">
+      <div class="logo">股</div>
+      <h1>股票買入時機小助手</h1>
+      <span class="live"><span class="dot"></span>離線·教學參考</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="breadcrumb">新手友好 · 學習增強版</div>
+      <div class="hero-title">一隻股票，什麼時候買最好？</div>
+      <div class="hero-sub">把複雜的K線、均線、RSI都收進背後，你只需要看「買入 / 觀望 /
+        賣出」三個燈，配一句人話解釋。點任一隻股票就能看它的專屬買賣信號和技術指標，還能把心水的股票加進自己的觀察名單。所有內容僅供學習參考，不構成投資建議。</div>
+      <div class="hero-tags">
+        <span class="pill">適合新手</span>
+        <span class="pill">港股</span>
+        <span class="pill">自選觀察</span>
+        <span class="pill">推薦名單</span>
+        <span class="pill">當天消息</span><span class="pill">完全離線</span>
+      </div>
+    </div>
+
+    <div class="install-hint">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <path d="M12 18h.01" />
+      </svg>
+      <div><b>手機安裝提示：</b>在瀏覽器菜單點「添加到主屏幕 / 加入主屏幕」，就能像 App 一樣獨立打開。本工具<strong>數據全部內置、完全離線可用</strong>，斷網也能看。</div>
+    </div>
+    <div class="sec" style="margin-top:22px">
+      <div class="query-card">
+        <div class="input-row">
+          <div class="code-input">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <input id="code" type="text" placeholder="輸入港股編號，如 01810" maxlength="5">
+          </div>
+          <button class="btn" id="go">查信號</button>
+        </div>
+        <div class="hot-label">熱門股票快捷選擇：</div>
+        <div class="hot-row" id="hotRow">
+          <button class="hot" data-code="01810">小米集團<span>01810</span></button><button class="hot"
+            data-code="00700">騰訊控股<span>00700</span></button><button class="hot"
+            data-code="09988">阿里巴巴<span>09988</span></button><button class="hot"
+            data-code="03690">美團<span>03690</span></button><button class="hot"
+            data-code="00883">中海油<span>00883</span></button><button class="hot"
+            data-code="01398">工商銀行<span>01398</span></button><button class="hot"
+            data-code="00939">建設銀行<span>00939</span></button><button class="hot"
+            data-code="00941">中國移動<span>00941</span></button><button class="hot"
+            data-code="01088">中國神華<span>01088</span></button><button class="hot"
+            data-code="02318">中國平安<span>02318</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" style="margin-top:0">
+      <div class="signal-card">
+        <div class="signal-head">
+          <span class="name" id="sigName">小米集團</span>
+          <span class="code" id="sigCode">01810</span>
+        </div>
+        <div class="big-signal" id="bigSig" style="background:#B45309">
+          <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="14" y="4" width="4" height="16" rx="1" />
+              <rect x="6" y="4" width="4" height="16" rx="1" />
+            </svg></div>
+          <div class="sig-lvl" id="sigLvl">觀望</div>
+          <div class="sig-price" id="sigPrice">現價 29.70</div>
+        </div>
+        <div class="sig-msg" id="sigMsg">股價還高於你設定的目標價，先別急，等等回調。</div>
+        <div class="sig-sub" id="sigSub">信號由「現價 vs 你的目標買入價」+「風險偏好」得出，僅供學習參考。點下面的「看完整分析」可查看技術指標與當天消息。</div>
+        <div class="sig-bar">
+          <div class="row"><span>現價 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span></div>
+          <div class="row"><span>我的目標買入價 <b id="barTarget">28.50</b></span><span class="v" id="barTargetV">28.50</span>
+          </div>
+          <div class="row"><span>價差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
+        </div>
+        <div class="risk-toggle">
+          <span class="lab">我的風險偏好：</span>
+          <div class="seg" id="riskSeg">
+            <button data-r="calm">穩健</button>
+            <button data-r="mid" class="on">均衡</button>
+            <button data-r="agg">進取</button>
+          </div>
+        </div>
+        <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg> 看當前股票的完整分析</button></div>
+      </div>
+    </div>
+
+    <div class="sec" id="watchSec">
+      <div class="sec-head">
+        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
+          </svg> 我的觀察名單</h2>
+        <div class="tag">把你心水的股票加進來，點擊任意一隻可看專屬分析。保存本頁後名單自動留存。</div>
+      </div>
+      <div class="watch-grid" id="watchGrid"></div>
+    </div>
+
+    <div class="sec" id="recSec">
+      <div class="sec-head">
+        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3Z" />
+          </svg> 為你推薦 · 分組名單</h2>
+        <div class="tag">按「科技成長 / 金融高息 / 能源資源 / 電訊公用 / 消費黃金」分組，點卡片看專屬分析，點右上角 ⊕ 加入觀察名單。</div>
+      </div>
+      <div class="grp">
+        <div class="grp-head" style="border-left-color:#1A1A1F">
+          <h3>科技成長</h3><span class="gsub">進攻型 · 波動大、想象空間大，適合有承受力的人</span><span class="gcount">4 只</span>
+        </div>
+        <div class="rec-grid">
+          <div class="rcard" data-code="01810">
+            <button class="r-add" data-code="01810" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">小米集團</span><span class="r-code">01810</span></div>
+            <div class="r-price">29.70</div>
+            <div class="r-yield">股息率 低息·成長</div>
+            <div class="r-note">人車家全生態，汽車+AI雙引擎，澎程系列熱銷</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="00700">
+            <button class="r-add" data-code="00700" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">騰訊控股</span><span class="r-code">00700</span></div>
+            <div class="r-price">376.00</div>
+            <div class="r-yield">股息率 低息·成長</div>
+            <div class="r-note">遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="09988">
+            <button class="r-add" data-code="09988" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">阿里巴巴</span><span class="r-code">09988</span></div>
+            <div class="r-price">85.45</div>
+            <div class="r-yield">股息率 低息·成長</div>
+            <div class="r-note">電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="03690">
+            <button class="r-add" data-code="03690" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">美團</span><span class="r-code">03690</span></div>
+            <div class="r-price">70.50</div>
+            <div class="r-yield">股息率 低息·成長</div>
+            <div class="r-note">即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-head" style="border-left-color:#FF6900">
+          <h3>金融高息</h3><span class="gsub">收息型 · 派息穩、估值低，防禦底倉</span><span class="gcount">3 只</span>
+        </div>
+        <div class="rec-grid">
+          <div class="rcard" data-code="01398">
+            <button class="r-add" data-code="01398" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">工商銀行</span><span class="r-code">01398</span></div>
+            <div class="r-price">8.01</div>
+            <div class="r-yield">股息率 約5.7釐</div>
+            <div class="r-note">國有大行，分紅穩定、估值低，距52周高點不足2%</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="00939">
+            <button class="r-add" data-code="00939" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">建設銀行</span><span class="r-code">00939</span></div>
+            <div class="r-price">10.59</div>
+            <div class="r-yield">股息率 約5.8釐</div>
+            <div class="r-note">國有大行，高股息防禦底倉，H股折價提供安全墊</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="02318">
+            <button class="r-add" data-code="02318" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">中國平安</span><span class="r-code">02318</span></div>
+            <div class="r-price">51.25</div>
+            <div class="r-yield">股息率 5.5釐</div>
+            <div class="r-note">保險藍籌，業績平穩、派息穩定，高股息防禦之選</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-head" style="border-left-color:#B45309">
+          <h3>能源資源</h3><span class="gsub">收息型 · 高股息+景氣，現金流強</span><span class="gcount">2 只</span>
+        </div>
+        <div class="rec-grid">
+          <div class="rcard" data-code="00883">
+            <button class="r-add" data-code="00883" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">中海油</span><span class="r-code">00883</span></div>
+            <div class="r-price">22.62</div>
+            <div class="r-yield">股息率 約6.9釐</div>
+            <div class="r-note">能源高息藍籌，原油景氣支撐，現金流強</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="01088">
+            <button class="r-add" data-code="01088" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">中國神華</span><span class="r-code">01088</span></div>
+            <div class="r-price">43.56</div>
+            <div class="r-yield">股息率 約5.4釐</div>
+            <div class="r-note">煤電一體化，現金流穩定、分紅高，冬季用能旺季受益</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-head" style="border-left-color:#0E7C3A">
+          <h3>電訊公用</h3><span class="gsub">收息型 · 現金流穩、防禦性強</span><span class="gcount">3 只</span>
+        </div>
+        <div class="rec-grid">
+          <div class="rcard" data-code="00941">
+            <button class="r-add" data-code="00941" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">中國移動</span><span class="r-code">00941</span></div>
+            <div class="r-price">80.50</div>
+            <div class="r-yield">股息率 約6.1釐</div>
+            <div class="r-note">派息穩定有增長，財息兼收首選，防禦性強</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="00002">
+            <button class="r-add" data-code="00002" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">中電控股</span><span class="r-code">00002</span></div>
+            <div class="r-price">68.50</div>
+            <div class="r-yield">股息率 高息</div>
+            <div class="r-note">公用事業，防禦屬性強，本地收息之選</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="06823">
+            <button class="r-add" data-code="06823" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">香港電訊</span><span class="r-code">06823</span></div>
+            <div class="r-price">5.20</div>
+            <div class="r-yield">股息率 約6.7釐</div>
+            <div class="r-note">派息較穩定，本地電訊收息之選</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-head" style="border-left-color:#C62F1F">
+          <h3>消費黃金</h3><span class="gsub">混合型 · 含高息與高波動，請特別留意風險</span><span class="gcount">2 只</span>
+        </div>
+        <div class="rec-grid">
+          <div class="rcard" data-code="06181">
+            <button class="r-add" data-code="06181" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">老鋪黃金</span><span class="r-code">06181</span></div>
+            <div class="r-price">297.60</div>
+            <div class="r-yield">股息率 約8.7釐</div>
+            <div class="r-note">派息大增但盈利與金價相關，8釐以上請特別留意風險</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+          <div class="rcard" data-code="06862">
+            <button class="r-add" data-code="06862" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg></button>
+            <div class="r-top"><span class="r-name">海底撈</span><span class="r-code">06862</span></div>
+            <div class="r-price">10.38</div>
+            <div class="r-yield">股息率 約6.6釐</div>
+            <div class="r-note">藍籌消費，派息增加、盈利穩定</div>
+            <div class="r-cta">看專屬分析 ›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="newsSec">
+      <div class="sec-head">
+        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+            <path d="M18 14h-8" />
+            <path d="M15 18h-5" />
+            <path d="M10 6h8v4h-8V6Z" />
+          </svg> 相關服務 · 當天消息</h2>
+        <div class="tag">每隻股票當天相關資訊 / 消息（教學整理，非實時），點擊可跳到該股分析。</div>
+      </div>
+      <div class="news-list">
+        <div class="nitem" data-code="01810">
+          <span class="ncode">01810</span>
+          <div class="nbody">
+            <div class="ntitle">小米集團 · 當天相關</div>
+            <div class="nmsg">10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="00700">
+          <span class="ncode">00700</span>
+          <div class="nbody">
+            <div class="ntitle">騰訊控股 · 當天相關</div>
+            <div class="nmsg">11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="09988">
+          <span class="ncode">09988</span>
+          <div class="nbody">
+            <div class="ntitle">阿里巴巴 · 當天相關</div>
+            <div class="nmsg">11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="03690">
+          <span class="ncode">03690</span>
+          <div class="nbody">
+            <div class="ntitle">美團 · 當天相關</div>
+            <div class="nmsg">11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="01398">
+          <span class="ncode">01398</span>
+          <div class="nbody">
+            <div class="ntitle">工商銀行 · 當天相關</div>
+            <div class="nmsg">前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="00939">
+          <span class="ncode">00939</span>
+          <div class="nbody">
+            <div class="ntitle">建設銀行 · 當天相關</div>
+            <div class="nmsg">11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="02318">
+          <span class="ncode">02318</span>
+          <div class="nbody">
+            <div class="ntitle">中國平安 · 當天相關</div>
+            <div class="nmsg">11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="00883">
+          <span class="ncode">00883</span>
+          <div class="nbody">
+            <div class="ntitle">中海油 · 當天相關</div>
+            <div class="nmsg">11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="01088">
+          <span class="ncode">01088</span>
+          <div class="nbody">
+            <div class="ntitle">中國神華 · 當天相關</div>
+            <div class="nmsg">11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="00941">
+          <span class="ncode">00941</span>
+          <div class="nbody">
+            <div class="ntitle">中國移動 · 當天相關</div>
+            <div class="nmsg">11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="00002">
+          <span class="ncode">00002</span>
+          <div class="nbody">
+            <div class="ntitle">中電控股 · 當天相關</div>
+            <div class="nmsg">公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="06823">
+          <span class="ncode">06823</span>
+          <div class="nbody">
+            <div class="ntitle">香港電訊 · 當天相關</div>
+            <div class="nmsg">本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="06181">
+          <span class="ncode">06181</span>
+          <div class="nbody">
+            <div class="ntitle">老鋪黃金 · 當天相關</div>
+            <div class="nmsg">金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。</div>
+          </div>
+        </div>
+        <div class="nitem" data-code="06862">
+          <span class="ncode">06862</span>
+          <div class="nbody">
+            <div class="ntitle">海底撈 · 當天相關</div>
+            <div class="nmsg">消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="histSec">
+      <div class="sec-head">
+        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+            <path d="M12 7v5l4 2" />
+          </svg> 查詢歷史記錄</h2>
+        <div class="tag">你最近查過的股票（保存在本機），點擊可回看。</div>
+      </div>
+      <div class="hist" id="histBox">
+        <div class="empty">還沒有查詢記錄，去上面查一隻股票吧。</div>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <path d="M12 9v4" />
+          <path d="M12 17h.01" />
+        </svg> 投資風險免責聲明</h3>
+      <ul>
+        <li>本工具所有價格、信號、技術指標與當天消息僅供學習參考，不構成任何投資建議或邀約。</li>
+        <li>股票價格可升可跌，過往表現不代表未來；投資者可能損失全部或部分本金，請量力而為。</li>
+        <li>「買入/觀望/賣出」信號由「現價 vs 目標買入價 + 風險偏好」的簡單教學規則生成，MA/RSI/支撐壓力位為教學參考值，不包含真實完整的技術面與基本面分析，不可作為實際交易依據。</li>
+        <li>當天消息為公開資訊的整理摘要，請以公司公告與官方披露為準。</li>
+        <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股價大跌或盈利不可持續所致，收息前請評估盈利穩定性、派息持續性與股價波動風險。</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      股票買入時機小助手 · 手機安裝版<br>
+      數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
+      生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg></button>
+      <div class="m-head">
+        <span class="m-name" id="mName"></span>
+        <span class="m-code" id="mCode"></span>
+      </div>
+      <div class="m-sub" id="mSub"></div>
+      <div class="m-price-row">
+        <span class="m-price" id="mPrice"></span>
+        <span class="m-yield" id="mYield"></span>
+      </div>
+      <div class="m-grid" id="mGrid"></div>
+      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg> 買賣信號</div>
+      <div class="m-msg" id="mMsg"></div>
+      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+          <path d="M18 14h-8" />
+          <path d="M15 18h-5" />
+          <path d="M10 6h8v4h-8V6Z" />
+        </svg> 當天消息</div>
+      <div class="m-risk" id="mNews"></div>
+      <div class="m-sec"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" />
+          <path d="M12 8v4" />
+          <path d="M12 16h.01" />
+        </svg> 風險提示</div>
+      <div class="m-risk" id="mRisk"></div>
+      <div class="m-btns">
+        <button class="addwatch-btn" id="mAddWatch">加入觀察名單</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var ICON = {
+      "trending-up": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+      "pause": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>',
+      "shield-alert": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'
+    };
+
+    var DATA = { "01810": { "name": "小米集團", "price": 29.7, "target": 28.5, "y": "低息·成長", "grp": "科技成長", "note": "人車家全生態，汽車+AI雙引擎，澎程系列熱銷", "ma5": 29.9, "ma20": 29.0, "rsi": 52, "sup": 28.5, "res": 31.5, "news": "10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。" }, "00700": { "name": "騰訊控股", "price": 376.0, "target": 360.0, "y": "低息·成長", "grp": "科技成長", "note": "遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入", "ma5": 388, "ma20": 398, "rsi": 38, "sup": 360, "res": 400, "news": "11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。" }, "09988": { "name": "阿里巴巴", "price": 85.45, "target": 90.0, "y": "低息·成長", "grp": "科技成長", "note": "電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌", "ma5": 92, "ma20": 96, "rsi": 32, "sup": 82, "res": 95, "news": "11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。" }, "03690": { "name": "美團", "price": 70.5, "target": 68.0, "y": "低息·成長", "grp": "科技成長", "note": "即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中", "ma5": 71, "ma20": 69, "rsi": 47, "sup": 65, "res": 75, "news": "11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。" }, "01398": { "name": "工商銀行", "price": 8.01, "target": 8.0, "y": "約5.7釐", "grp": "金融高息", "note": "國有大行，分紅穩定、估值低，距52周高點不足2%", "ma5": 8.0, "ma20": 7.9, "rsi": 55, "sup": 7.7, "res": 8.18, "news": "前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。" }, "00939": { "name": "建設銀行", "price": 10.59, "target": 10.5, "y": "約5.8釐", "grp": "金融高息", "note": "國有大行，高股息防禦底倉，H股折價提供安全墊", "ma5": 10.6, "ma20": 10.4, "rsi": 54, "sup": 10.1, "res": 10.9, "news": "11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。" }, "02318": { "name": "中國平安", "price": 51.25, "target": 50.0, "y": "5.5釐", "grp": "金融高息", "note": "保險藍籌，業績平穩、派息穩定，高股息防禦之選", "ma5": 51.5, "ma20": 50.5, "rsi": 50, "sup": 48.5, "res": 53, "news": "11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。" }, "00883": { "name": "中海油", "price": 22.62, "target": 23.0, "y": "約6.9釐", "grp": "能源資源", "note": "能源高息藍籌，原油景氣支撐，現金流強", "ma5": 23.1, "ma20": 23.0, "rsi": 45, "sup": 21.5, "res": 24, "news": "11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。" }, "01088": { "name": "中國神華", "price": 43.56, "target": 44.0, "y": "約5.4釐", "grp": "能源資源", "note": "煤電一體化，現金流穩定、分紅高，冬季用能旺季受益", "ma5": 43.8, "ma20": 43.0, "rsi": 55, "sup": 41.5, "res": 46, "news": "11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。" }, "00941": { "name": "中國移動", "price": 80.5, "target": 79.0, "y": "約6.1釐", "grp": "電訊公用", "note": "派息穩定有增長，財息兼收首選，防禦性強", "ma5": 80.5, "ma20": 80.0, "rsi": 52, "sup": 78, "res": 82, "news": "11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。" }, "00002": { "name": "中電控股", "price": 68.5, "target": 67.0, "y": "高息", "grp": "電訊公用", "note": "公用事業，防禦屬性強，本地收息之選", "ma5": 68.8, "ma20": 68.0, "rsi": 50, "sup": 66, "res": 70, "news": "公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。" }, "06823": { "name": "香港電訊", "price": 5.2, "target": 5.0, "y": "約6.7釐", "grp": "電訊公用", "note": "派息較穩定，本地電訊收息之選", "ma5": 5.2, "ma20": 5.1, "rsi": 52, "sup": 4.9, "res": 5.4, "news": "本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。" }, "06181": { "name": "老鋪黃金", "price": 297.6, "target": 270.0, "y": "約8.7釐", "grp": "消費黃金", "note": "派息大增但盈利與金價相關，8釐以上請特別留意風險", "ma5": 305, "ma20": 310, "rsi": 35, "sup": 280, "res": 330, "news": "金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。" }, "06862": { "name": "海底撈", "price": 10.38, "target": 9.8, "y": "約6.6釐", "grp": "消費黃金", "note": "藍籌消費，派息增加、盈利穩定", "ma5": 10.5, "ma20": 10.2, "rsi": 48, "sup": 9.5, "res": 11, "news": "消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。" } };
+    var cur = "01810";
+    var risk = "mid";
+    var watch = ["01810"];
+
+    function fmt(n) { return (+n).toFixed(2); }
+    function compute(price, target, r) {
+      var mult = r === "calm" ? 1.05 : (r === "mid" ? 1.10 : 1.15);
+      if (price <= target) {
+        return { lvl: "買入", color: "#0E7C3A", icon: "trending-up", msg: "股價已到（或低於）你設定的目標買入價，符合分批進場條件。可以開始小額分批買，別一次梭哈。" };
+      } else if (price < target * mult) {
+        return { lvl: "觀望", color: "#B45309", icon: "pause", msg: "股價還略高於目標價，先別急着追，可以掛着等它回調到目標價附近再動手。" };
+      } else {
+        return { lvl: "賣出 / 等待", color: "#C62F1F", icon: "shield-alert", msg: "股價明顯高於你的目標價（追高風險），現在買不划算。建議等待回落，或先觀察基本面變化。" };
+      }
+    }
+
+    function render() {
+      var d = DATA[cur];
+      if (!d) return;
+      var s = compute(d.price, d.target, risk);
+      var big = document.getElementById("bigSig");
+      big.style.background = s.color;
+      document.getElementById("sigIco").innerHTML = ICON[s.icon] || '';
+      document.getElementById("sigLvl").textContent = s.lvl;
+      document.getElementById("sigPrice").textContent = "現價 " + fmt(d.price);
+      document.getElementById("sigMsg").textContent = s.msg;
+      document.getElementById("sigName").textContent = d.name;
+      document.getElementById("sigCode").textContent = cur;
+      document.getElementById("barPrice").textContent = fmt(d.price);
+      document.getElementById("barPriceV").textContent = fmt(d.price);
+      document.getElementById("barTarget").textContent = fmt(d.target);
+      document.getElementById("barTargetV").textContent = fmt(d.target);
+      var gap = ((d.price - d.target) / d.target * 100);
+      var gapTxt = (gap >= 0 ? "+" : "") + gap.toFixed(1) + "%";
+      document.getElementById("barGap").textContent = gapTxt;
+      document.getElementById("barGapV").textContent = gapTxt;
+      var hots = document.querySelectorAll("#hotRow .hot");
+      for (var i = 0; i < hots.length; i++) hots[i].classList.toggle("active", hots[i].dataset.code === cur);
+    }
+
+    function saveWatch() { try { localStorage.setItem("watch", JSON.stringify(watch)); } catch (e) { } }
+    function loadWatch() { try { var w = JSON.parse(localStorage.getItem("watch") || "[]"); if (Object.prototype.toString.call(w) === "[object Array]") watch = w.filter(function (c) { return DATA[c]; }); } catch (e) { watch = []; } }
+
+    function sigTag(code) {
+      var d = DATA[code]; if (!d) return "";
+      var lvl, col;
+      if (d.price <= d.target) { lvl = "買入"; col = "#0E7C3A"; }
+      else if (d.price < d.target * (risk === "calm" ? 1.05 : (risk === "mid" ? 1.10 : 1.15))) { lvl = "觀望"; col = "#B45309"; }
+      else { lvl = "賣出/等待"; col = "#C62F1F"; }
+      return '<span class="wsig" style="background:' + col + ';color:#fff">' + lvl + '</span>';
+    }
+
+    function renderWatch() {
+      var g = document.getElementById("watchGrid");
+      if (watch.length === 0) {
+        g.innerHTML = '<div class="empty">名單還是空的。到下面「推薦名單」點卡片右上角的 ⊕，或查一隻股票後點「加入觀察名單」，就能把股票收藏到這裏。</div>';
+        return;
+      }
+      var html = "";
+      for (var i = 0; i < watch.length; i++) {
+        var code = watch[i], d = DATA[code]; if (!d) continue;
+        html += '<div class="wcard" data-code="' + code + '">' +
+          '<button class="del" data-code="' + code + '" title="移除">×</button>' +
+          '<div class="wtop"><span class="wname">' + d.name + '</span><span class="wcode">' + code + '</span></div>' +
+          '<div class="wprice">' + fmt(d.price) + '</div>' +
+          sigTag(code) +
+          '</div>';
+      }
+      g.innerHTML = html;
+      var wcs = g.querySelectorAll(".wcard");
+      for (var j = 0; j < wcs.length; j++) {
+        (function (card) {
+          card.addEventListener("click", function () { openModal(card.dataset.code); });
+        })(wcs[j]);
+      }
+      var dels = g.querySelectorAll(".del");
+      for (var k = 0; k < dels.length; k++) {
+        (function (btn) {
+          btn.addEventListener("click", function (e) { e.stopPropagation(); removeWatch(btn.dataset.code); });
+        })(dels[k]);
+      }
+    }
+
+    function addWatch(code) {
+      if (watch.indexOf(code) === -1) { watch.push(code); saveWatch(); renderWatch(); toast("已加入觀察名單"); }
+      var ab = document.getElementById("mAddWatch"); if (ab) ab.textContent = "已在觀察名單 ✓";
+    }
+    function removeWatch(code) {
+      watch = watch.filter(function (c) { return c !== code; }); saveWatch(); renderWatch(); toast("已移出觀察名單");
+      var ab = document.getElementById("mAddWatch"); if (ab) ab.textContent = "加入觀察名單";
+    }
+
+    function saveHist() {
+      try {
+        var h = JSON.parse(localStorage.getItem("hist") || "[]");
+        h = h.filter(function (x) { return x.code !== cur; });
+        h.unshift({ code: cur, name: DATA[cur].name, price: DATA[cur].price, t: new Date().toLocaleTimeString("zh-HK", { hour: "2-digit", minute: "2-digit" }) });
+        if (h.length > 10) h = h.slice(0, 10);
+        localStorage.setItem("hist", JSON.stringify(h));
+        renderHist(h);
+      } catch (e) { }
+    }
+    function renderHist(h) {
+      var box = document.getElementById("histBox");
+      if (!h || h.length === 0) { box.innerHTML = '<div class="empty">還沒有查詢記錄，去上面查一隻股票吧。</div>'; return; }
+      var html = "";
+      for (var i = 0; i < h.length; i++) {
+        var it = h[i], d = DATA[it.code]; if (!d) continue;
+        html += '<div class="hist-item" data-code="' + it.code + '">' +
+          '<span class="hn">' + d.name + '</span><span class="hc">' + it.code + '</span>' +
+          '<span class="hp">' + fmt(it.price) + '</span>' +
+          '<span class="htime">' + it.t + '</span>' +
+          '</div>';
+      }
+      box.innerHTML = html;
+      var items = box.querySelectorAll(".hist-item");
+      for (var j = 0; j < items.length; j++) {
+        (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(items[j]);
+      }
+    }
+    function loadHist() { try { renderHist(JSON.parse(localStorage.getItem("hist") || "[]")); } catch (e) { } }
+
+    function openModal(code) {
+      var d = DATA[code]; if (!d) return;
+      cur = code; render();
+      document.getElementById("mName").textContent = d.name;
+      document.getElementById("mCode").textContent = code;
+      document.getElementById("mSub").textContent = d.grp + " · " + d.note;
+      document.getElementById("mPrice").textContent = fmt(d.price);
+      document.getElementById("mYield").textContent = "股息率 " + d.y;
+      var g = document.getElementById("mGrid");
+      g.innerHTML =
+        '<div class="m-stat"><div class="lab">MA5</div><div class="val">' + fmt(d.ma5) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">MA20</div><div class="val">' + fmt(d.ma20) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">RSI(14)</div><div class="val">' + d.rsi + '</div></div>' +
+        '<div class="m-stat"><div class="lab">支撐位</div><div class="val">' + fmt(d.sup) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">壓力位</div><div class="val">' + fmt(d.res) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">目標買入價</div><div class="val">' + fmt(d.target) + '</div></div>';
+      var s = compute(d.price, d.target, risk);
+      document.getElementById("mMsg").innerHTML = '<b style="color:' + s.color + '">' + s.lvl + '</b> · ' + s.msg;
+      document.getElementById("mNews").innerHTML = d.news;
+      var riskHtml = '<b>⚠ 給新手的提醒：</b>';
+      if (d.y.indexOf("8釐") >= 0 || d.y.indexOf("8.7") >= 0 || d.y.indexOf("8.") === 0) riskHtml += ' 該股股息率偏高（' + d.y + '），屬「高息陷阱」高發區，須特別留意盈利能否持續、股價會否大跌。';
+      riskHtml += (d.grp === "科技成長" ? ' 科技股波動較大，價格可上可下，務必量力而為、分批參與。' : ' 該股屬收息型標的，看重的是長期穩定收息，別指望短線暴漲。') + ' 以上僅教學參考，非投資建議。';
+      document.getElementById("mRisk").innerHTML = riskHtml;
+      var ab = document.getElementById("mAddWatch");
+      ab.textContent = watch.indexOf(code) !== -1 ? "已在觀察名單 ✓" : "加入觀察名單";
+      document.getElementById("overlay").classList.add("show");
+    }
+
+    document.getElementById("go").addEventListener("click", function () {
+      var code = document.getElementById("code").value.replace(/\D/g, "").trim();
+      if (!code) { toast("請先輸入港股編號，如 01810"); return; }
+      if (DATA[code]) { cur = code; render(); saveHist(); openModal(code); }
+      else { toast("暫未收錄該編號，可試試熱門股"); }
     });
-  }
+    document.getElementById("code").addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("go").click(); });
 
-  function unlock(){
-    var s=document.getElementById('lockScreen');
-    s.style.display='none';
-    document.body.style.overflow='';
-  }
+    var hotBtns = document.querySelectorAll("#hotRow .hot");
+    for (var hi = 0; hi < hotBtns.length; hi++) {
+      (function (b) {
+        b.addEventListener("click", function () {
+          document.getElementById("code").value = b.dataset.code;
+          cur = b.dataset.code; render(); saveHist(); openModal(b.dataset.code);
+        });
+      })(hotBtns[hi]);
+    }
 
-  function autoUnlock(){
-    var remembered=false;
-    try{ remembered=(localStorage.getItem(KEY)==='1'); }catch(e){}
-    if(remembered){ unlock(); return; }
-    document.getElementById('lockScreen').style.display='flex';
-    var inp=document.getElementById('lockInput');
-    if(inp) setTimeout(function(){ inp.focus(); },120);
-  }
+    var riskBtns = document.querySelectorAll("#riskSeg button");
+    for (var ri = 0; ri < riskBtns.length; ri++) {
+      (function (b) {
+        b.addEventListener("click", function () {
+          var segs = document.querySelectorAll("#riskSeg button");
+          for (var x = 0; x < segs.length; x++) segs[x].classList.remove("on");
+          b.classList.add("on");
+          risk = b.dataset.r;
+          render(); renderWatch();
+        });
+      })(riskBtns[ri]);
+    }
 
-  document.addEventListener('DOMContentLoaded', autoUnlock);
+    document.getElementById("fullBtn").addEventListener("click", function () { openModal(cur); });
+    document.getElementById("modalClose").addEventListener("click", function () { document.getElementById("overlay").classList.remove("show"); });
+    document.getElementById("overlay").addEventListener("click", function (e) { if (e.target === document.getElementById("overlay")) document.getElementById("overlay").classList.remove("show"); });
+    document.getElementById("mAddWatch").addEventListener("click", function () {
+      if (watch.indexOf(cur) !== -1) { removeWatch(cur); document.getElementById("mAddWatch").textContent = "加入觀察名單"; }
+      else addWatch(cur);
+    });
 
-  var btn=document.getElementById('lockBtn');
-  if(btn) btn.addEventListener('click', tryUnlock);
-  var inp=document.getElementById('lockInput');
-  if(inp) inp.addEventListener('keydown', function(e){
-    if(e.key==='Enter'||e.key==='Go'){ e.preventDefault(); tryUnlock(); }
-  });
-  var eye=document.getElementById('lockEye');
-  if(eye) eye.addEventListener('click', function(){
-    var i=document.getElementById('lockInput');
-    if(i.type==='password'){ i.type='text'; } else { i.type='password'; }
-  });
-})();
-</script>
+    var rcs = document.querySelectorAll(".rcard");
+    for (var ci = 0; ci < rcs.length; ci++) {
+      (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(rcs[ci]);
+    }
+    var nis = document.querySelectorAll(".nitem");
+    for (var ni = 0; ni < nis.length; ni++) {
+      (function (el) { el.addEventListener("click", function () { openModal(el.dataset.code); }); })(nis[ni]);
+    }
+    var rds = document.querySelectorAll(".r-add");
+    for (var di = 0; di < rds.length; di++) {
+      (function (b) {
+        b.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var c = b.dataset.code;
+          if (watch.indexOf(c) !== -1) {
+            removeWatch(c);
+            b.classList.remove("on");
+            b.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
+          } else {
+            addWatch(c);
+            b.classList.add("on");
+            b.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+          }
+        });
+      })(rds[di]);
+    }
+
+    function toast(msg) {
+      var t = document.getElementById("toast");
+      t.textContent = msg; t.classList.add("show");
+      clearTimeout(t._t);
+      t._t = setTimeout(function () { t.classList.remove("show"); }, 2200);
+    }
+
+    loadWatch();
+    loadHist();
+    renderWatch();
+    render();
+  </script>
+
+  <script>
+    /* =====================================================
+       密碼鎖邏輯 · 私密版（已修復 SHA-256 Bug）
+       -----------------------------------------------------
+       【如何修改密碼】
+       1. 在下方 `SHX` 一行，把舊哈希替換成新密碼的 SHA-256 十六進制值
+       2. 用任意 SHA-256 工具計算新密碼，例如：
+           - 瀏覽器控制枱（HTTPS 或 localhost）：
+             crypto.subtle.digest('SHA-256', new TextEncoder().encode('你的新密碼'))
+             .then(d => console.log([...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')))
+           - Python:  import hashlib; hashlib.sha256('你的新密碼'.encode()).hexdigest()
+       3. 把算出的 64 位哈希粘到 SHX = '...' 保存即可，無需改其它代碼。
+       4. 當前密碼為 Ws123456，頁面只內置其哈希，不含明文。
+       ===================================================== */
+    (function () {
+      var SHX = '8fe611ea5431b7eb8712e98049d2822d7bb15220c93a07809c14f3474c581994';
+      var KEY = 'xh_stock_unlock';
+
+      /* ---- 自寫 SHA-256（備用，用於 file:// 等 crypto.subtle 不可用的場景） ---- */
+      var sha256Fallback = (function () {
+        function R(n, c) { return (n << c) | (n >>> (32 - c)); }
+        var K = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+          0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7,
+          0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc,
+          0x76f988da, 0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351,
+          0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e,
+          0x92722c85, 0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585,
+          0x106aa070, 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
+          0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7,
+          0xc67178f2];
+        var H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+        function str2bin(s) { var a = []; for (var i = 0; i < s.length; i++)a.push(s.charCodeAt(i)); return a; }
+        return function (msg) {
+          /* ========== 修復核心：用 orig.length 而非 m.length ========== */
+          var orig = str2bin(msg);       // 原始訊息位元組（不含 0x80）
+          var m = [].concat(orig, [0x80]); // 加入 padding 起始位元組
+          var l = orig.length;           // ✅ 正確：原始訊息長度，不含 0x80
+          /* ============================================================ */
+          while ((m.length % 64) !== 56) m.push(0);
+          var bits = (l * 8) >>> 0, hibits = Math.floor((l * 8) / 0x100000000);
+          m.push((hibits >>> 24) & 255, (hibits >>> 16) & 255, (hibits >>> 8) & 255, hibits & 255,
+            (bits >>> 24) & 255, (bits >>> 16) & 255, (bits >>> 8) & 255, bits & 255);
+          var h = H.slice();
+          for (var i = 0; i < m.length; i += 64) {
+            var w = new Array(64), j;
+            for (j = 0; j < 16; j++)w[j] = ((m[i + j * 4] << 24) | (m[i + j * 4 + 1] << 16) | (m[i + j * 4 + 2] << 8) | (m[i + j * 4 + 3])) >>> 0;
+            for (j = 16; j < 64; j++) {
+              var s0 = R(w[j - 15], 7) ^ R(w[j - 15], 18) ^ (w[j - 15] >>> 3);
+              var s1 = R(w[j - 2], 17) ^ R(w[j - 2], 19) ^ (w[j - 2] >>> 10);
+              w[j] = (w[j - 16] + s0 + w[j - 7] + s1) >>> 0;
+            }
+            var a0 = h[0], b0 = h[1], c0 = h[2], d0 = h[3], e0 = h[4], f0 = h[5], g0 = h[6], h0 = h[7];
+            for (j = 0; j < 64; j++) {
+              var S1 = R(e0, 6) ^ R(e0, 11) ^ R(e0, 25);
+              var ch = (e0 & f0) ^ (~e0 & g0);
+              var t1 = (h0 + S1 + ch + K[j] + w[j]) >>> 0;
+              var S0 = R(a0, 2) ^ R(a0, 13) ^ R(a0, 22);
+              var maj = (a0 & b0) ^ (a0 & c0) ^ (b0 & c0);
+              var t2 = (S0 + maj) >>> 0;
+              h0 = g0; g0 = f0; f0 = e0; e0 = (d0 + t1) >>> 0; d0 = c0; c0 = b0; b0 = a0; a0 = (t1 + t2) >>> 0;
+            }
+            h[0] = (h[0] + a0) >>> 0; h[1] = (h[1] + b0) >>> 0; h[2] = (h[2] + c0) >>> 0; h[3] = (h[3] + d0) >>> 0;
+            h[4] = (h[4] + e0) >>> 0; h[5] = (h[5] + f0) >>> 0; h[6] = (h[6] + g0) >>> 0; h[7] = (h[7] + h0) >>> 0;
+          }
+          var out = '';
+          for (var i = 0; i < 8; i++)out += ('00000000' + h[i].toString(16)).slice(-8);
+          return out;
+        };
+      })();
+
+      /* ---- 優先用 crypto.subtle（更可靠），不可用時 fallback ---- */
+      function sha256(msg) {
+        if (window.crypto && window.crypto.subtle && window.crypto.subtle.digest) {
+          try {
+            return crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg))
+              .then(function (buf) {
+                return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+                  return ('00' + b.toString(16)).slice(-2);
+                }).join('');
+              })
+              .catch(function () { return sha256Fallback(msg); });
+          } catch (e) {
+            return Promise.resolve(sha256Fallback(msg));
+          }
+        }
+        return Promise.resolve(sha256Fallback(msg));
+      }
+
+      function tryUnlock() {
+        var v = document.getElementById('lockInput').value;
+        sha256(v).then(function (hash) {
+          if (hash === SHX) {
+            var r = document.getElementById('lockRemember').checked;
+            try {
+              if (r) { localStorage.setItem(KEY, '1'); }
+              else { localStorage.removeItem(KEY); }
+            } catch (e) { }
+            unlock();
+          } else {
+            var box = document.getElementById('lockBox'), err = document.getElementById('lockErr');
+            box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+            err.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 密碼錯誤，請重試';
+          }
+        });
+      }
+
+      function unlock() {
+        var s = document.getElementById('lockScreen');
+        s.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function autoUnlock() {
+        var remembered = false;
+        try { remembered = (localStorage.getItem(KEY) === '1'); } catch (e) { }
+        if (remembered) { unlock(); return; }
+        document.getElementById('lockScreen').style.display = 'flex';
+        var inp = document.getElementById('lockInput');
+        if (inp) setTimeout(function () { inp.focus(); }, 120);
+      }
+
+      document.addEventListener('DOMContentLoaded', autoUnlock);
+
+      var btn = document.getElementById('lockBtn');
+      if (btn) btn.addEventListener('click', tryUnlock);
+      var inp = document.getElementById('lockInput');
+      if (inp) inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === 'Go') { e.preventDefault(); tryUnlock(); }
+      });
+      var eye = document.getElementById('lockEye');
+      if (eye) eye.addEventListener('click', function () {
+        var i = document.getElementById('lockInput');
+        if (i.type === 'password') { i.type = 'text'; } else { i.type = 'password'; }
+      });
+    })();
+  </script>
 </body>
+
 </html>
