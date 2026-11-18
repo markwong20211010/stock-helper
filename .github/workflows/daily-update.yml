@@ -45,7 +45,21 @@ jobs:
           git add data.json
           if git diff --cached --quiet; then
             echo "今日價格無變化，不提交"
-          else
-            git commit -m "chore: 更新股票數據 $(TZ=Asia/Hong_Kong date +%F)"
-            git push
+            exit 0
           fi
+          git commit -m "chore: 更新股票數據 $(TZ=Asia/Hong_Kong date +%F)"
+          # 你隨時會喺網頁上傳／改檔案，機械人跑緊時遠端可能已有新 commit，
+          # 直接 push 會被拒（non-fast-forward）。所以先 rebase 再重試。
+          for i in 1 2 3; do
+            echo "第 $i 次嘗試推送…"
+            if git push origin HEAD:main; then
+              echo "推送成功"
+              exit 0
+            fi
+            echo "遠端有新提交，改為 rebase 後再推"
+            git pull --rebase origin main || { echo "::error::rebase 失敗（可能同一檔案兩邊都改），請手動處理"; exit 1; }
+            sleep 3
+          done
+          echo "::error::連續 3 次推送失敗"
+          exit 1
+#（注：内容由AI生成）
