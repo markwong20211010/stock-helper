@@ -3,7 +3,7 @@ name: 每日更新股票數據
 on:
   schedule:
     # GitHub Actions 只用 UTC；09:15 UTC = 香港時間 17:15
-    # 只跑週一至週五（港股交易日）， 收市價 16:08 已定，跑完會自動 commit
+    # 只跑週一至週五（港股交易日），收市價 16:08 已定
     - cron: '15 9 * * 1-5'
   workflow_dispatch: {}   # 可在 Actions 頁手動按 Run workflow
 
@@ -26,17 +26,26 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: 抓收市價並更新 index.html
-        run: python3 scripts/update_stock_data.py index.html
+      # 重要：只讀 stocks.json、只寫 data.json —— 唔會再改 index.html，
+      # 所以你上傳／編輯頁面唔會同機械人撞出「合併衝突」。
+      - name: 抓收市價並生成 data.json
+        run: python3 scripts/update_stock_data.py
+
+      - name: 檢查頁面有無未解決的合併衝突
+        run: |
+          if grep -nE '^(<<<<<<<|>>>>>>>)' index.html; then
+            echo "::error::index.html 仍有未解決的 Git 衝突標記，請重新上傳乾淨版本"
+            exit 1
+          fi
 
       - name: 提交並推送
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- index.html stocks.json; then
+          git add data.json
+          if git diff --cached --quiet; then
             echo "今日價格無變化，不提交"
           else
-            git add index.html stocks.json
             git commit -m "chore: 更新股票數據 $(TZ=Asia/Hong_Kong date +%F)"
             git push
           fi
