@@ -1,0 +1,42 @@
+name: 每日更新股票數據
+
+on:
+  schedule:
+    # GitHub Actions 只用 UTC；09:15 UTC = 香港時間 17:15
+    # 只跑週一至週五（港股交易日）， 收市價 16:08 已定，跑完會自動 commit
+    - cron: '15 9 * * 1-5'
+  workflow_dispatch: {}   # 可在 Actions 頁手動按 Run workflow
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stock-helper-daily
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取出專案
+        uses: actions/checkout@v4
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 抓收市價並更新 index.html
+        run: python3 scripts/update_stock_data.py index.html
+
+      - name: 提交並推送
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- index.html stocks.json; then
+            echo "今日價格無變化，不提交"
+          else
+            git add index.html stocks.json
+            git commit -m "chore: 更新股票數據 $(TZ=Asia/Hong_Kong date +%F)"
+            git push
+          fi
