@@ -165,8 +165,6 @@ body{background:var(--bg);color:var(--t2);font-family:var(--body);line-height:1.
   .m-price{font-size:30px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* ===== 手机安装版 · 触控优化 ===== */
 html{-webkit-text-size-adjust:100%}
 body{padding-bottom:env(safe-area-inset-bottom)}
 .topbar-in{padding-top:calc(12px + env(safe-area-inset-top))}
@@ -189,9 +187,6 @@ body{padding-bottom:env(safe-area-inset-bottom)}
   .install-hint{font-size:12.5px;padding:12px 14px}
   .hero{padding:26px 0 4px}
 }
-
-
-/* ===== 密码锁界面（私密版） ===== */
 .lock-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(160deg,#1A1A1F 0%,#2b2b33 55%,#3a2c18 100%);padding:24px;overflow:auto}
 .lock-box{background:#fff;border-radius:24px;max-width:360px;width:100%;padding:34px 28px 30px;text-align:center;
@@ -622,7 +617,6 @@ var ICON = {
   "shield-alert": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'
 };
 
-
 var DATA = {"01810": {"name": "小米集团", "price": 29.7, "target": 28.5, "y": "低息·成长", "grp": "科技成长", "note": "人车家全生态，汽车+AI双引擎，澎程系列热销", "ma5": 29.9, "ma20": 29.0, "rsi": 52, "sup": 28.5, "res": 31.5, "news": "10月汽车交付超5万创单月纪录；11/9回购约5000万港元、年内累计回购128.6亿；澎程系列首月锁单超7万、N70居增程车销量第一。"}, "00700": {"name": "腾讯控股", "price": 376.0, "target": 360.0, "y": "低息·成长", "grp": "科技成长", "note": "游戏+广告+金融科技，AI混元模型推进，北水连续净买入", "ma5": 388, "ma20": 398, "rsi": 38, "sup": 360, "res": 400, "news": "11/17南下资金净买入腾讯15.96亿港元居首；业绩周临近，AI混元推出Hy4 flash；美国BIS新规限制远程算力偏负面。"}, "09988": {"name": "阿里巴巴", "price": 85.45, "target": 90.0, "y": "低息·成长", "grp": "科技成长", "note": "电商+云+AI，云资本开支与自研芯片叙事；短线超跌", "ma5": 92, "ma20": 96, "rsi": 32, "sup": 82, "res": 95, "news": "11/17跌5.21%收85.45，南向连续3日净卖出共40.9亿；阿里跌见52周低附近；里昂估双十一GMV增约5%。"}, "03690": {"name": "美团", "price": 70.5, "target": 68.0, "y": "低息·成长", "grp": "科技成长", "note": "即时零售+外卖龙头，补贴竞争压制利润率，52周低点修复中", "ma5": 71, "ma20": 69, "rsi": 47, "sup": 65, "res": 75, "news": "11/17跌1.47%收70.5，南向小幅净买入1.23亿；京东、美团即时零售补贴竞争受关注。"}, "01398": {"name": "工商银行", "price": 8.01, "target": 8.0, "y": "约5.7厘", "grp": "金融高息", "note": "国有大行，分红稳定、估值低，距52周高点不足2%", "ma5": 8.0, "ma20": 7.9, "rsi": 55, "sup": 7.7, "res": 8.18, "news": "前三季度上市银行净利增3.78%，息差企稳；国有大行中期分红比例上调至31%，银行板块估值上行。"}, "00939": {"name": "建设银行", "price": 10.59, "target": 10.5, "y": "约5.8厘", "grp": "金融高息", "note": "国有大行，高股息防御底仓，H股折价提供安全垫", "ma5": 10.6, "ma20": 10.4, "rsi": 54, "sup": 10.1, "res": 10.9, "news": "11/17南向净买入建设银行5.5亿港元；中期分红比例上调，股息率约5.8%，防御属性受资金青睐。"}, "02318": {"name": "中国平安", "price": 51.25, "target": 50.0, "y": "5.5厘", "grp": "金融高息", "note": "保险蓝筹，业绩平稳、派息稳定，高股息防御之选", "ma5": 51.5, "ma20": 50.5, "rsi": 50, "sup": 48.5, "res": 53, "news": "11/17跌0.77%收51.25；保险板块随大盘小幅调整，高股息属性下资金承接相对稳健。"}, "00883": {"name": "中海油", "price": 22.62, "target": 23.0, "y": "约6.9厘", "grp": "能源资源", "note": "能源高息蓝筹，原油景气支撑，现金流强", "ma5": 23.1, "ma20": 23.0, "rsi": 45, "sup": 21.5, "res": 24, "news": "11/17跌2.16%收22.62，南向小幅净卖出；油价与中东地缘扰动，高股息+能源景气兼具配置价值。"}, "01088": {"name": "中国神华", "price": 43.56, "target": 44.0, "y": "约5.4厘", "grp": "能源资源", "note": "煤电一体化，现金流稳定、分红高，冬季用能旺季受益", "ma5": 43.8, "ma20": 43.0, "rsi": 55, "sup": 41.5, "res": 46, "news": "11/17微跌0.95%收43.56；10月原煤产量同比降5.8%，供给收缩预期升温，高股息能源股受青睐。"}, "00941": {"name": "中国移动", "price": 80.5, "target": 79.0, "y": "约6.1厘", "grp": "电讯公用", "note": "派息稳定有增长，财息兼收首选，防御性强", "ma5": 80.5, "ma20": 80.0, "rsi": 52, "sup": 78, "res": 82, "news": "11/17平收80.5；红筹股收息首选，股息率约6.1%，在弱市中表现抗跌。"}, "00002": {"name": "中电控股", "price": 68.5, "target": 67.0, "y": "高息", "grp": "电讯公用", "note": "公用事业，防御属性强，本地收息之选", "ma5": 68.8, "ma20": 68.0, "rsi": 50, "sup": 66, "res": 70, "news": "公用事业防御属性受青睐，派息相对稳定，适合作为收息底仓配置。"}, "06823": {"name": "香港电讯", "price": 5.2, "target": 5.0, "y": "约6.7厘", "grp": "电讯公用", "note": "派息较稳定，本地电讯收息之选", "ma5": 5.2, "ma20": 5.1, "rsi": 52, "sup": 4.9, "res": 5.4, "news": "本地电讯服务现金流稳定，股息率约6.7%，属稳健收息标的。"}, "06181": {"name": "老铺黄金", "price": 297.6, "target": 270.0, "y": "约8.7厘", "grp": "消费黄金", "note": "派息大增但盈利与金价相关，8厘以上请特别留意风险", "ma5": 305, "ma20": 310, "rsi": 35, "sup": 280, "res": 330, "news": "金价高位回落，纽约期金失守3970美元，金饰克价跌破1200元；高价黄金股对金价敏感，回调风险大。"}, "06862": {"name": "海底捞", "price": 10.38, "target": 9.8, "y": "约6.6厘", "grp": "消费黄金", "note": "蓝筹消费，派息增加、盈利稳定", "ma5": 10.5, "ma20": 10.2, "rsi": 48, "sup": 9.5, "res": 11, "news": "消费板块随社零温和复苏，餐饮龙头盈利与派息稳定，属稳健高息消费标的。"}};
 var cur = "01810";
 var risk = "mid";
@@ -651,7 +645,7 @@ function render(){
   document.getElementById("sigPrice").textContent = "现价 "+fmt(d.price);
   document.getElementById("sigMsg").textContent = s.msg;
   document.getElementById("sigName").textContent = d.name;
-  document.getElementById("sigCode").textContent = d.code;
+  document.getElementById("sigCode").textContent = cur;
   document.getElementById("barPrice").textContent = fmt(d.price);
   document.getElementById("barPriceV").textContent = fmt(d.price);
   document.getElementById("barTarget").textContent = fmt(d.target);
@@ -662,7 +656,6 @@ function render(){
   document.getElementById("barGapV").textContent = gapTxt;
   var hots = document.querySelectorAll("#hotRow .hot");
   for(var i=0;i<hots.length;i++) hots[i].classList.toggle("active", hots[i].dataset.code===cur);
-  
 }
 
 function saveWatch(){ try{ localStorage.setItem("watch", JSON.stringify(watch)); }catch(e){} }
@@ -773,7 +766,6 @@ function openModal(code){
   var ab=document.getElementById("mAddWatch");
   ab.textContent = watch.indexOf(code)!==-1 ? "已在观察名单 ✓" : "加入观察名单";
   document.getElementById("overlay").classList.add("show");
-  lucide.createIcons();
 }
 
 document.getElementById("go").addEventListener("click", function(){
@@ -829,9 +821,15 @@ for(var di=0;di<rds.length;di++){
     b.addEventListener("click", function(e){
       e.stopPropagation();
       var c=b.dataset.code;
-      if(watch.indexOf(c)!==-1){ removeWatch(c); b.classList.remove("on"); b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>'; }
-      else { addWatch(c); b.classList.add("on"); b.innerHTML='<i data-lucide="check" style="width:14px;height:14px"></i>'; }
-      lucide.createIcons();
+      if(watch.indexOf(c)!==-1){
+        removeWatch(c);
+        b.classList.remove("on");
+        b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
+      } else {
+        addWatch(c);
+        b.classList.add("on");
+        b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      }
     });
   })(rds[di]);
 }
@@ -850,30 +848,13 @@ render();
 </script>
 
 <script>
-(function(){var d=document,b=d.body;if(!b)return;
-var old=b.querySelectorAll('[data-aigc-mark],#__xas_aigc_watermark__');
-for(var k=0;k<old.length;k++)old[k].parentNode&&old[k].parentNode.removeChild(old[k]);
-var f=d.createElement("div");
-f.id="__xas_aigc_watermark__";
-f.setAttribute("data-aigc-mark","true");
-f.style.cssText="position:fixed;bottom:8px;right:12px;z-index:2147483647;font-size:11px;padding:3px 7px;font-family:system-ui,sans-serif;pointer-events:none;color:rgba(30,30,30,0.6);background:rgba(255,255,255,0.4);border:0.5px solid rgba(0,0,0,0.08);border-radius:4px;line-height:1.4;backdrop-filter:blur(8px);";
-var paths=["M14.0072 26.6377C14.2318 25.9475 13.3696 25.4389 12.8659 25.9611C9.56694 29.3941 6.9736 33.4696 5.35587 37.9788C-0.86998 55.1279 7.72006 74.1728 24.7867 80.6891C33.1499 83.8815 41.0252 82.7894 44.7212 81.8812C54.0056 79.6016 63.1537 72.4609 66.7114 63.4447C67.1039 62.4525 66.6252 61.3286 65.6404 60.9222C63.78 60.1548 61.9263 59.3896 60.3721 58.7471C59.46 58.3702 58.4117 58.7402 57.9398 59.6076C56.4287 62.3753 54.8496 65.0568 52.4945 67.2274C46.0349 73.5893 36.1675 75.8621 27.5956 72.9036C14.6833 68.6487 7.76998 54.5307 12.124 41.7683C12.3668 41.0553 12.4916 40.3038 12.4621 39.55C12.242 33.8125 12.8228 30.2955 14.0072 26.6377Z","M73.6785 14.313C74.3682 14.5378 74.8765 13.675 74.3546 13.171C70.9241 9.86968 66.8514 7.27451 62.3454 5.65564C45.2084 -0.574603 26.1769 8.0215 19.6651 25.1002C16.4751 33.4692 17.5664 41.3501 18.474 45.0488C20.7519 54.3396 27.8876 63.4943 36.8974 67.0544C37.8889 67.4472 39.012 66.9681 39.4182 65.9827C40.185 64.1209 40.9497 62.2659 41.5918 60.7107C41.9684 59.7979 41.5986 58.7489 40.7318 58.2767C37.9661 56.7645 35.2865 55.1843 33.1174 52.8275C26.76 46.3634 24.4888 36.489 27.4452 27.9111C31.6971 14.9897 45.8051 8.07145 58.5586 12.4285C59.271 12.6715 60.022 12.7964 60.7753 12.7668C66.5088 12.5466 70.0233 13.1278 73.6785 14.313Z","M85.9922 73.9549C85.7676 74.6451 86.6298 75.1537 87.1335 74.6315C90.4324 71.1985 93.0258 67.123 94.6435 62.6138C100.869 45.4647 92.2793 26.4198 75.2127 19.9035C66.8495 16.7111 58.9742 17.8033 55.2782 18.7114C45.9938 20.991 36.8456 28.1317 33.288 37.1479C32.8955 38.1401 33.3742 39.264 34.3589 39.6704C36.2194 40.4378 38.0731 41.203 39.6273 41.8455C40.5394 42.2224 41.5876 41.8524 42.0596 40.985C43.5706 38.2173 45.1498 35.5358 47.5049 33.3652C53.9645 27.0033 63.8319 24.7305 72.4038 27.689C85.3161 31.9439 92.2294 46.0619 87.8754 58.8243C87.6326 59.5373 87.5078 60.2888 87.5373 61.0426C87.7574 66.7801 87.1766 70.2971 85.9922 73.9549Z","M26.2674 86.2849C25.5777 86.0601 25.0694 86.9229 25.5913 87.4269C29.0219 90.7282 33.0945 93.3234 37.6028 94.9423C54.7398 101.173 73.7713 92.5764 80.2831 75.4977C83.4731 67.1287 82.3818 59.2478 81.4742 55.5491C79.1963 46.2583 72.0606 37.1036 63.0508 33.5435C62.0593 33.1507 60.9362 33.6298 60.53 34.6152C59.7632 36.477 58.9985 38.3297 58.3564 39.885C57.9798 40.7977 58.3496 41.8467 59.2163 42.3212C61.9821 43.8334 64.6617 45.4114 66.8285 47.7704C73.1859 54.2345 75.4571 64.1089 72.5007 72.6869C68.2488 85.6082 54.1408 92.5265 41.3874 88.1694C40.6749 87.9264 39.9239 87.8015 39.1706 87.8311C33.4371 88.0513 29.9226 87.4701 26.2674 86.2826V86.2849Z"];
-b.appendChild(f);
-var svg='<svg width="14" height="14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline;vertical-align:-2px;margin:0 4px">';
-for(var i=0;i<paths.length;i++)svg+='<path d="'+paths[i]+'" fill="rgba(30,30,30,0.5)"/>';
-svg+="</svg>";
-f.innerHTML="本页面由"+svg+"超级小爱AI生成";
-})();
-</script>
-
-<script>
 /* =====================================================
-   密码锁逻辑 · 私密版
+   密码锁逻辑 · 私密版（已修复 SHA-256 Bug）
    -----------------------------------------------------
    【如何修改密码】
    1. 在下方 `SHX` 一行，把旧哈希替换成新密码的 SHA-256 十六进制值
    2. 用任意 SHA-256 工具计算新密码，例如：
-       - 浏览器控制台：
+       - 浏览器控制台（HTTPS 或 localhost）：
          crypto.subtle.digest('SHA-256', new TextEncoder().encode('你的新密码'))
          .then(d => console.log([...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')))
        - Python:  import hashlib; hashlib.sha256('你的新密码'.encode()).hexdigest()
@@ -884,7 +865,8 @@ f.innerHTML="本页面由"+svg+"超级小爱AI生成";
   var SHX = '8fe611ea5431b7eb8712e98049d2822d7bb15220c93a07809c14f3474c581994';
   var KEY = 'xh_stock_unlock';
 
-  var sha256 = (function(){
+  /* ---- 自写 SHA-256（备用，用于 file:// 等 crypto.subtle 不可用的场景） ---- */
+  var sha256Fallback = (function(){
     function R(n,c){ return (n<<c)|(n>>>(32-c)); }
     var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
       0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,
@@ -898,13 +880,17 @@ f.innerHTML="本页面由"+svg+"超级小爱AI生成";
     var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
     function str2bin(s){var a=[];for(var i=0;i<s.length;i++)a.push(s.charCodeAt(i));return a;}
     return function(msg){
-      var a=0x80,i,n,m=[].concat(str2bin(msg),[a]),l=m.length;
-      while((m.length%64)!==56)m.push(0);
-      var bits=(l*8)>>>0,hibits=Math.floor((l*8)/0x100000000);
+      /* ========== 修复核心：用 orig.length 而非 m.length ========== */
+      var orig = str2bin(msg);       // 原始訊息位元組（不含 0x80）
+      var m = [].concat(orig, [0x80]); // 加入 padding 起始位元組
+      var l = orig.length;           // ✅ 正確：原始訊息長度，不含 0x80
+      /* ============================================================ */
+      while((m.length % 64) !== 56) m.push(0);
+      var bits = (l*8)>>>0, hibits = Math.floor((l*8)/0x100000000);
       m.push((hibits>>>24)&255,(hibits>>>16)&255,(hibits>>>8)&255,hibits&255,
              (bits>>>24)&255,(bits>>>16)&255,(bits>>>8)&255,bits&255);
       var h=H.slice();
-      for(i=0;i<m.length;i+=64){
+      for(var i=0;i<m.length;i+=64){
         var w=new Array(64),j;
         for(j=0;j<16;j++)w[j]=((m[i+j*4]<<24)|(m[i+j*4+1]<<16)|(m[i+j*4+2]<<8)|(m[i+j*4+3]))>>>0;
         for(j=16;j<64;j++){
@@ -926,28 +912,53 @@ f.innerHTML="本页面由"+svg+"超级小爱AI生成";
         h[4]=(h[4]+e0)>>>0;h[5]=(h[5]+f0)>>>0;h[6]=(h[6]+g0)>>>0;h[7]=(h[7]+h0)>>>0;
       }
       var out='';
-      for(i=0;i<8;i++)out+=('00000000'+h[i].toString(16)).slice(-8);
+      for(var i=0;i<8;i++)out+=('00000000'+h[i].toString(16)).slice(-8);
       return out;
     };
   })();
 
-  function tryUnlock(){
-    var v=document.getElementById('lockInput').value;
-    if(sha256(v)===SHX){
-      var r=document.getElementById('lockRemember').checked;
-      try{ if(r){ localStorage.setItem(KEY,'1'); } else { localStorage.removeItem(KEY); } }catch(e){}
-      unlock();
-    }else{
-      var box=document.getElementById('lockBox'),err=document.getElementById('lockErr');
-      box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
-      err.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 密码错误，请重试';
+  /* ---- 優先用 crypto.subtle（更可靠），不可用時 fallback ---- */
+  function sha256(msg){
+    if(window.crypto && window.crypto.subtle && window.crypto.subtle.digest){
+      try {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg))
+          .then(function(buf){
+            return Array.prototype.map.call(new Uint8Array(buf), function(b){
+              return ('00'+b.toString(16)).slice(-2);
+            }).join('');
+          })
+          .catch(function(){ return sha256Fallback(msg); });
+      } catch(e){
+        return Promise.resolve(sha256Fallback(msg));
+      }
     }
+    return Promise.resolve(sha256Fallback(msg));
   }
+
+  function tryUnlock(){
+    var v = document.getElementById('lockInput').value;
+    sha256(v).then(function(hash){
+      if(hash === SHX){
+        var r = document.getElementById('lockRemember').checked;
+        try{
+          if(r){ localStorage.setItem(KEY,'1'); }
+          else { localStorage.removeItem(KEY); }
+        }catch(e){}
+        unlock();
+      } else {
+        var box=document.getElementById('lockBox'), err=document.getElementById('lockErr');
+        box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+        err.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 密码错误，请重试';
+      }
+    });
+  }
+
   function unlock(){
     var s=document.getElementById('lockScreen');
     s.style.display='none';
     document.body.style.overflow='';
   }
+
   function autoUnlock(){
     var remembered=false;
     try{ remembered=(localStorage.getItem(KEY)==='1'); }catch(e){}
@@ -958,10 +969,13 @@ f.innerHTML="本页面由"+svg+"超级小爱AI生成";
   }
 
   document.addEventListener('DOMContentLoaded', autoUnlock);
+
   var btn=document.getElementById('lockBtn');
   if(btn) btn.addEventListener('click', tryUnlock);
   var inp=document.getElementById('lockInput');
-  if(inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key==='Go'){ e.preventDefault(); tryUnlock(); } });
+  if(inp) inp.addEventListener('keydown', function(e){
+    if(e.key==='Enter'||e.key==='Go'){ e.preventDefault(); tryUnlock(); }
+  });
   var eye=document.getElementById('lockEye');
   if(eye) eye.addEventListener('click', function(){
     var i=document.getElementById('lockInput');
@@ -969,21 +983,5 @@ f.innerHTML="本页面由"+svg+"超级小爱AI生成";
   });
 })();
 </script>
-
-<script>(function(){
-var d=document,b=d.body;if(!b)return;
-var old=b.querySelectorAll('[data-aigc-mark],#__xas_aigc_watermark__');
-for(var k=0;k<old.length;k++)old[k].parentNode&&old[k].parentNode.removeChild(old[k]);
-var f=d.createElement("div");
-f.id="__xas_aigc_watermark__";
-f.setAttribute("data-aigc-mark","true");
-f.style.cssText="position:fixed;bottom:8px;right:12px;z-index:2147483647;font-size:11px;padding:3px 7px;font-family:system-ui,sans-serif;pointer-events:none;color:rgba(30,30,30,0.6);background:rgba(255,255,255,0.4);border:0.5px solid rgba(0,0,0,0.08);border-radius:4px;line-height:1.4;backdrop-filter:blur(8px);";
-var paths=["M14.0072 26.6377C14.2318 25.9475 13.3696 25.4389 12.8659 25.9611C9.56694 29.3941 6.9736 33.4696 5.35587 37.9788C-0.86998 55.1279 7.72006 74.1728 24.7867 80.6891C33.1499 83.8815 41.0252 82.7894 44.7212 81.8812C54.0056 79.6016 63.1537 72.4609 66.7114 63.4447C67.1039 62.4525 66.6252 61.3286 65.6404 60.9222C63.78 60.1548 61.9263 59.3896 60.3721 58.7471C59.46 58.3702 58.4117 58.7402 57.9398 59.6076C56.4287 62.3753 54.8496 65.0568 52.4945 67.2274C46.0349 73.5893 36.1675 75.8621 27.5956 72.9036C14.6833 68.6487 7.76998 54.5307 12.124 41.7683C12.3668 41.0553 12.4916 40.3038 12.4621 39.55C12.242 33.8125 12.8228 30.2955 14.0072 26.6377Z","M73.6785 14.313C74.3682 14.5378 74.8765 13.675 74.3546 13.171C70.9241 9.86968 66.8514 7.27451 62.3454 5.65564C45.2084 -0.574603 26.1769 8.0215 19.6651 25.1002C16.4751 33.4692 17.5664 41.3501 18.474 45.0488C20.7519 54.3396 27.8876 63.4943 36.8974 67.0544C37.8889 67.4472 39.012 66.9681 39.4182 65.9827C40.185 64.1209 40.9497 62.2659 41.5918 60.7107C41.9684 59.7979 41.5986 58.7489 40.7318 58.2767C37.9661 56.7645 35.2865 55.1843 33.1174 52.8275C26.76 46.3634 24.4888 36.489 27.4452 27.9111C31.6971 14.9897 45.8051 8.07145 58.5586 12.4285C59.271 12.6715 60.022 12.7964 60.7753 12.7668C66.5088 12.5466 70.0233 13.1278 73.6785 14.313Z","M85.9922 73.9549C85.7676 74.6451 86.6298 75.1537 87.1335 74.6315C90.4324 71.1985 93.0258 67.123 94.6435 62.6138C100.869 45.4647 92.2793 26.4198 75.2127 19.9035C66.8495 16.7111 58.9742 17.8033 55.2782 18.7114C45.9938 20.991 36.8456 28.1317 33.288 37.1479C32.8955 38.1401 33.3742 39.264 34.3589 39.6704C36.2194 40.4378 38.0731 41.203 39.6273 41.8455C40.5394 42.2224 41.5876 41.8524 42.0596 40.985C43.5706 38.2173 45.1498 35.5358 47.5049 33.3652C53.9645 27.0033 63.8319 24.7305 72.4038 27.689C85.3161 31.9439 92.2294 46.0619 87.8754 58.8243C87.6326 59.5373 87.5078 60.2888 87.5373 61.0426C87.7574 66.7801 87.1766 70.2971 85.9922 73.9549Z","M26.2674 86.2849C25.5777 86.0601 25.0694 86.9229 25.5913 87.4269C29.0219 90.7282 33.0945 93.3234 37.6028 94.9423C54.7398 101.173 73.7713 92.5764 80.2831 75.4977C83.4731 67.1287 82.3818 59.2478 81.4742 55.5491C79.1963 46.2583 72.0606 37.1036 63.0508 33.5435C62.0593 33.1507 60.9362 33.6298 60.53 34.6152C59.7632 36.477 58.9985 38.3297 58.3564 39.885C57.9798 40.7977 58.3496 41.8467 59.2163 42.3212C61.9821 43.8334 64.6617 45.4114 66.8285 47.7704C73.1859 54.2345 75.4571 64.1089 72.5007 72.6869C68.2488 85.6082 54.1408 92.5265 41.3874 88.1694C40.6749 87.9264 39.9239 87.8015 39.1706 87.8311C33.4371 88.0513 29.9226 87.4701 26.2674 86.2826V86.2849Z"];
-b.appendChild(f);
-var svg='<svg width="14" height="14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline;vertical-align:-2px;margin:0 4px">';
-for(var i=0;i<paths.length;i++)svg+='<path d="'+paths[i]+'" fill="rgba(30,30,30,0.5)"/>';
-svg+="</svg>";
-f.innerHTML="本页面由"+svg+"超级小爱AI生成";
-})();</script>
 </body>
 </html>
