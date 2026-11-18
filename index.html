@@ -316,6 +316,65 @@
       gap: 8px
     }
 
+    /* ===== home page: search + signal side by side on widescreen ===== */
+    .home-cols>.sec {
+      margin-top: 0;
+      margin-bottom: 40px
+    }
+
+    .home-cols>.sec:first-child {
+      margin-top: 22px
+    }
+
+    .home-cols>.sec:last-child {
+      margin-bottom: 0
+    }
+
+    @media (min-width:900px) {
+      .home-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: start
+      }
+
+      .home-cols>.sec,
+      .home-cols>.sec:first-child {
+        margin-top: 0;
+        margin-bottom: 0
+      }
+    }
+
+    /* ===== hot chips: tap label to reveal on compact screens ===== */
+    @media (max-width:640px) {
+      .hot-label {
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none
+      }
+
+      .hot-label::after {
+        content: "▾";
+        display: inline-block;
+        margin-left: 6px;
+        color: var(--acc);
+        font-size: 11px;
+        transition: transform .2s
+      }
+
+      .hot-label.open::after {
+        transform: rotate(180deg)
+      }
+
+      .hot-row {
+        display: none
+      }
+
+      .hot-row.show {
+        display: flex
+      }
+    }
+
     .hot {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1639,7 +1698,8 @@
 
     <div class="tab-panel on" id="p-home">
 
-      <div class="sec" style="margin-top:22px">
+      <div class="home-cols">
+      <div class="sec">
         <div class="query-card">
           <div class="input-row">
             <div class="code-input">
@@ -1668,7 +1728,7 @@
         </div>
       </div>
 
-      <div class="sec" style="margin-top:0">
+      <div class="sec">
         <div class="signal-card">
           <div class="signal-head">
             <span class="name" id="sigName">小米集團</span>
@@ -1708,6 +1768,7 @@
                 <path d="m21 21-4.3-4.3" />
               </svg> 看當前股票的完整分析</button></div>
         </div>
+      </div>
       </div>
 
     </div>
@@ -2368,7 +2429,7 @@
     document.getElementById("go").addEventListener("click", function () {
       var code = document.getElementById("code").value.replace(/\D/g, "").trim();
       if (!code) { toast("請先輸入港股編號，如 01810"); return; }
-      if (DATA[code]) { cur = code; render(); saveHist(); openModal(code); }
+      if (DATA[code]) { cur = code; render(); saveHist(); }
       else { toast("暫未收錄該編號，可試試熱門股"); }
     });
     document.getElementById("code").addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("go").click(); });
@@ -2378,9 +2439,18 @@
       (function (b) {
         b.addEventListener("click", function () {
           document.getElementById("code").value = b.dataset.code;
-          cur = b.dataset.code; render(); saveHist(); openModal(b.dataset.code);
+          cur = b.dataset.code; render(); saveHist();
         });
       })(hotBtns[hi]);
+    }
+
+    var hotLabel = document.querySelector(".hot-label");
+    if (hotLabel) {
+      hotLabel.addEventListener("click", function () {
+        var row = document.getElementById("hotRow");
+        if (row) row.classList.toggle("show");
+        hotLabel.classList.toggle("open");
+      });
     }
 
     var riskBtns = document.querySelectorAll("#riskSeg button");
