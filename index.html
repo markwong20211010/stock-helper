@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-HK">
 
 <head>
@@ -2260,7 +2260,7 @@
         <div class="footer">
           股票買入時機小助手 · 手機安裝版<br>
           數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
-          生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
+          數據更新於 2026年11月18日（收市） · 僅作學習與參考，不構成投資建議
         </div>
       </div>
     </div>
@@ -2275,10 +2275,132 @@
       "shield-alert": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'
     };
 
-    var DATA = { "01810": { "name": "小米集團", "price": 29.7, "target": 28.5, "y": "低息·成長", "grp": "科技成長", "note": "人車家全生態，汽車+AI雙引擎，澎程系列熱銷", "ma5": 29.9, "ma20": 29.0, "rsi": 52, "sup": 28.5, "res": 31.5, "news": "10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。" }, "00700": { "name": "騰訊控股", "price": 376.0, "target": 360.0, "y": "低息·成長", "grp": "科技成長", "note": "遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入", "ma5": 388, "ma20": 398, "rsi": 38, "sup": 360, "res": 400, "news": "11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。" }, "09988": { "name": "阿里巴巴", "price": 85.45, "target": 90.0, "y": "低息·成長", "grp": "科技成長", "note": "電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌", "ma5": 92, "ma20": 96, "rsi": 32, "sup": 82, "res": 95, "news": "11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。" }, "03690": { "name": "美團", "price": 70.5, "target": 68.0, "y": "低息·成長", "grp": "科技成長", "note": "即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中", "ma5": 71, "ma20": 69, "rsi": 47, "sup": 65, "res": 75, "news": "11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。" }, "01398": { "name": "工商銀行", "price": 8.01, "target": 8.0, "y": "約5.7釐", "grp": "金融高息", "note": "國有大行，分紅穩定、估值低，距52周高點不足2%", "ma5": 8.0, "ma20": 7.9, "rsi": 55, "sup": 7.7, "res": 8.18, "news": "前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。" }, "00939": { "name": "建設銀行", "price": 10.59, "target": 10.5, "y": "約5.8釐", "grp": "金融高息", "note": "國有大行，高股息防禦底倉，H股折價提供安全墊", "ma5": 10.6, "ma20": 10.4, "rsi": 54, "sup": 10.1, "res": 10.9, "news": "11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。" }, "02318": { "name": "中國平安", "price": 51.25, "target": 50.0, "y": "5.5釐", "grp": "金融高息", "note": "保險藍籌，業績平穩、派息穩定，高股息防禦之選", "ma5": 51.5, "ma20": 50.5, "rsi": 50, "sup": 48.5, "res": 53, "news": "11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。" }, "00883": { "name": "中海油", "price": 22.62, "target": 23.0, "y": "約6.9釐", "grp": "能源資源", "note": "能源高息藍籌，原油景氣支撐，現金流強", "ma5": 23.1, "ma20": 23.0, "rsi": 45, "sup": 21.5, "res": 24, "news": "11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。" }, "01088": { "name": "中國神華", "price": 43.56, "target": 44.0, "y": "約5.4釐", "grp": "能源資源", "note": "煤電一體化，現金流穩定、分紅高，冬季用能旺季受益", "ma5": 43.8, "ma20": 43.0, "rsi": 55, "sup": 41.5, "res": 46, "news": "11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。" }, "00941": { "name": "中國移動", "price": 80.5, "target": 79.0, "y": "約6.1釐", "grp": "電訊公用", "note": "派息穩定有增長，財息兼收首選，防禦性強", "ma5": 80.5, "ma20": 80.0, "rsi": 52, "sup": 78, "res": 82, "news": "11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。" }, "00002": { "name": "中電控股", "price": 68.5, "target": 67.0, "y": "高息", "grp": "電訊公用", "note": "公用事業，防禦屬性強，本地收息之選", "ma5": 68.8, "ma20": 68.0, "rsi": 50, "sup": 66, "res": 70, "news": "公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。" }, "06823": { "name": "香港電訊", "price": 5.2, "target": 5.0, "y": "約6.7釐", "grp": "電訊公用", "note": "派息較穩定，本地電訊收息之選", "ma5": 5.2, "ma20": 5.1, "rsi": 52, "sup": 4.9, "res": 5.4, "news": "本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。" }, "06181": { "name": "老鋪黃金", "price": 297.6, "target": 270.0, "y": "約8.7釐", "grp": "消費黃金", "note": "派息大增但盈利與金價相關，8釐以上請特別留意風險", "ma5": 305, "ma20": 310, "rsi": 35, "sup": 280, "res": 330, "news": "金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。" }, "06862": { "name": "海底撈", "price": 10.38, "target": 9.8, "y": "約6.6釐", "grp": "消費黃金", "note": "藍籌消費，派息增加、盈利穩定", "ma5": 10.5, "ma20": 10.2, "rsi": 48, "sup": 9.5, "res": 11, "news": "消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。" } };
+    var DATA = {"01810": {"name": "小米集團", "price": 29.66, "target": 28.5, "y": "低息·成長", "grp": "科技成長", "note": "人車家全生態，汽車+AI雙引擎，澎程系列熱銷", "ma5": 29.456, "ma20": 28.408, "rsi": 59, "sup": 25.4, "res": 31.74, "news": "10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。"}, "00700": {"name": "騰訊控股", "price": 372.8, "target": 360.0, "y": "低息·成長", "grp": "科技成長", "note": "遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入", "ma5": 384.92, "ma20": 395.02, "rsi": 35, "sup": 370.0, "res": 431.2, "news": "11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。"}, "09988": {"name": "阿里巴巴", "price": 85.25, "target": 90.0, "y": "低息·成長", "grp": "科技成長", "note": "電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌", "ma5": 89.04, "ma20": 97.388, "rsi": 29, "sup": 84.25, "res": 109.4, "news": "11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。"}, "03690": {"name": "美團", "price": 70.15, "target": 68.0, "y": "低息·成長", "grp": "科技成長", "note": "即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中", "ma5": 70.82, "ma20": 73.088, "rsi": 43, "sup": 68.85, "res": 83.0, "news": "11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。"}, "01398": {"name": "工商銀行", "price": 7.935, "target": 8.0, "y": "約5.7釐", "grp": "金融高息", "note": "國有大行，分紅穩定、估值低，距52周高點不足2%", "ma5": 7.957, "ma20": 7.789, "rsi": 58, "sup": 7.165, "res": 8.18, "news": "前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。"}, "00939": {"name": "建設銀行", "price": 10.51, "target": 10.5, "y": "約5.8釐", "grp": "金融高息", "note": "國有大行，高股息防禦底倉，H股折價提供安全墊", "ma5": 10.544, "ma20": 10.284, "rsi": 61, "sup": 9.61, "res": 10.73, "news": "11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。"}, "02318": {"name": "中國平安", "price": 50.7, "target": 50.0, "y": "5.5釐", "grp": "金融高息", "note": "保險藍籌，業績平穩、派息穩定，高股息防禦之選", "ma5": 51.5, "ma20": 50.939, "rsi": 43, "sup": 47.68, "res": 53.6, "news": "11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。"}, "00883": {"name": "中海油", "price": 22.28, "target": 23.0, "y": "約6.9釐", "grp": "能源資源", "note": "能源高息藍籌，原油景氣支撐，現金流強", "ma5": 22.74, "ma20": 23.449, "rsi": 35, "sup": 22.22, "res": 25.0, "news": "11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。"}, "01088": {"name": "中國神華", "price": 43.14, "target": 44.0, "y": "約5.4釐", "grp": "能源資源", "note": "煤電一體化，現金流穩定、分紅高，冬季用能旺季受益", "ma5": 43.372, "ma20": 42.402, "rsi": 52, "sup": 38.68, "res": 44.44, "news": "11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。"}, "00941": {"name": "中國移動", "price": 80.55, "target": 79.0, "y": "約6.1釐", "grp": "電訊公用", "note": "派息穩定有增長，財息兼收首選，防禦性強", "ma5": 80.53, "ma20": 79.797, "rsi": 56, "sup": 77.0, "res": 81.7, "news": "11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。"}, "00002": {"name": "中電控股", "price": 81.8, "target": 67.0, "y": "高息", "grp": "電訊公用", "note": "公用事業，防禦屬性強，本地收息之選", "ma5": 81.45, "ma20": 79.222, "rsi": 68, "sup": 75.6, "res": 81.95, "news": "公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。"}, "06823": {"name": "香港電訊", "price": 12.52, "target": 5.0, "y": "約6.7釐", "grp": "電訊公用", "note": "派息較穩定，本地電訊收息之選", "ma5": 12.354, "ma20": 12.168, "rsi": 65, "sup": 11.78, "res": 12.62, "news": "本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。"}, "06181": {"name": "老鋪黃金", "price": 279.2, "target": 270.0, "y": "約8.7釐", "grp": "消費黃金", "note": "派息大增但盈利與金價相關，8釐以上請特別留意風險", "ma5": 286.64, "ma20": 287.69, "rsi": 40, "sup": 257.4, "res": 315.0, "news": "金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。"}, "06862": {"name": "海底撈", "price": 10.4, "target": 9.8, "y": "約6.6釐", "grp": "消費黃金", "note": "藍籌消費，派息增加、盈利穩定", "ma5": 10.236, "ma20": 9.763, "rsi": 63, "sup": 9.015, "res": 10.66, "news": "消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。"}, "00981": {"name": "中芯國際", "price": 49.2, "target": 47.72, "y": "—", "grp": "科技成長", "note": "晶圓代工龍頭，先進製程與國產替代主線（自動目標：現價 −3%，可自行改 target）", "ma5": 48.348, "ma20": 46.534, "rsi": 49, "sup": 41.06, "res": 52.3, "news": ""}, "01211": {"name": "比亞迪股份", "price": 64.05, "target": 62.13, "y": "—", "grp": "科技成長", "note": "新能源車龍頭，整車+電池一體化，出海增長（自動目標：現價 −3%，可自行改 target）", "ma5": 65.17, "ma20": 69.58, "rsi": 31, "sup": 62.85, "res": 76.85, "news": ""}, "09618": {"name": "京東集團", "price": 97.65, "target": 94.72, "y": "—", "grp": "科技成長", "note": "自營電商+物流，即時零售競爭中估值偏低（自動目標：現價 −3%，可自行改 target）", "ma5": 105.13, "ma20": 104.978, "rsi": 36, "sup": 96.05, "res": 114.9, "news": ""}, "09999": {"name": "網易", "price": 188.3, "target": 182.65, "y": "—", "grp": "科技成長", "note": "遊戲長青，派息與回購穩定，現金流強（自動目標：現價 −3%，可自行改 target）", "ma5": 191.22, "ma20": 187.815, "rsi": 48, "sup": 171.5, "res": 206.6, "news": ""}, "09888": {"name": "百度集團", "price": 70.2, "target": 68.09, "y": "—", "grp": "科技成長", "note": "搜索+智能駕駛，AI 敘事但廣告承壓（自動目標：現價 −3%，可自行改 target）", "ma5": 73.47, "ma20": 76.05, "rsi": 32, "sup": 69.15, "res": 81.2, "news": ""}, "00005": {"name": "匯豐控股", "price": 136.0, "target": 131.92, "y": "—", "grp": "金融高息", "note": "國際銀行，息差與回購支撐，股息率較高（自動目標：現價 −3%，可自行改 target）", "ma5": 139.12, "ma20": 138.128, "rsi": 40, "sup": 130.316, "res": 145.616, "news": ""}, "01299": {"name": "友邦保險", "price": 76.85, "target": 74.54, "y": "—", "grp": "金融高息", "note": "泛亞保險，新業務價值增長，長期收息（自動目標：現價 −3%，可自行改 target）", "ma5": 77.9, "ma20": 75.76, "rsi": 55, "sup": 69.8, "res": 80.0, "news": ""}, "00388": {"name": "香港交易所", "price": 375.6, "target": 364.33, "y": "—", "grp": "金融高息", "note": "交易所壟斷業務，成交活躍度直接影響收入（自動目標：現價 −3%，可自行改 target）", "ma5": 378.4, "ma20": 376.75, "rsi": 46, "sup": 363.2, "res": 397.2, "news": ""}, "02388": {"name": "中銀香港", "price": 48.54, "target": 47.08, "y": "—", "grp": "金融高息", "note": "本地銀行，股息穩定，受益港元利率（自動目標：現價 −3%，可自行改 target）", "ma5": 49.468, "ma20": 49.225, "rsi": 44, "sup": 46.95, "res": 51.46, "news": ""}, "00823": {"name": "領展房產基金", "price": 41.0, "target": 39.77, "y": "—", "grp": "電訊公用", "note": "REITs，租金收入穩定，派息為主要回報（自動目標：現價 −3%，可自行改 target）", "ma5": 41.068, "ma20": 40.075, "rsi": 62, "sup": 37.2, "res": 41.78, "news": ""}, "01038": {"name": "長江基建", "price": 73.0, "target": 70.81, "y": "—", "grp": "電訊公用", "note": "基建公用組合，現金流穩、連續加派（自動目標：現價 −3%，可自行改 target）", "ma5": 72.5, "ma20": 70.617, "rsi": 66, "sup": 66.55, "res": 73.8, "news": ""}, "00003": {"name": "香港中華煤氣", "price": 7.455, "target": 7.23, "y": "—", "grp": "電訊公用", "note": "燃氣公用，防禦性強，派息歷史長（自動目標：現價 −3%，可自行改 target）", "ma5": 7.422, "ma20": 7.319, "rsi": 66, "sup": 7.075, "res": 7.465, "news": ""}, "00006": {"name": "電能實業", "price": 67.0, "target": 64.99, "y": "—", "grp": "電訊公用", "note": "港燈母公司，現金流穩定，收息之選（自動目標：現價 −3%，可自行改 target）", "ma5": 66.27, "ma20": 64.273, "rsi": 75, "sup": 59.7, "res": 67.5, "news": ""}, "00175": {"name": "吉利汽車", "price": 13.6, "target": 13.19, "y": "—", "grp": "科技成長", "note": "整車龍頭，銀河與極氪雙線，銷量修復（自動目標：現價 −3%，可自行改 target）", "ma5": 13.604, "ma20": 14.003, "rsi": 39, "sup": 13.15, "res": 14.95, "news": ""}, "02015": {"name": "理想汽車", "price": 45.54, "target": 44.17, "y": "—", "grp": "科技成長", "note": "增程+純電，盈利穩健但競爭激烈（自動目標：現價 −3%，可自行改 target）", "ma5": 45.676, "ma20": 45.442, "rsi": 49, "sup": 42.46, "res": 50.5, "news": ""}, "09868": {"name": "小鵬汽車", "price": 39.54, "target": 38.35, "y": "—", "grp": "科技成長", "note": "智能駕駛與新車周期，波動較大（自動目標：現價 −3%，可自行改 target）", "ma5": 37.744, "ma20": 37.576, "rsi": 55, "sup": 34.96, "res": 40.84, "news": ""}, "09866": {"name": "蔚來", "price": 22.72, "target": 22.04, "y": "—", "grp": "科技成長", "note": "換電模式與高端定位，現金消耗需留意（自動目標：現價 −3%，可自行改 target）", "ma5": 23.068, "ma20": 24.983, "rsi": 35, "sup": 21.04, "res": 26.96, "news": ""}};
     var cur = "01810";
     var risk = "mid";
     var watch = ["01810"];
+
+    /* ===== 即時查詢：頁面未收錄的港股，即時向行情接口抓取（需聯網） ===== */
+    var LIVE_KEY = "xh_live_codes";
+
+    function pad5(s) { s = String(s).replace(/\D/g, ""); while (s.length < 5) s = "0" + s; return s.slice(-5); }
+    function r2(n) { return Math.round(n * 100) / 100; }
+    function nv(x) { return (x === null || x === undefined || isNaN(x)) ? "—" : fmt(x); }
+
+    function gbkText(buf) {
+      try { return new TextDecoder("gbk").decode(new Uint8Array(buf)); } catch (e) { return null; }
+    }
+
+    function parseQuote(txt, code) {
+      var key = "v_hk" + code, i = txt.indexOf(key);
+      if (i < 0) return null;
+      var s = txt.indexOf('"', i), e = txt.indexOf('"', s + 1);
+      if (s < 0 || e < 0) return null;
+      var f = txt.slice(s + 1, e).split("~");
+      if (f.length < 40) return null;
+      var k = -1;
+      for (var j = 0; j < f.length; j++) { if (/^\d{4}\/\d{2}\/\d{2}/.test(f[j])) { k = j; break; } }
+      if (k < 0) return null;
+      var price = parseFloat(f[3]);
+      if (!(price > 0)) return null;
+      return { name: f[1], price: price, high: parseFloat(f[k + 3]), low: parseFloat(f[k + 4]) };
+    }
+
+    function fetchQuote(code) {
+      var url = "https://qt.gtimg.cn/q=hk" + code;
+      return fetch(url, { cache: "no-store" })
+        .then(function (r) { return r.arrayBuffer(); })
+        .then(function (b) {
+          var txt = gbkText(b);
+          if (!txt) throw new Error("decode");
+          var q = parseQuote(txt, code);
+          if (!q) throw new Error("empty");
+          return q;
+        })
+        .catch(function () {
+          return new Promise(function (res, rej) {
+            var sc = document.createElement("script");
+            sc.src = url + "&_=" + Date.now();
+            sc.onload = function () {
+              var gg = window["v_hk" + code];
+              var q = gg ? parseQuote('v_hk' + code + '="' + gg + '"', code) : null;
+              if (q) res(q); else rej(new Error("empty"));
+            };
+            sc.onerror = function () { rej(new Error("net")); };
+            document.body.appendChild(sc);
+          });
+        });
+    }
+
+    function fetchRows(code) {
+      var url = "https://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get?param=hk" + code + ",day,,,90,qfq";
+      return fetch(url, { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          var n = j && j.data && j.data["hk" + code];
+          return (n && (n.day || n.qfqday)) || [];
+        });
+    }
+
+    function calcRsi(closes, period) {
+      period = period || 14;
+      if (closes.length < period + 1) return null;
+      var g = [], l = [], i, d;
+      for (i = 1; i < closes.length; i++) { d = closes[i] - closes[i - 1]; g.push(d > 0 ? d : 0); l.push(d < 0 ? -d : 0); }
+      var ag = 0, al = 0;
+      for (i = 0; i < period; i++) { ag += g[i]; al += l[i]; }
+      ag /= period; al /= period;
+      for (i = period; i < g.length; i++) { ag = (ag * (period - 1) + g[i]) / period; al = (al * (period - 1) + l[i]) / period; }
+      if (al === 0) return 100;
+      return Math.round(100 - 100 / (1 + ag / al));
+    }
+
+    function buildLive(q, rows) {
+      var closes = [], highs = [], lows = [], i, r;
+      for (i = 0; i < rows.length; i++) { r = rows[i]; closes.push(parseFloat(r[2])); highs.push(parseFloat(r[3])); lows.push(parseFloat(r[4])); }
+      if (closes.length >= 20 && Math.abs(closes[closes.length - 1] - q.price) > 0.01) {
+        closes.push(q.price); highs.push(q.high); lows.push(q.low);
+      }
+      var ma5 = null, ma20 = null, sup = null, res = null, rsi = null;
+      if (closes.length >= 5) { ma5 = 0; for (i = closes.length - 5; i < closes.length; i++) ma5 += closes[i]; ma5 /= 5; }
+      if (closes.length >= 20) {
+        ma20 = 0; sup = 1e9; res = -1e9;
+        for (i = closes.length - 20; i < closes.length; i++) {
+          ma20 += closes[i];
+          if (lows[i] < sup) sup = lows[i];
+          if (highs[i] > res) res = highs[i];
+        }
+        ma20 /= 20; rsi = calcRsi(closes);
+      }
+      return {
+        name: q.name, price: q.price, target: r2(q.price * 0.97), y: "—",
+        grp: "自選（即時）", note: "即時抓取，暫未收錄於股票清單；加入觀察名單會記住本機",
+        ma5: ma5, ma20: ma20, rsi: rsi, sup: sup, res: res,
+        news: "即時查詢模式不提供當天消息；想長期收錄，把編號加入 stocks.json 即可。"
+      };
+    }
+
+    function loadLive(code, done, silent) {
+      code = pad5(code);
+      if (DATA[code]) { done(true); return; }
+      if (!silent) toast("正在抓取 " + code + " 即時行情…");
+      fetchQuote(code).then(function (q) {
+        return fetchRows(code).catch(function () { return []; }).then(function (rows) {
+          DATA[code] = buildLive(q, rows || []);
+          var lv = [];
+          try { lv = JSON.parse(localStorage.getItem(LIVE_KEY) || "[]"); } catch (e) { lv = []; }
+          if (lv.indexOf(code) < 0) {
+            lv.unshift(code);
+            if (lv.length > 30) lv = lv.slice(0, 30);
+            try { localStorage.setItem(LIVE_KEY, JSON.stringify(lv)); } catch (e) { }
+          }
+          done(true);
+        });
+      }).catch(function () {
+        if (!silent) toast("查不到 " + code + "，請確認是 5 位港股編號");
+        done(false);
+      });
+    }
 
     function fmt(n) { return (+n).toFixed(2); }
     function compute(price, target, r) {
@@ -2408,18 +2530,21 @@
       document.getElementById("mYield").textContent = "股息率 " + d.y;
       var g = document.getElementById("mGrid");
       g.innerHTML =
-        '<div class="m-stat"><div class="lab">MA5</div><div class="val">' + fmt(d.ma5) + '</div></div>' +
-        '<div class="m-stat"><div class="lab">MA20</div><div class="val">' + fmt(d.ma20) + '</div></div>' +
-        '<div class="m-stat"><div class="lab">RSI(14)</div><div class="val">' + d.rsi + '</div></div>' +
-        '<div class="m-stat"><div class="lab">支撐位</div><div class="val">' + fmt(d.sup) + '</div></div>' +
-        '<div class="m-stat"><div class="lab">壓力位</div><div class="val">' + fmt(d.res) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">MA5</div><div class="val">' + nv(d.ma5) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">MA20</div><div class="val">' + nv(d.ma20) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">RSI(14)</div><div class="val">' + ((d.rsi === null || d.rsi === undefined) ? "—" : d.rsi) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">支撐位</div><div class="val">' + nv(d.sup) + '</div></div>' +
+        '<div class="m-stat"><div class="lab">壓力位</div><div class="val">' + nv(d.res) + '</div></div>' +
         '<div class="m-stat"><div class="lab">目標買入價</div><div class="val">' + fmt(d.target) + '</div></div>';
       var s = compute(d.price, d.target, risk);
       document.getElementById("mMsg").innerHTML = '<b style="color:' + s.color + '">' + s.lvl + '</b> · ' + s.msg;
       document.getElementById("mNews").innerHTML = d.news;
       var riskHtml = '<b>⚠ 給新手的提醒：</b>';
       if (d.y.indexOf("8釐") >= 0 || d.y.indexOf("8.7") >= 0 || d.y.indexOf("8.") === 0) riskHtml += ' 該股股息率偏高（' + d.y + '），屬「高息陷阱」高發區，須特別留意盈利能否持續、股價會否大跌。';
-      riskHtml += (d.grp === "科技成長" ? ' 科技股波動較大，價格可上可下，務必量力而為、分批參與。' : ' 該股屬收息型標的，看重的是長期穩定收息，別指望短線暴漲。') + ' 以上僅教學參考，非投資建議。';
+      riskHtml += (d.grp.indexOf("即時") >= 0
+        ? ' 這隻是即時查詢股，頁面未收錄其分組與基本面，只按「現價 vs 目標價」給教學信號，目標價暫按現價 −3% 自動設定，可自行修改。'
+        : (d.grp === "科技成長" ? ' 科技股波動較大，價格可上可下，務必量力而為、分批參與。' : ' 該股屬收息型標的，看重的是長期穩定收息，別指望短線暴漲。'))
+        + ' 以上僅教學參考，非投資建議。';
       document.getElementById("mRisk").innerHTML = riskHtml;
       var ab = document.getElementById("mAddWatch");
       ab.textContent = watch.indexOf(code) !== -1 ? "已在觀察名單 ✓" : "加入觀察名單";
@@ -2429,8 +2554,9 @@
     document.getElementById("go").addEventListener("click", function () {
       var code = document.getElementById("code").value.replace(/\D/g, "").trim();
       if (!code) { toast("請先輸入港股編號，如 01810"); return; }
-      if (DATA[code]) { cur = code; render(); saveHist(); }
-      else { toast("暫未收錄該編號，可試試熱門股"); }
+      code = pad5(code);
+      if (DATA[code]) { cur = code; render(); saveHist(); return; }
+      loadLive(code, function (ok) { if (ok) { cur = code; render(); saveHist(); } });
     });
     document.getElementById("code").addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("go").click(); });
 
@@ -2512,6 +2638,19 @@
     loadHist();
     renderWatch();
     render();
+    (function restoreLive() {
+      var lv = [];
+      try { lv = JSON.parse(localStorage.getItem(LIVE_KEY) || "[]"); } catch (e) { lv = []; }
+      for (var i = 0; i < lv.length; i++) {
+        (function (c) {
+          if (!DATA[c]) {
+            loadLive(c, function (ok) {
+              if (ok) { renderWatch(); if (cur === c) render(); }
+            }, true);
+          }
+        })(lv[i]);
+      }
+    })();
 
     /* ===== Tab navigation ===== */
     (function () {
@@ -2749,3 +2888,4 @@
 </body>
 
 </html>
+<!-- （注：内容由AI生成） -->
