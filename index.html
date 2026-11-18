@@ -112,6 +112,32 @@
       animation: pulse 1.6s infinite
     }
 
+    .topbar-info {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--t2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .topbar-info:hover {
+      border-color: var(--acc);
+      color: var(--acc)
+    }
+
+    .topbar-info:focus-visible {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px
+    }
+
     @keyframes pulse {
 
       0%,
@@ -1489,6 +1515,27 @@
     .tab-panel>.sec:first-child {
       margin-top: 22px
     }
+
+    /* ===== Info / readme modal ===== */
+    .info-modal {
+      max-width: 680px
+    }
+
+    .info-modal .hero {
+      padding: 0 0 4px
+    }
+
+    .info-modal .hero-title {
+      font-size: 24px
+    }
+
+    .info-modal .disclaimer {
+      margin-top: 24px
+    }
+
+    .info-modal .footer {
+      margin: 24px 0 0
+    }
   </style>
 </head>
 
@@ -1535,518 +1582,490 @@
     <div class="topbar-in">
       <div class="logo">股</div>
       <h1>股票買入時機小助手</h1>
-      <span class="live"><span class="dot"></span>離線·教學參考</span>
+      <button class="topbar-info" id="infoBtn" type="button" aria-label="使用說明與免責聲明"
+        title="使用說明與免責聲明">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4" />
+          <path d="M12 8h.01" />
+        </svg>
+      </button>
+      <span class="live"><span class="dot"></span>離線</span>
     </div>
   </div>
 
   <div class="wrap">
 
     <nav class="tabnav" id="tabnav" role="tablist" aria-label="頁面分區">
-      <button class="tab-btn on" type="button" role="tab" aria-selected="true" aria-controls="p-home" data-panel="p-home">買入時機</button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-watch" data-panel="p-watch">觀察名單</button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-rec" data-panel="p-rec">推薦名單</button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-news" data-panel="p-news">當天消息</button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-hist" data-panel="p-hist">查詢歷史</button>
+      <button class="tab-btn on" type="button" role="tab" aria-selected="true" aria-controls="p-home"
+        data-panel="p-home">買入時機</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-watch"
+        data-panel="p-watch">觀察名單</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-rec"
+        data-panel="p-rec">推薦名單</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-news"
+        data-panel="p-news">當天消息</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-hist"
+        data-panel="p-hist">查詢歷史</button>
     </nav>
 
     <div class="tab-panel on" id="p-home">
 
-    <div class="hero">
-      <div class="breadcrumb">新手友好 · 學習增強版</div>
-      <div class="hero-title">一隻股票，什麼時候買最好？</div>
-      <div class="hero-sub">把複雜的K線、均線、RSI都收進背後，你只需要看「買入 / 觀望 /
-        賣出」三個燈，配一句人話解釋。點任一隻股票就能看它的專屬買賣信號和技術指標，還能把心水的股票加進自己的觀察名單。所有內容僅供學習參考，不構成投資建議。</div>
-      <div class="hero-tags">
-        <span class="pill">適合新手</span>
-        <span class="pill">港股</span>
-        <span class="pill">自選觀察</span>
-        <span class="pill">推薦名單</span>
-        <span class="pill">當天消息</span><span class="pill">完全離線</span>
+      <div class="sec" style="margin-top:22px">
+        <div class="query-card">
+          <div class="input-row">
+            <div class="code-input">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <input id="code" type="text" placeholder="輸入港股編號，如 01810" maxlength="5">
+            </div>
+            <button class="btn" id="go">查信號</button>
+          </div>
+          <div class="hot-label">熱門股票快捷選擇：</div>
+          <div class="hot-row" id="hotRow">
+            <button class="hot" data-code="01810">小米集團<span>01810</span></button><button class="hot"
+              data-code="00700">騰訊控股<span>00700</span></button><button class="hot"
+              data-code="09988">阿里巴巴<span>09988</span></button><button class="hot"
+              data-code="03690">美團<span>03690</span></button><button class="hot"
+              data-code="00883">中海油<span>00883</span></button><button class="hot"
+              data-code="01398">工商銀行<span>01398</span></button><button class="hot"
+              data-code="00939">建設銀行<span>00939</span></button><button class="hot"
+              data-code="00941">中國移動<span>00941</span></button><button class="hot"
+              data-code="01088">中國神華<span>01088</span></button><button class="hot"
+              data-code="02318">中國平安<span>02318</span></button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="install-hint">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" />
-        <path d="M12 18h.01" />
-      </svg>
-      <div><b>手機安裝提示：</b>在瀏覽器菜單點「添加到主屏幕 / 加入主屏幕」，就能像 App 一樣獨立打開。本工具<strong>數據全部內置、完全離線可用</strong>，斷網也能看。</div>
-    </div>
-    <div class="sec" style="margin-top:22px">
-      <div class="query-card">
-        <div class="input-row">
-          <div class="code-input">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <input id="code" type="text" placeholder="輸入港股編號，如 01810" maxlength="5">
+      <div class="sec" style="margin-top:0">
+        <div class="signal-card">
+          <div class="signal-head">
+            <span class="name" id="sigName">小米集團</span>
+            <span class="code" id="sigCode">01810</span>
           </div>
-          <button class="btn" id="go">查信號</button>
-        </div>
-        <div class="hot-label">熱門股票快捷選擇：</div>
-        <div class="hot-row" id="hotRow">
-          <button class="hot" data-code="01810">小米集團<span>01810</span></button><button class="hot"
-            data-code="00700">騰訊控股<span>00700</span></button><button class="hot"
-            data-code="09988">阿里巴巴<span>09988</span></button><button class="hot"
-            data-code="03690">美團<span>03690</span></button><button class="hot"
-            data-code="00883">中海油<span>00883</span></button><button class="hot"
-            data-code="01398">工商銀行<span>01398</span></button><button class="hot"
-            data-code="00939">建設銀行<span>00939</span></button><button class="hot"
-            data-code="00941">中國移動<span>00941</span></button><button class="hot"
-            data-code="01088">中國神華<span>01088</span></button><button class="hot"
-            data-code="02318">中國平安<span>02318</span></button>
+          <div class="big-signal" id="bigSig" style="background:#B45309">
+            <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+              </svg></div>
+            <div class="sig-lvl" id="sigLvl">觀望</div>
+            <div class="sig-price" id="sigPrice">現價 29.70</div>
+          </div>
+          <div class="sig-msg" id="sigMsg">股價還高於你設定的目標價，先別急，等等回調。</div>
+          <div class="sig-sub" id="sigSub">信號由「現價 vs 你的目標買入價」+「風險偏好」得出，僅供學習參考。點下面的「看完整分析」可查看技術指標與當天消息。</div>
+          <div class="sig-bar">
+            <div class="row"><span>現價 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span></div>
+            <div class="row"><span>我的目標買入價 <b id="barTarget">28.50</b></span><span class="v"
+                id="barTargetV">28.50</span>
+            </div>
+            <div class="row"><span>價差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
+          </div>
+          <div class="risk-toggle">
+            <span class="lab">我的風險偏好：</span>
+            <div class="seg" id="riskSeg">
+              <button data-r="calm">穩健</button>
+              <button data-r="mid" class="on">均衡</button>
+              <button data-r="agg">進取</button>
+            </div>
+          </div>
+          <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg> 看當前股票的完整分析</button></div>
         </div>
       </div>
-    </div>
-
-    <div class="sec" style="margin-top:0">
-      <div class="signal-card">
-        <div class="signal-head">
-          <span class="name" id="sigName">小米集團</span>
-          <span class="code" id="sigCode">01810</span>
-        </div>
-        <div class="big-signal" id="bigSig" style="background:#B45309">
-          <div class="sig-ico" id="sigIco"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <rect x="14" y="4" width="4" height="16" rx="1" />
-              <rect x="6" y="4" width="4" height="16" rx="1" />
-            </svg></div>
-          <div class="sig-lvl" id="sigLvl">觀望</div>
-          <div class="sig-price" id="sigPrice">現價 29.70</div>
-        </div>
-        <div class="sig-msg" id="sigMsg">股價還高於你設定的目標價，先別急，等等回調。</div>
-        <div class="sig-sub" id="sigSub">信號由「現價 vs 你的目標買入價」+「風險偏好」得出，僅供學習參考。點下面的「看完整分析」可查看技術指標與當天消息。</div>
-        <div class="sig-bar">
-          <div class="row"><span>現價 <b id="barPrice">29.70</b></span><span class="v" id="barPriceV">29.70</span></div>
-          <div class="row"><span>我的目標買入價 <b id="barTarget">28.50</b></span><span class="v" id="barTargetV">28.50</span>
-          </div>
-          <div class="row"><span>價差 <b id="barGap">+4.2%</b></span><span class="v" id="barGapV">+4.2%</span></div>
-        </div>
-        <div class="risk-toggle">
-          <span class="lab">我的風險偏好：</span>
-          <div class="seg" id="riskSeg">
-            <button data-r="calm">穩健</button>
-            <button data-r="mid" class="on">均衡</button>
-            <button data-r="agg">進取</button>
-          </div>
-        </div>
-        <div style="margin-top:16px"><button class="btn sec-btn" id="fullBtn"><svg xmlns="http://www.w3.org/2000/svg"
-              width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg> 看當前股票的完整分析</button></div>
-      </div>
-    </div>
 
     </div>
 
     <div class="tab-panel" id="p-watch">
-    <div class="sec" id="watchSec">
-      <div class="sec-head">
-        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon
-              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
-          </svg> 我的觀察名單</h2>
-        <div class="tag">把你心水的股票加進來，點擊任意一隻可看專屬分析。保存本頁後名單自動留存。</div>
+      <div class="sec" id="watchSec">
+        <div class="sec-head">
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
+            </svg> 我的觀察名單</h2>
+          <div class="tag">把你心水的股票加進來，點擊任意一隻可看專屬分析。保存本頁後名單自動留存。</div>
+        </div>
+        <div class="watch-grid" id="watchGrid"></div>
       </div>
-      <div class="watch-grid" id="watchGrid"></div>
-    </div>
 
     </div>
 
     <div class="tab-panel" id="p-rec">
-    <div class="sec" id="recSec">
-      <div class="sec-head">
-        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3Z" />
-          </svg> 為你推薦 · 分組名單</h2>
-        <div class="tag">按「科技成長 / 金融高息 / 能源資源 / 電訊公用 / 消費黃金」分組，點卡片看專屬分析，點右上角 ⊕ 加入觀察名單。</div>
+      <div class="sec" id="recSec">
+        <div class="sec-head">
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3Z" />
+            </svg> 為你推薦 · 分組名單</h2>
+          <div class="tag">按「科技成長 / 金融高息 / 能源資源 / 電訊公用 / 消費黃金」分組，點卡片看專屬分析，點右上角 ⊕ 加入觀察名單。</div>
+        </div>
+        <div class="grp">
+          <div class="grp-head" style="border-left-color:#1A1A1F">
+            <h3>科技成長</h3><span class="gsub">進攻型 · 波動大、想象空間大，適合有承受力的人</span><span class="gcount">4 只</span>
+          </div>
+          <div class="rec-grid">
+            <div class="rcard" data-code="01810">
+              <button class="r-add" data-code="01810" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">小米集團</span><span class="r-code">01810</span></div>
+              <div class="r-price">29.70</div>
+              <div class="r-yield">股息率 低息·成長</div>
+              <div class="r-note">人車家全生態，汽車+AI雙引擎，澎程系列熱銷</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="00700">
+              <button class="r-add" data-code="00700" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">騰訊控股</span><span class="r-code">00700</span></div>
+              <div class="r-price">376.00</div>
+              <div class="r-yield">股息率 低息·成長</div>
+              <div class="r-note">遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="09988">
+              <button class="r-add" data-code="09988" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">阿里巴巴</span><span class="r-code">09988</span></div>
+              <div class="r-price">85.45</div>
+              <div class="r-yield">股息率 低息·成長</div>
+              <div class="r-note">電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="03690">
+              <button class="r-add" data-code="03690" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">美團</span><span class="r-code">03690</span></div>
+              <div class="r-price">70.50</div>
+              <div class="r-yield">股息率 低息·成長</div>
+              <div class="r-note">即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="grp-head" style="border-left-color:#FF6900">
+            <h3>金融高息</h3><span class="gsub">收息型 · 派息穩、估值低，防禦底倉</span><span class="gcount">3 只</span>
+          </div>
+          <div class="rec-grid">
+            <div class="rcard" data-code="01398">
+              <button class="r-add" data-code="01398" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">工商銀行</span><span class="r-code">01398</span></div>
+              <div class="r-price">8.01</div>
+              <div class="r-yield">股息率 約5.7釐</div>
+              <div class="r-note">國有大行，分紅穩定、估值低，距52周高點不足2%</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="00939">
+              <button class="r-add" data-code="00939" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">建設銀行</span><span class="r-code">00939</span></div>
+              <div class="r-price">10.59</div>
+              <div class="r-yield">股息率 約5.8釐</div>
+              <div class="r-note">國有大行，高股息防禦底倉，H股折價提供安全墊</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="02318">
+              <button class="r-add" data-code="02318" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">中國平安</span><span class="r-code">02318</span></div>
+              <div class="r-price">51.25</div>
+              <div class="r-yield">股息率 5.5釐</div>
+              <div class="r-note">保險藍籌，業績平穩、派息穩定，高股息防禦之選</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="grp-head" style="border-left-color:#B45309">
+            <h3>能源資源</h3><span class="gsub">收息型 · 高股息+景氣，現金流強</span><span class="gcount">2 只</span>
+          </div>
+          <div class="rec-grid">
+            <div class="rcard" data-code="00883">
+              <button class="r-add" data-code="00883" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">中海油</span><span class="r-code">00883</span></div>
+              <div class="r-price">22.62</div>
+              <div class="r-yield">股息率 約6.9釐</div>
+              <div class="r-note">能源高息藍籌，原油景氣支撐，現金流強</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="01088">
+              <button class="r-add" data-code="01088" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">中國神華</span><span class="r-code">01088</span></div>
+              <div class="r-price">43.56</div>
+              <div class="r-yield">股息率 約5.4釐</div>
+              <div class="r-note">煤電一體化，現金流穩定、分紅高，冬季用能旺季受益</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="grp-head" style="border-left-color:#0E7C3A">
+            <h3>電訊公用</h3><span class="gsub">收息型 · 現金流穩、防禦性強</span><span class="gcount">3 只</span>
+          </div>
+          <div class="rec-grid">
+            <div class="rcard" data-code="00941">
+              <button class="r-add" data-code="00941" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">中國移動</span><span class="r-code">00941</span></div>
+              <div class="r-price">80.50</div>
+              <div class="r-yield">股息率 約6.1釐</div>
+              <div class="r-note">派息穩定有增長，財息兼收首選，防禦性強</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="00002">
+              <button class="r-add" data-code="00002" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">中電控股</span><span class="r-code">00002</span></div>
+              <div class="r-price">68.50</div>
+              <div class="r-yield">股息率 高息</div>
+              <div class="r-note">公用事業，防禦屬性強，本地收息之選</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="06823">
+              <button class="r-add" data-code="06823" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">香港電訊</span><span class="r-code">06823</span></div>
+              <div class="r-price">5.20</div>
+              <div class="r-yield">股息率 約6.7釐</div>
+              <div class="r-note">派息較穩定，本地電訊收息之選</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="grp-head" style="border-left-color:#C62F1F">
+            <h3>消費黃金</h3><span class="gsub">混合型 · 含高息與高波動，請特別留意風險</span><span class="gcount">2 只</span>
+          </div>
+          <div class="rec-grid">
+            <div class="rcard" data-code="06181">
+              <button class="r-add" data-code="06181" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">老鋪黃金</span><span class="r-code">06181</span></div>
+              <div class="r-price">297.60</div>
+              <div class="r-yield">股息率 約8.7釐</div>
+              <div class="r-note">派息大增但盈利與金價相關，8釐以上請特別留意風險</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+            <div class="rcard" data-code="06862">
+              <button class="r-add" data-code="06862" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg></button>
+              <div class="r-top"><span class="r-name">海底撈</span><span class="r-code">06862</span></div>
+              <div class="r-price">10.38</div>
+              <div class="r-yield">股息率 約6.6釐</div>
+              <div class="r-note">藍籌消費，派息增加、盈利穩定</div>
+              <div class="r-cta">看專屬分析 ›</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="grp">
-        <div class="grp-head" style="border-left-color:#1A1A1F">
-          <h3>科技成長</h3><span class="gsub">進攻型 · 波動大、想象空間大，適合有承受力的人</span><span class="gcount">4 只</span>
-        </div>
-        <div class="rec-grid">
-          <div class="rcard" data-code="01810">
-            <button class="r-add" data-code="01810" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">小米集團</span><span class="r-code">01810</span></div>
-            <div class="r-price">29.70</div>
-            <div class="r-yield">股息率 低息·成長</div>
-            <div class="r-note">人車家全生態，汽車+AI雙引擎，澎程系列熱銷</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="00700">
-            <button class="r-add" data-code="00700" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">騰訊控股</span><span class="r-code">00700</span></div>
-            <div class="r-price">376.00</div>
-            <div class="r-yield">股息率 低息·成長</div>
-            <div class="r-note">遊戲+廣告+金融科技，AI混元模型推進，北水連續淨買入</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="09988">
-            <button class="r-add" data-code="09988" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">阿里巴巴</span><span class="r-code">09988</span></div>
-            <div class="r-price">85.45</div>
-            <div class="r-yield">股息率 低息·成長</div>
-            <div class="r-note">電商+雲+AI，雲資本開支與自研芯片敍事；短線超跌</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="03690">
-            <button class="r-add" data-code="03690" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">美團</span><span class="r-code">03690</span></div>
-            <div class="r-price">70.50</div>
-            <div class="r-yield">股息率 低息·成長</div>
-            <div class="r-note">即時零售+外賣龍頭，補貼競爭壓制利潤率，52周低點修復中</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-        </div>
-      </div>
-      <div class="grp">
-        <div class="grp-head" style="border-left-color:#FF6900">
-          <h3>金融高息</h3><span class="gsub">收息型 · 派息穩、估值低，防禦底倉</span><span class="gcount">3 只</span>
-        </div>
-        <div class="rec-grid">
-          <div class="rcard" data-code="01398">
-            <button class="r-add" data-code="01398" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">工商銀行</span><span class="r-code">01398</span></div>
-            <div class="r-price">8.01</div>
-            <div class="r-yield">股息率 約5.7釐</div>
-            <div class="r-note">國有大行，分紅穩定、估值低，距52周高點不足2%</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="00939">
-            <button class="r-add" data-code="00939" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">建設銀行</span><span class="r-code">00939</span></div>
-            <div class="r-price">10.59</div>
-            <div class="r-yield">股息率 約5.8釐</div>
-            <div class="r-note">國有大行，高股息防禦底倉，H股折價提供安全墊</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="02318">
-            <button class="r-add" data-code="02318" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">中國平安</span><span class="r-code">02318</span></div>
-            <div class="r-price">51.25</div>
-            <div class="r-yield">股息率 5.5釐</div>
-            <div class="r-note">保險藍籌，業績平穩、派息穩定，高股息防禦之選</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-        </div>
-      </div>
-      <div class="grp">
-        <div class="grp-head" style="border-left-color:#B45309">
-          <h3>能源資源</h3><span class="gsub">收息型 · 高股息+景氣，現金流強</span><span class="gcount">2 只</span>
-        </div>
-        <div class="rec-grid">
-          <div class="rcard" data-code="00883">
-            <button class="r-add" data-code="00883" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">中海油</span><span class="r-code">00883</span></div>
-            <div class="r-price">22.62</div>
-            <div class="r-yield">股息率 約6.9釐</div>
-            <div class="r-note">能源高息藍籌，原油景氣支撐，現金流強</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="01088">
-            <button class="r-add" data-code="01088" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">中國神華</span><span class="r-code">01088</span></div>
-            <div class="r-price">43.56</div>
-            <div class="r-yield">股息率 約5.4釐</div>
-            <div class="r-note">煤電一體化，現金流穩定、分紅高，冬季用能旺季受益</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-        </div>
-      </div>
-      <div class="grp">
-        <div class="grp-head" style="border-left-color:#0E7C3A">
-          <h3>電訊公用</h3><span class="gsub">收息型 · 現金流穩、防禦性強</span><span class="gcount">3 只</span>
-        </div>
-        <div class="rec-grid">
-          <div class="rcard" data-code="00941">
-            <button class="r-add" data-code="00941" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">中國移動</span><span class="r-code">00941</span></div>
-            <div class="r-price">80.50</div>
-            <div class="r-yield">股息率 約6.1釐</div>
-            <div class="r-note">派息穩定有增長，財息兼收首選，防禦性強</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="00002">
-            <button class="r-add" data-code="00002" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">中電控股</span><span class="r-code">00002</span></div>
-            <div class="r-price">68.50</div>
-            <div class="r-yield">股息率 高息</div>
-            <div class="r-note">公用事業，防禦屬性強，本地收息之選</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="06823">
-            <button class="r-add" data-code="06823" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">香港電訊</span><span class="r-code">06823</span></div>
-            <div class="r-price">5.20</div>
-            <div class="r-yield">股息率 約6.7釐</div>
-            <div class="r-note">派息較穩定，本地電訊收息之選</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-        </div>
-      </div>
-      <div class="grp">
-        <div class="grp-head" style="border-left-color:#C62F1F">
-          <h3>消費黃金</h3><span class="gsub">混合型 · 含高息與高波動，請特別留意風險</span><span class="gcount">2 只</span>
-        </div>
-        <div class="rec-grid">
-          <div class="rcard" data-code="06181">
-            <button class="r-add" data-code="06181" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">老鋪黃金</span><span class="r-code">06181</span></div>
-            <div class="r-price">297.60</div>
-            <div class="r-yield">股息率 約8.7釐</div>
-            <div class="r-note">派息大增但盈利與金價相關，8釐以上請特別留意風險</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-          <div class="rcard" data-code="06862">
-            <button class="r-add" data-code="06862" title="加入/移出觀察名單"><svg xmlns="http://www.w3.org/2000/svg" width="14"
-                height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg></button>
-            <div class="r-top"><span class="r-name">海底撈</span><span class="r-code">06862</span></div>
-            <div class="r-price">10.38</div>
-            <div class="r-yield">股息率 約6.6釐</div>
-            <div class="r-note">藍籌消費，派息增加、盈利穩定</div>
-            <div class="r-cta">看專屬分析 ›</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     </div>
 
     <div class="tab-panel" id="p-news">
-    <div class="sec" id="newsSec">
-      <div class="sec-head">
-        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
-            <path d="M18 14h-8" />
-            <path d="M15 18h-5" />
-            <path d="M10 6h8v4h-8V6Z" />
-          </svg> 相關服務 · 當天消息</h2>
-        <div class="tag">每隻股票當天相關資訊 / 消息（教學整理，非實時），點擊可跳到該股分析。</div>
+      <div class="sec" id="newsSec">
+        <div class="sec-head">
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+              <path d="M18 14h-8" />
+              <path d="M15 18h-5" />
+              <path d="M10 6h8v4h-8V6Z" />
+            </svg> 相關服務 · 當天消息</h2>
+          <div class="tag">每隻股票當天相關資訊 / 消息（教學整理，非實時），點擊可跳到該股分析。</div>
+        </div>
+        <div class="news-list">
+          <div class="nitem" data-code="01810">
+            <span class="ncode">01810</span>
+            <div class="nbody">
+              <div class="ntitle">小米集團 · 當天相關</div>
+              <div class="nmsg">10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="00700">
+            <span class="ncode">00700</span>
+            <div class="nbody">
+              <div class="ntitle">騰訊控股 · 當天相關</div>
+              <div class="nmsg">11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="09988">
+            <span class="ncode">09988</span>
+            <div class="nbody">
+              <div class="ntitle">阿里巴巴 · 當天相關</div>
+              <div class="nmsg">11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="03690">
+            <span class="ncode">03690</span>
+            <div class="nbody">
+              <div class="ntitle">美團 · 當天相關</div>
+              <div class="nmsg">11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="01398">
+            <span class="ncode">01398</span>
+            <div class="nbody">
+              <div class="ntitle">工商銀行 · 當天相關</div>
+              <div class="nmsg">前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="00939">
+            <span class="ncode">00939</span>
+            <div class="nbody">
+              <div class="ntitle">建設銀行 · 當天相關</div>
+              <div class="nmsg">11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="02318">
+            <span class="ncode">02318</span>
+            <div class="nbody">
+              <div class="ntitle">中國平安 · 當天相關</div>
+              <div class="nmsg">11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="00883">
+            <span class="ncode">00883</span>
+            <div class="nbody">
+              <div class="ntitle">中海油 · 當天相關</div>
+              <div class="nmsg">11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="01088">
+            <span class="ncode">01088</span>
+            <div class="nbody">
+              <div class="ntitle">中國神華 · 當天相關</div>
+              <div class="nmsg">11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="00941">
+            <span class="ncode">00941</span>
+            <div class="nbody">
+              <div class="ntitle">中國移動 · 當天相關</div>
+              <div class="nmsg">11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="00002">
+            <span class="ncode">00002</span>
+            <div class="nbody">
+              <div class="ntitle">中電控股 · 當天相關</div>
+              <div class="nmsg">公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="06823">
+            <span class="ncode">06823</span>
+            <div class="nbody">
+              <div class="ntitle">香港電訊 · 當天相關</div>
+              <div class="nmsg">本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="06181">
+            <span class="ncode">06181</span>
+            <div class="nbody">
+              <div class="ntitle">老鋪黃金 · 當天相關</div>
+              <div class="nmsg">金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。</div>
+            </div>
+          </div>
+          <div class="nitem" data-code="06862">
+            <span class="ncode">06862</span>
+            <div class="nbody">
+              <div class="ntitle">海底撈 · 當天相關</div>
+              <div class="nmsg">消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="news-list">
-        <div class="nitem" data-code="01810">
-          <span class="ncode">01810</span>
-          <div class="nbody">
-            <div class="ntitle">小米集團 · 當天相關</div>
-            <div class="nmsg">10月汽車交付超5萬創單月紀錄；11/9回購約5000萬港元、年內累計回購128.6億；澎程系列首月鎖單超7萬、N70居增程車銷量第一。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="00700">
-          <span class="ncode">00700</span>
-          <div class="nbody">
-            <div class="ntitle">騰訊控股 · 當天相關</div>
-            <div class="nmsg">11/17南下資金淨買入騰訊15.96億港元居首；業績周臨近，AI混元推出Hy4 flash；美國BIS新規限制遠程算力偏負面。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="09988">
-          <span class="ncode">09988</span>
-          <div class="nbody">
-            <div class="ntitle">阿里巴巴 · 當天相關</div>
-            <div class="nmsg">11/17跌5.21%收85.45，南向連續3日淨賣出共40.9億；阿里跌見52周低附近；里昂估雙十一GMV增約5%。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="03690">
-          <span class="ncode">03690</span>
-          <div class="nbody">
-            <div class="ntitle">美團 · 當天相關</div>
-            <div class="nmsg">11/17跌1.47%收70.5，南向小幅淨買入1.23億；京東、美團即時零售補貼競爭受關注。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="01398">
-          <span class="ncode">01398</span>
-          <div class="nbody">
-            <div class="ntitle">工商銀行 · 當天相關</div>
-            <div class="nmsg">前三季度上市銀行淨利增3.78%，息差企穩；國有大行中期分紅比例上調至31%，銀行板塊估值上行。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="00939">
-          <span class="ncode">00939</span>
-          <div class="nbody">
-            <div class="ntitle">建設銀行 · 當天相關</div>
-            <div class="nmsg">11/17南向淨買入建設銀行5.5億港元；中期分紅比例上調，股息率約5.8%，防禦屬性受資金青睞。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="02318">
-          <span class="ncode">02318</span>
-          <div class="nbody">
-            <div class="ntitle">中國平安 · 當天相關</div>
-            <div class="nmsg">11/17跌0.77%收51.25；保險板塊隨大盤小幅調整，高股息屬性下資金承接相對穩健。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="00883">
-          <span class="ncode">00883</span>
-          <div class="nbody">
-            <div class="ntitle">中海油 · 當天相關</div>
-            <div class="nmsg">11/17跌2.16%收22.62，南向小幅淨賣出；油價與中東地緣擾動，高股息+能源景氣兼具配置價值。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="01088">
-          <span class="ncode">01088</span>
-          <div class="nbody">
-            <div class="ntitle">中國神華 · 當天相關</div>
-            <div class="nmsg">11/17微跌0.95%收43.56；10月原煤產量同比降5.8%，供給收縮預期升温，高股息能源股受青睞。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="00941">
-          <span class="ncode">00941</span>
-          <div class="nbody">
-            <div class="ntitle">中國移動 · 當天相關</div>
-            <div class="nmsg">11/17平收80.5；紅籌股收息首選，股息率約6.1%，在弱市中表現抗跌。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="00002">
-          <span class="ncode">00002</span>
-          <div class="nbody">
-            <div class="ntitle">中電控股 · 當天相關</div>
-            <div class="nmsg">公用事業防禦屬性受青睞，派息相對穩定，適合作為收息底倉配置。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="06823">
-          <span class="ncode">06823</span>
-          <div class="nbody">
-            <div class="ntitle">香港電訊 · 當天相關</div>
-            <div class="nmsg">本地電訊服務現金流穩定，股息率約6.7%，屬穩健收息標的。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="06181">
-          <span class="ncode">06181</span>
-          <div class="nbody">
-            <div class="ntitle">老鋪黃金 · 當天相關</div>
-            <div class="nmsg">金價高位回落，紐約期金失守3970美元，金飾克價跌破1200元；高價黃金股對金價敏感，回調風險大。</div>
-          </div>
-        </div>
-        <div class="nitem" data-code="06862">
-          <span class="ncode">06862</span>
-          <div class="nbody">
-            <div class="ntitle">海底撈 · 當天相關</div>
-            <div class="nmsg">消費板塊隨社零温和復甦，餐飲龍頭盈利與派息穩定，屬穩健高息消費標的。</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     </div>
 
     <div class="tab-panel" id="p-hist">
-    <div class="sec" id="histSec">
-      <div class="sec-head">
-        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-            <path d="M3 3v5h5" />
-            <path d="M12 7v5l4 2" />
-          </svg> 查詢歷史記錄</h2>
-        <div class="tag">你最近查過的股票（保存在本機），點擊可回看。</div>
+      <div class="sec" id="histSec">
+        <div class="sec-head">
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M12 7v5l4 2" />
+            </svg> 查詢歷史記錄</h2>
+          <div class="tag">你最近查過的股票（保存在本機），點擊可回看。</div>
+        </div>
+        <div class="hist" id="histBox">
+          <div class="empty">還沒有查詢記錄，去「買入時機」頁查一隻股票吧。</div>
+        </div>
       </div>
-      <div class="hist" id="histBox">
-        <div class="empty">還沒有查詢記錄，去「買入時機」頁查一隻股票吧。</div>
-      </div>
-    </div>
 
     </div>
 
-    <div class="disclaimer">
-      <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-          <path d="M12 9v4" />
-          <path d="M12 17h.01" />
-        </svg> 投資風險免責聲明</h3>
-      <ul>
-        <li>本工具所有價格、信號、技術指標與當天消息僅供學習參考，不構成任何投資建議或邀約。</li>
-        <li>股票價格可升可跌，過往表現不代表未來；投資者可能損失全部或部分本金，請量力而為。</li>
-        <li>「買入/觀望/賣出」信號由「現價 vs 目標買入價 + 風險偏好」的簡單教學規則生成，MA/RSI/支撐壓力位為教學參考值，不包含真實完整的技術面與基本面分析，不可作為實際交易依據。</li>
-        <li>當天消息為公開資訊的整理摘要，請以公司公告與官方披露為準。</li>
-        <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股價大跌或盈利不可持續所致，收息前請評估盈利穩定性、派息持續性與股價波動風險。</li>
-      </ul>
-    </div>
-
-    <div class="footer">
-      股票買入時機小助手 · 手機安裝版<br>
-      數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
-      生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
-    </div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -2091,6 +2110,58 @@
       <div class="m-risk" id="mRisk"></div>
       <div class="m-btns">
         <button class="addwatch-btn" id="mAddWatch">加入觀察名單</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="infoOverlay">
+    <div class="modal info-modal">
+      <button class="modal-close" id="infoClose" aria-label="關閉"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+          height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg></button>
+      <div class="hero">
+        <div class="breadcrumb">新手友好 · 學習增強版</div>
+        <div class="hero-title">一隻股票，什麼時候買最好？</div>
+        <div class="hero-sub">把複雜的K線、均線、RSI都收進背後，你只需要看「買入 / 觀望 /
+          賣出」三個燈，配一句人話解釋。點任一隻股票就能看它的專屬買賣信號和技術指標，還能把心水的股票加進自己的觀察名單。所有內容僅供學習參考，不構成投資建議。</div>
+        <div class="hero-tags">
+          <span class="pill">適合新手</span>
+          <span class="pill">港股</span>
+          <span class="pill">自選觀察</span>
+          <span class="pill">推薦名單</span>
+          <span class="pill">當天消息</span><span class="pill">完全離線</span>
+        </div>
+      </div>
+      <div class="install-hint">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" />
+          <path d="M12 18h.01" />
+        </svg>
+        <div><b>手機安裝提示：</b>在瀏覽器菜單點「添加到主屏幕 / 加入主屏幕」，就能像 App 一樣獨立打開。本工具<strong>數據全部內置、完全離線可用</strong>，斷網也能看。</div>
+      </div>
+      <div class="disclaimer">
+        <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+            <path d="M12 9v4" />
+            <path d="M12 17h.01" />
+          </svg> 投資風險免責聲明</h3>
+        <ul>
+          <li>本工具所有價格、信號、技術指標與當天消息僅供學習參考，不構成任何投資建議或邀約。</li>
+          <li>股票價格可升可跌，過往表現不代表未來；投資者可能損失全部或部分本金，請量力而為。</li>
+          <li>「買入/觀望/賣出」信號由「現價 vs 目標買入價 + 風險偏好」的簡單教學規則生成，MA/RSI/支撐壓力位為教學參考值，不包含真實完整的技術面與基本面分析，不可作為實際交易依據。</li>
+          <li>當天消息為公開資訊的整理摘要，請以公司公告與官方披露為準。</li>
+          <li>高股息不代表保本保收益；警惕「高息陷阱」——高股息率可能是股價大跌或盈利不可持續所致，收息前請評估盈利穩定性、派息持續性與股價波動風險。</li>
+        </ul>
+      </div>
+      <div class="footer">
+        股票買入時機小助手 · 手機安裝版<br>
+        數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
+        生成於 2026年11月18日 · 僅作學習與參考，不構成投資建議
       </div>
     </div>
   </div>
@@ -2372,6 +2443,18 @@
       var saved = null;
       try { saved = localStorage.getItem(KEY_TAB); } catch (e) { }
       activate(saved, false);
+    })();
+
+    /* ===== Info / readme overlay ===== */
+    (function () {
+      var btn = document.getElementById("infoBtn");
+      var ov = document.getElementById("infoOverlay");
+      if (!btn || !ov) return;
+      function close() { ov.classList.remove("show"); }
+      btn.addEventListener("click", function () { ov.classList.add("show"); });
+      document.getElementById("infoClose").addEventListener("click", close);
+      ov.addEventListener("click", function (e) { if (e.target === ov) close(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();
   </script>
 
