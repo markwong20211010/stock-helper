@@ -1419,6 +1419,76 @@
         animation: none
       }
     }
+
+    /* ===== Tab navigation ===== */
+    .tabnav {
+      position: sticky;
+      top: calc(58px + env(safe-area-inset-top));
+      z-index: 49;
+      display: flex;
+      gap: 8px;
+      padding: 10px 0;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tabnav::-webkit-scrollbar {
+      display: none
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: var(--tint);
+      color: var(--t2);
+      border-radius: 999px;
+      padding: 9px 16px;
+      min-height: 44px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: .2s
+    }
+
+    .tab-btn:hover {
+      border-color: var(--acc);
+      color: var(--acc)
+    }
+
+    .tab-btn.on {
+      background: var(--acc);
+      border-color: var(--acc);
+      color: var(--on)
+    }
+
+    .tab-btn.on:hover {
+      color: var(--on)
+    }
+
+    .tab-btn:focus-visible {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px
+    }
+
+    .tab-panel {
+      display: none
+    }
+
+    .tab-panel.on {
+      display: block
+    }
+
+    .tab-panel>.sec:first-child {
+      margin-top: 22px
+    }
   </style>
 </head>
 
@@ -1470,6 +1540,16 @@
   </div>
 
   <div class="wrap">
+
+    <nav class="tabnav" id="tabnav" role="tablist" aria-label="頁面分區">
+      <button class="tab-btn on" type="button" role="tab" aria-selected="true" aria-controls="p-home" data-panel="p-home">買入時機</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-watch" data-panel="p-watch">觀察名單</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-rec" data-panel="p-rec">推薦名單</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-news" data-panel="p-news">當天消息</button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="p-hist" data-panel="p-hist">查詢歷史</button>
+    </nav>
+
+    <div class="tab-panel on" id="p-home">
 
     <div class="hero">
       <div class="breadcrumb">新手友好 · 學習增強版</div>
@@ -1563,6 +1643,9 @@
       </div>
     </div>
 
+    </div>
+
+    <div class="tab-panel" id="p-watch">
     <div class="sec" id="watchSec">
       <div class="sec-head">
         <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -1575,6 +1658,9 @@
       <div class="watch-grid" id="watchGrid"></div>
     </div>
 
+    </div>
+
+    <div class="tab-panel" id="p-rec">
     <div class="sec" id="recSec">
       <div class="sec-head">
         <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -1803,6 +1889,9 @@
       </div>
     </div>
 
+    </div>
+
+    <div class="tab-panel" id="p-news">
     <div class="sec" id="newsSec">
       <div class="sec-head">
         <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -1917,6 +2006,9 @@
       </div>
     </div>
 
+    </div>
+
+    <div class="tab-panel" id="p-hist">
     <div class="sec" id="histSec">
       <div class="sec-head">
         <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -1928,8 +2020,10 @@
         <div class="tag">你最近查過的股票（保存在本機），點擊可回看。</div>
       </div>
       <div class="hist" id="histBox">
-        <div class="empty">還沒有查詢記錄，去上面查一隻股票吧。</div>
+        <div class="empty">還沒有查詢記錄，去「買入時機」頁查一隻股票吧。</div>
       </div>
+    </div>
+
     </div>
 
     <div class="disclaimer">
@@ -2066,7 +2160,7 @@
     function renderWatch() {
       var g = document.getElementById("watchGrid");
       if (watch.length === 0) {
-        g.innerHTML = '<div class="empty">名單還是空的。到下面「推薦名單」點卡片右上角的 ⊕，或查一隻股票後點「加入觀察名單」，就能把股票收藏到這裏。</div>';
+        g.innerHTML = '<div class="empty">名單還是空的。到「推薦名單」頁點卡片右上角的 ⊕，或查一隻股票後點「加入觀察名單」，就能把股票收藏到這裏。</div>';
         return;
       }
       var html = "";
@@ -2115,7 +2209,7 @@
     }
     function renderHist(h) {
       var box = document.getElementById("histBox");
-      if (!h || h.length === 0) { box.innerHTML = '<div class="empty">還沒有查詢記錄，去上面查一隻股票吧。</div>'; return; }
+      if (!h || h.length === 0) { box.innerHTML = '<div class="empty">還沒有查詢記錄，去「買入時機」頁查一隻股票吧。</div>'; return; }
       var html = "";
       for (var i = 0; i < h.length; i++) {
         var it = h[i], d = DATA[it.code]; if (!d) continue;
@@ -2238,6 +2332,47 @@
     loadHist();
     renderWatch();
     render();
+
+    /* ===== Tab navigation ===== */
+    (function () {
+      var nav = document.getElementById("tabnav");
+      if (!nav) return;
+      var KEY_TAB = "xh_stock_tab";
+      var btns = nav.querySelectorAll(".tab-btn");
+      var panels = document.querySelectorAll(".tab-panel");
+      function activate(id, save) {
+        var valid = false, i;
+        for (i = 0; i < btns.length; i++) {
+          if (btns[i].getAttribute("data-panel") === id) { valid = true; break; }
+        }
+        if (!valid) id = btns[0].getAttribute("data-panel");
+        for (i = 0; i < btns.length; i++) {
+          var on = btns[i].getAttribute("data-panel") === id;
+          btns[i].classList.toggle("on", on);
+          btns[i].setAttribute("aria-selected", on ? "true" : "false");
+        }
+        for (i = 0; i < panels.length; i++) {
+          panels[i].classList.toggle("on", panels[i].id === id);
+        }
+        if (save) { try { localStorage.setItem(KEY_TAB, id); } catch (e) { } }
+      }
+      nav.addEventListener("click", function (e) {
+        var b = e.target && e.target.closest ? e.target.closest(".tab-btn") : null;
+        if (!b || !nav.contains(b)) return;
+        activate(b.getAttribute("data-panel"), true);
+        var topbar = document.querySelector(".topbar");
+        var stickyTop = topbar ? topbar.offsetHeight : 59;
+        var target = Math.max(0, nav.offsetTop - stickyTop);
+        var cur = window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (Math.abs(cur - target) > 4) {
+          var smooth = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth";
+          window.scrollTo({ top: target, behavior: smooth });
+        }
+      });
+      var saved = null;
+      try { saved = localStorage.getItem(KEY_TAB); } catch (e) { }
+      activate(saved, false);
+    })();
   </script>
 
   <script>
