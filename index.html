@@ -2170,7 +2170,7 @@
         <div class="footer">
           股票買入時機小助手 · 手機安裝版<br>
           數據為內置教學參考、非實時 · 完全離線可用，可添加至手機主屏幕當 App 使用<br>
-          數據更新於 2026年11月18日（收市） · 僅作學習與參考，不構成投資建議
+          <span id="footDate">數據更新於 2026年11月18日（收市）</span> · 僅作學習與參考，不構成投資建議
         </div>
       </div>
     </div>
@@ -2313,6 +2313,59 @@
       });
     }
 
+
+    /* ===== 開機讀同源 data.json（機械人每日寫入），抓唔到就沿用內嵌 DATA ===== */
+    function applyJson(j) {
+      if (!j || !j.stocks || !j.stocks.length) return false;
+      var nd = {}, keys = Object.keys(DATA), i, c, s0, base, pr;
+      for (i = 0; i < keys.length; i++) nd[keys[i]] = DATA[keys[i]];
+      var cnt = 0;
+      for (i = 0; i < j.stocks.length; i++) {
+        s0 = j.stocks[i];
+        if (!s0 || !s0.code) continue;
+        c = pad5(s0.code);
+        base = DATA[c] || {};
+        pr = parseFloat(s0.price);
+        if (!(pr > 0)) continue;
+        nd[c] = {
+          name: s0.name || base.name || c,
+          price: pr,
+          target: (s0.target === null || s0.target === undefined || s0.target === "") ?
+            (base.target || r2(pr * 0.97)) : parseFloat(s0.target),
+          y: s0.y || base.y || "—",
+          grp: s0.grp || base.grp || "自選",
+          note: s0.note || base.note || "",
+          ma5: (s0.ma5 === null || s0.ma5 === undefined) ? null : parseFloat(s0.ma5),
+          ma20: (s0.ma20 === null || s0.ma20 === undefined) ? null : parseFloat(s0.ma20),
+          rsi: (s0.rsi === null || s0.rsi === undefined) ? null : parseInt(s0.rsi, 10),
+          sup: (s0.sup === null || s0.sup === undefined) ? null : parseFloat(s0.sup),
+          res: (s0.res === null || s0.res === undefined) ? null : parseFloat(s0.res),
+          news: s0.news || ""
+        };
+        cnt++;
+      }
+      if (!cnt) return false;
+      DATA = nd;
+      if (!DATA[cur]) cur = Object.keys(DATA)[0] || cur;
+      var fd = document.getElementById("footDate");
+      if (fd && j.updated) {
+        fd.textContent = "數據更新於 " + String(j.updated).replace(" HKT", "") + "（收市 · 自動同步）";
+      }
+      return true;
+    }
+
+    function loadJsonData() {
+      if (location.protocol === "file:") return;
+      fetch("data.json?_=" + Date.now(), { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("404"); return r.json(); })
+        .then(function (j) {
+          if (!applyJson(j)) return;
+          render();
+          renderWatch();
+          renderNews();
+        })
+        .catch(function () { });
+    }
 
     function liveTag(d) { return (d.grp && d.grp.indexOf("即時") >= 0); }
 
@@ -2595,6 +2648,7 @@
     renderWatch();
     render();
     renderNews();
+    loadJsonData();
     (function restoreLive() {
       var lv = [];
       try { lv = JSON.parse(localStorage.getItem(LIVE_KEY) || "[]"); } catch (e) { lv = []; }
